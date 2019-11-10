@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+    <classPathEntry location="E:\DevelopTools\jars\mysql-connector-java-5.1.47.jar" />
+    <context id="context1" targetRuntime="MyBatis3">
+        <plugin type="com.cn.lucky.morning.mybaties.MybatisPageTools" />
+        <commentGenerator>
+            <property name="suppressDate" value="true" />
+        </commentGenerator>
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/novel?useUnicode=true&amp;characterEncoding=UTF-8&amp;serverTimezone=GMT%2B8" userId="root" password="123321abc" />
+        <javaTypeResolver>
+            <property name="forceBigDecimals" value="false" />
+        </javaTypeResolver>
+        <javaModelGenerator targetPackage="com.cn.lucky.morning.model.domain" targetProject="E:\Codes\DouBiNovel\Java\Model-Domain\src\main\java">
+            <property name="trimStrings" value="true" />
+        </javaModelGenerator>
+        <sqlMapGenerator targetPackage="mybatis" targetProject="E:\Codes\DouBiNovel\Java\Model-Dao\src\main\resources" />
+
+        <javaClientGenerator targetPackage="com.cn.lucky.morning.model.dao" targetProject="E:\Codes\DouBiNovel\Java\Model-Dao\src\main\java" type="XMLMAPPER" />
+
+        <table domainObjectName="BookInfo" tableName="m_book_info">
+            <generatedKey column="id" sqlStatement="MySql" />
+        </table>
+    </context>
+</generatorConfiguration>

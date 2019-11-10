@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>逗逼小说-搜索结果</title>
+    <style>
+        *{
+            position: relative;
+            margin: 0;
+            padding: 0;
+        }
+        body{
+            background-color: #e0ce9e;
+        }
+        .content{
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+        .book-img{
+            padding: 10px;
+        }
+        .book-info{
+            padding: 10px;
+        }
+        .book-info p{
+            padding: 2px;
+        }
+        img{
+            z-index: 1;
+        }
+        .book-name{
+            font-size: 18px;
+            font-weight: bold;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
+</head>
+<body>
+<div class="content">
+    <form action="./search" method="post" class=" layui-fluid">
+        <div class="layui-row layui-col-space20">
+            <div class="layui-col-xs6 layui-col-xs-offset1 layui-col-sm7 layui-col-sm-offset1 layui-col-md4 layui-col-md-offset3">
+                <input th:value="${name}" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名" class="layui-input">
+            </div>
+            <div class="layui-col-xs4 layui-col-sm3 layui-col-md2">
+                <button type="submit" class="layui-btn layui-btn-fluid layui-btn-radius">搜索</button>
+            </div>
+        </div>
+    </form>
+</div>
+
+<div class="layui-container">
+    <table class="layui-tab">
+        <tbody>
+        <tr url="">
+            <td class="book-img">
+                <a href="../book/catalogs.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
+                    <img src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg">
+                </a>
+            </td>
+            <td class="book-info">
+                <a href="../book/catalogs.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
+                    <p class="book-name">九星毒奶</p>
+                </a>
+                <p class="book-des layui-hide-xs">这是一个充满了星力的平行世界。星图、星技、星宠、觉醒者大行其道。魂穿而来的江晓，体内蕴含着一张奇特的内视星图，成为一名稀有的医疗系觉醒者。他本想成为一只快乐的大奶，但却被众人冠上了毒奶之名。这一切的故...</p>
+                <p class="book-author">作者： 育</p>
+                <p class="book-type">类型： 科幻灵异</p>
+                <p class="book-update">更新时间： 2019-11-09</p>
+                <p class="book-new">最新章节： 835 惊心动魄</p>
+                <p class="book-source">来源： <a href="https://www.xbiquge6.com/" target="_blank">新笔趣阁</a></p>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"/>
+</body>
+</html>
