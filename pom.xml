@@ -10,6 +10,7 @@
         <module>Model-Domain</module>
 		<module>mybatis-generator-plugin</module>
         <module>Model-Dao</module>
+        <module>Model-AnalysisNovels</module>
     </modules>
 	<parent>
 		<groupId>org.springframework.boot</groupId>

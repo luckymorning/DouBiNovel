@@ -43,6 +43,13 @@
             <version>2.2.2</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
+        <dependency>
+            <groupId>org.jsoup</groupId>
+            <artifactId>jsoup</artifactId>
+            <version>1.12.1</version>
+        </dependency>
+
         <!-- Spring Boot Redis依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
