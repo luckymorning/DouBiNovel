@@ -4,6 +4,15 @@ public class Col {
     private String name;
     private Object value;
 
+    public Col() {
+
+    }
+
+    public Col(String name, Object value) {
+        this.name = name;
+        this.value = value;
+    }
+
     public String getName() {
         return name;
     }

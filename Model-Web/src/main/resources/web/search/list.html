@@ -63,14 +63,14 @@
         <tbody>
             <tr th:each="data:${list}">
                 <td class="book-img">
-                    <a th:href="${data.bookUrl}"
-                       href="../book/catalogs.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
+                    <a th:href="@{/book/detail(url=${data.bookUrl},source=${data.bookSourceLink})}"
+                       href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
                         <img th:src="${data.bookImg}" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg" th:onerror="#{data.bookImgError}">
                     </a>
                 </td>
                 <td class="book-info">
-                    <a th:href="${data.bookUrl}"
-                       href="../book/catalogs.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
+                    <a th:href="@{/book/detail(url=${data.bookUrl},source=${data.bookSourceLink})}"
+                       href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
                         <p class="book-name" th:text="${data.name}">九星毒奶</p>
                     </a>
                     <p class="book-des layui-hide-xs" th:text="${data.novelDes}">

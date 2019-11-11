@@ -21,4 +21,9 @@ public class Const {
 
     }
 
+    public static class analysisSource{
+        public static final String BI_QU_GE6 = "https://www.xbiquge6.com/";
+
+    }
+
 }
