@@ -5,16 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <title>逗逼小说-搜索结果</title>
     <style>
-        * {
-            position: relative;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: #e0ce9e;
-        }
-
         .content {
             padding-top: 20px;
             padding-bottom: 20px;
@@ -41,6 +31,7 @@
             font-weight: bold;
         }
     </style>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
@@ -63,13 +54,13 @@
         <tbody>
             <tr th:each="data:${list}">
                 <td class="book-img">
-                    <a th:href="@{/book/detail(url=${data.bookUrl},source=${data.bookSourceLink})}"
+                    <a th:href="@{/book/detail(url=${data.bookUrl})}"
                        href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
                         <img th:src="${data.bookImg}" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg" th:onerror="#{data.bookImgError}">
                     </a>
                 </td>
                 <td class="book-info">
-                    <a th:href="@{/book/detail(url=${data.bookUrl},source=${data.bookSourceLink})}"
+                    <a th:href="@{/book/detail(url=${data.bookUrl})}"
                        href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
                         <p class="book-name" th:text="${data.name}">九星毒奶</p>
                     </a>
@@ -88,6 +79,6 @@
     </table>
 </div>
 
-<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"/>
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
 </body>
 </html>

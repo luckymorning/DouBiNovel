@@ -5,14 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <title th:text="${info.name}+'-详情'">逗逼小说-目录</title>
     <style>
-        *{
-            position: relative;
-            margin: 0;
-            padding: 0;
-        }
-        body{
-            background-color: #e0ce9e;
-        }
         .content{
             padding-top: 20px;
             padding-bottom: 20px;
@@ -33,6 +25,7 @@
             font-size: 16px;
         }
     </style>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
@@ -66,7 +59,7 @@
     <hr class="layui-bg-gray">
     <h1>目录列表</h1>
     <div class="layui-row" style="margin-bottom: 30px;min-height: 1000px;">
-        <a th:each="data:${catalogs}" class="layui-col-xs6 layui-col-md4" href="https://www.xbiquge6.com/84_84291/35306.html" th:href="${data.value}" th:text="${data.name}">001 划重点？</a>
+        <a th:each="data:${catalogs}" class="layui-col-xs6 layui-col-md4" href="https://www.xbiquge6.com/84_84291/35306.html" th:href="@{/book/reader(url=${data.value})}" th:text="${data.name}">001 划重点？</a>
     </div>
 </div>
 <ul class="layui-fixbar">
@@ -78,6 +71,6 @@
         $('html, body').animate({scrollTop:0}, 'slow');
     })
 </script>
-<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"/>
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
 </body>
 </html>

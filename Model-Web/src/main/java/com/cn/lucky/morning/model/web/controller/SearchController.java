@@ -1,6 +1,6 @@
 package com.cn.lucky.morning.model.web.controller;
 
-import com.cn.lucky.morning.model.analysis.novel.BiQuGe6NovelAnalysis;
+import com.cn.lucky.morning.model.analysis.BiQuGe6NovelAnalysis;
 import com.cn.lucky.morning.model.domain.BookInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;

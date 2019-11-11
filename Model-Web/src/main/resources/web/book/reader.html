@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title th:text="${catalogName}">逗逼小说-阅读器</title>
+    <style>
+        .content{
+            border: 1px solid #d8d8d8;
+            margin: 20px auto;
+            width: 980px;
+            padding: 10px;
+            background: #f3e9c6 url('https://qidian.gtimg.com/qd/images/read.qidian.com/theme/theme_1_bg.1ae7b.png') repeat;
+        }
+        .catalog-name{
+            font-size: 20px;
+            font-weight: bolder;
+            text-align: center;
+            padding: 20px;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
+</head>
+<body>
+
+<div class="layui-container">
+    <div class="catalog-name" th:text="${catalogName}">小说标题</div>
+    <div class="content" th:utext="${content}">小说正文</div>
+    <div class="layui-row">
+        <a th:href="@{/book/reader(url=${preCatalog})}" th:if="${preCatalog!=null}" href="#" class="layui-col-xs3 layui-col-xs-offset2 layui-col-md2 layui-col-md-offset4">上一章</a>
+        <a th:href="@{/book/detail(url=${catalogs})}" href="#" class="layui-col-xs3 layui-col-md2">目录</a>
+        <a th:href="@{/book/reader(url=${nextCatalog})}" th:if="${nextCatalog!=null}" href="#" class="layui-col-xs3 layui-col-md2">下一章</a>
+    </div>
+</div>
+<ul class="layui-fixbar">
+    <li class="layui-icon layui-fixbar-top" lay-type="top" style="display: list-item;"></li>
+</ul>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script>
+    $(".layui-fixbar-top").click(function () {
+        $('html, body').animate({scrollTop:0}, 'slow');
+    })
+</script>
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
+</body>
+</html>

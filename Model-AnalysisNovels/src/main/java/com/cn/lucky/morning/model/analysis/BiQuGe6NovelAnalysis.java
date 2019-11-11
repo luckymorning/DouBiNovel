@@ -1,4 +1,4 @@
-package com.cn.lucky.morning.model.analysis.novel;
+package com.cn.lucky.morning.model.analysis;
 
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.common.network.Col;
@@ -17,7 +17,7 @@ import java.util.List;
 
 @Component
 public class BiQuGe6NovelAnalysis {
-    private static final String BASE_URL = "https://www.xbiquge6.com/";
+    private static final String BASE_URL = "https://www.xbiquge6.com";
     private static final String IMG_ONERROR="$(this).attr('src', 'https://www.xbiquge6.com/images/nocover.jpg')";
 
     /**
@@ -26,7 +26,7 @@ public class BiQuGe6NovelAnalysis {
      * @return
      */
     public List<BookInfo> searchByName(String name) {
-        String url = String.format(BASE_URL+"search.php?keyword=%s",name);
+        String url = String.format(BASE_URL+"/search.php?keyword=%s",name);
         List<BookInfo> list = new ArrayList<>();
         try {
             Response response = NetWorkUtil.get(url,null,true);
@@ -44,7 +44,7 @@ public class BiQuGe6NovelAnalysis {
                 info.setNovelType(infos.get(1).child(1).text());
                 info.setLastUpdate(infos.get(2).child(1).text());
                 info.setLastNew(infos.get(3).child(1).text());
-                info.setBookSourceLink(BASE_URL);
+                info.setBookSourceLink(info.getBookUrl());
                 info.setBookSourceName("新笔趣阁");
                 list.add(info);
             }
@@ -55,7 +55,7 @@ public class BiQuGe6NovelAnalysis {
     }
 
     /**
-     * 获取数据详细信息页
+     * 获取书籍详细信息页
      * @param url
      * @return
      */
@@ -79,8 +79,9 @@ public class BiQuGe6NovelAnalysis {
             Element fmimgDiv = html.selectFirst("#fmimg");
             bookInfo.setBookImg(fmimgDiv.child(0).attr("src"));
             bookInfo.setBookImgError(IMG_ONERROR);
-
-            bookInfo.setBookSourceLink(BASE_URL);
+            bookInfo.setBookUrl(url);
+            bookInfo.setBookSourceLink(bookInfo.getBookUrl());
+            bookInfo.setBookSourceName("新笔趣阁");
             result.addVal("info",bookInfo);
 
             List<Col> catalogs = new ArrayList<>();
@@ -91,12 +92,49 @@ public class BiQuGe6NovelAnalysis {
                 Element link = dd.child(0);
                 String name = link.text();
                 String href = link.attr("href");
-                href = BASE_URL + href.substring(1);
+                href = BASE_URL + href;
                 catalogs.add(new Col(name,href));
             }
 
             result.addVal("catalogs",catalogs);
 
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            result.setSuccess(false);
+            result.setMessage(e.getMessage());
+        }
+        return result;
+    }
+
+    /**
+     * 获取章节内容
+     * @param url
+     * @return
+     */
+    public MvcResult loadContent(String url){
+        MvcResult result = MvcResult.create();
+        try {
+            Response response = NetWorkUtil.get(url,null,true);
+            Document html = Jsoup.parse(response.body().string());
+            Element name = html.selectFirst(".bookname");
+            result.addVal("catalogName",name.child(0).text());
+
+            Element div = html.selectFirst("#content");
+            result.addVal("content",div.html());
+
+            Element bottom = html.selectFirst(".bottem2");
+            Elements links = bottom.select("a");
+            String preCatalog = links.get(0).attr("href");
+            if (preCatalog.endsWith(".html")){
+                result.addVal("preCatalog",BASE_URL+preCatalog);
+            }
+            String catalogs = links.get(1).attr("href");
+            result.addVal("catalogs",BASE_URL+catalogs);
+            String nextCatalog = links.get(2).attr("href");
+            if (nextCatalog.endsWith(".html")){
+                result.addVal("nextCatalog",BASE_URL+nextCatalog);
+            }
 
         } catch (Exception e) {
             e.printStackTrace();
