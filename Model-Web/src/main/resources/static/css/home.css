@@ -5,4 +5,7 @@
 }
 body{
     background-color: #e0ce9e;
+    color: #262626;
+    text-align: left;
+    user-select: none;
 }

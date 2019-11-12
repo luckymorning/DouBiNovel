@@ -22,7 +22,7 @@ public class BookInfoController {
     public String detail(String url, Model model) {
         if (StringUtils.isEmpty(url)){
             model.addAttribute("msg","解析地址不能为空");
-            return "/public/error";
+            return "public/error";
         }else{
             MvcResult result;
             if (url.contains(Const.analysisSource.BI_QU_GE6)){
@@ -31,11 +31,11 @@ public class BookInfoController {
                     model.addAllAttributes(result.getValues());
                 }else {
                     model.addAttribute("msg","解析出错："+result.getMessage());
-                    return "error";
+                    return "public/error";
                 }
             }else {
                 model.addAttribute("msg","未知解析源");
-                return "error";
+                return "public/error";
             }
         }
 
@@ -56,11 +56,11 @@ public class BookInfoController {
                     model.addAllAttributes(result.getValues());
                 }else {
                     model.addAttribute("msg","解析出错："+result.getMessage());
-                    return "error";
+                    return "public/error";
                 }
             }else {
                 model.addAttribute("msg","未知解析源");
-                return "error";
+                return "public/error";
             }
         }
         return "book/reader";

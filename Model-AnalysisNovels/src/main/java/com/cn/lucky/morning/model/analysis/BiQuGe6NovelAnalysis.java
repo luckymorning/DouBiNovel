@@ -121,7 +121,12 @@ public class BiQuGe6NovelAnalysis {
             result.addVal("catalogName",name.child(0).text());
 
             Element div = html.selectFirst("#content");
-            result.addVal("content",div.html());
+            String content = div.html();
+            while (content.indexOf("\n<br>\n<br>")!=-1){
+                content = content.replaceAll("\n<br>\n<br>","<br>");
+            }
+            content.replaceAll("\n<br>","<br>");
+            result.addVal("content",content);
 
             Element bottom = html.selectFirst(".bottem2");
             Elements links = bottom.select("a");

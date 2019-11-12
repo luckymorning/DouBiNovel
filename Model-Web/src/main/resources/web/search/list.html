@@ -35,21 +35,22 @@
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
-<div class="content">
-    <form action="./search" method="post" class=" layui-fluid">
-        <div class="layui-row layui-col-space20">
-            <div class="layui-col-xs6 layui-col-xs-offset1 layui-col-sm7 layui-col-sm-offset1 layui-col-md4 layui-col-md-offset3">
-                <input th:value="${name}" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名"
-                       class="layui-input">
-            </div>
-            <div class="layui-col-xs4 layui-col-sm3 layui-col-md2">
-                <button type="submit" class="layui-btn layui-btn-fluid layui-btn-radius">搜索</button>
-            </div>
-        </div>
-    </form>
-</div>
 
 <div class="layui-container">
+    <div class="content">
+        <form action="./search" method="post" class=" layui-fluid">
+            <div class="layui-row layui-col-space20">
+                <div class="layui-col-xs8 layui-col-md9">
+                    <input th:value="${name}" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名"
+                           class="layui-input">
+                </div>
+                <div class="layui-col-xs4 layui-col-md3">
+                    <button type="submit" class="layui-btn layui-btn-fluid layui-btn-radius">搜索</button>
+                </div>
+            </div>
+        </form>
+    </div>
+
     <table class="layui-tab">
         <tbody>
             <tr th:each="data:${list}">
