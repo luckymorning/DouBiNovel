@@ -283,4 +283,3 @@ function checkLayout() {
     $('.layui-fixbar').css('left', left + 'px');
     // console.info(scrollTop);
 }
-

@@ -1,3 +1,4 @@
+
 .content {
     margin: auto;
 }
@@ -8,13 +9,13 @@
 
 .theme-0 .content-wrap {
     border: 1px solid #d8d8d8;
-    background: url('/imgs/reader/theme/basic_bg.edf95.png') repeat;
+    background: #ede7da url('/imgs/reader/theme/basic_bg.edf95.png') repeat;
     letter-spacing: 0.2rem;
 }
 
 .theme-0 .panel-wrap {
     border: 1px solid #d8d8d8;
-    background: url('/imgs/reader/theme/base_theme_popup.f1a43.png') repeat;
+    background: #fefdf7 url('/imgs/reader/theme/base_theme_popup.f1a43.png') repeat;
     letter-spacing: 0.2rem;
     box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
 }

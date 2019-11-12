@@ -5,10 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <title th:text="${info.name}+'-详情'">逗逼小说-目录</title>
     <style>
-        .content{
-            padding-top: 20px;
-            padding-bottom: 20px;
-        }
         .book-info p{
             padding: 2px;
         }
@@ -29,20 +25,27 @@
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
-<div class="content">
-    <form action="/search/search" method="post" class=" layui-fluid">
-        <div class="layui-row layui-col-space20">
-            <div class="layui-col-xs6 layui-col-xs-offset1 layui-col-sm7 layui-col-sm-offset1 layui-col-md4 layui-col-md-offset3">
-                <input type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名" class="layui-input">
+
+<div class="layui-row novel-header">
+    <div class="header-item layui-col-md2 layui-col-md-offset1">
+        <img src="../../static/imgs/icon/logo.png" th:src="${/imgs/icon/logo.png}" class="header-logo">
+        <span>逗逼联盟-阅读</span>
+    </div>
+
+    <div class="header-item layui-col-md3 layui-col-md-offset6 layui-row">
+        <form action="/search/search" method="post" id="form">
+            <div class="layui-col-md8 header-search">
+                <input id="name" class="layui-input" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名">
             </div>
-            <div class="layui-col-xs4 layui-col-sm3 layui-col-md2">
-                <button type="submit" class="layui-btn layui-btn-fluid layui-btn-radius">搜索</button>
+            <div class="layui-col-md3 header-search">
+                <i class="layui-icon" onclick="submit()">&#xe615;</i>
             </div>
-        </div>
-    </form>
+
+        </form>
+    </div>
 </div>
 
-<div class="layui-container">
+<div class="layui-container" style="margin-top: 50px;">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-xs4 layui-col-md2">
             <img th:src="${info.bookImg}" th:onerror="#{info.bookImgError}" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg">
@@ -71,6 +74,7 @@
         $('html, body').animate({scrollTop:0}, 'slow');
     })
 </script>
+<script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
 <script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
 </body>
 </html>

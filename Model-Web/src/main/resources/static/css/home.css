@@ -4,8 +4,41 @@
     padding: 0;
 }
 body{
-    background-color: #e0ce9e;
+    background: #f3e9c6 url('/imgs/reader/theme/theme_1_bg.1ae7b.png') repeat;
     color: #262626;
     text-align: left;
     user-select: none;
+}
+
+.novel-header{
+    height: 50px;
+    padding: 15px;
+    background-color: rgba(255,255,255,.4);
+}
+
+.header-item {
+    text-align: left;
+    height: 100%;
+}
+
+.header-item span{
+    line-height: 50px;
+    font-size: 20px;
+    font-weight: bold;
+    margin-left: 10px;
+}
+
+.header-logo{
+    height: 100%;
+    width: auto;
+}
+
+.header-search{
+    line-height: 40px;
+    text-align: left;
+}
+.header-search i{
+    font-size: 30px;
+    cursor: pointer;
+    margin-left: 5px;
 }

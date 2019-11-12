@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title></title>
+</head>
+<body>
+
+<div class="layui-row novel-header">
+    <div class="header-item layui-col-md2 layui-col-md-offset1">
+        <img src="../../static/imgs/icon/logo.png" th:src="${/imgs/icon/logo.png}" class="header-logo">
+        <span>逗逼联盟-阅读</span>
+    </div>
+
+    <div class="header-item layui-col-md3 layui-col-md-offset6 layui-row">
+        <form action="/search/search" method="post" id="form">
+            <div class="layui-col-md8 header-search">
+                <input id="name" class="layui-input" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名">
+            </div>
+            <div class="layui-col-md3 header-search">
+                <i class="layui-icon" onclick="submit()">&#xe615;</i>
+            </div>
+
+        </form>
+    </div>
+</div>
+
+</body>
+</html>

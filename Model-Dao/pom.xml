@@ -10,6 +10,19 @@
     <modelVersion>4.0.0</modelVersion>
 
     <artifactId>Model-Dao</artifactId>
-
+    <dependencies>
+        <dependency>
+            <groupId>DouBiNovel-Base</groupId>
+            <artifactId>Model-Domain</artifactId>
+            <version>0.0.1-SNAPSHOT</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+            <version>3.4.6</version>
+            <scope>compile</scope>
+        </dependency>
+    </dependencies>
 
 </project>
