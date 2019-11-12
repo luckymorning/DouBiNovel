@@ -21,5 +21,10 @@
         <table domainObjectName="BookInfo" tableName="m_book_info">
             <generatedKey column="id" sqlStatement="MySql" />
         </table>
+        <table domainObjectName="UpdateLog" tableName="m_update_log">
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
+            <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+            <columnOverride column="updated" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+        </table>
     </context>
 </generatorConfiguration>
