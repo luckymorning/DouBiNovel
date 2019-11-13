@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <title>逗逼小说-错误页面</title>
+    <title>逗逼阅读-错误页面</title>
     <style>
         .content{
             padding-top: 10%;
@@ -15,11 +15,12 @@
         }
     </style>
     <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
     <div class="content">
-        <form action="/search/search" method="post" class="layui-container">
+        <form action="/search" method="post" class="layui-container">
             <div class="layui-row layui-col-space20">
                 <div class="layui-col-xs6 layui-col-xs-offset1 layui-col-sm7 layui-col-sm-offset1 layui-col-md4 layui-col-md-offset3">
                     <input type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名" class="layui-input">
@@ -33,6 +34,8 @@
             </div>
         </form>
     </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+    <script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
     <script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
 </body>
 </html>

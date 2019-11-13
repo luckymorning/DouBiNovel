@@ -8,12 +8,15 @@ $('body').addClass(theme);
 //加载字体大小
 var fontSize = localStorage.getItem("fontSize");
 if (fontSize == null || fontSize == undefined || fontSize == ''){
-    fontSize = 30;
+    if ($(window).width()<600){
+        fontSize = 22;
+    }else {
+        fontSize = 30;
+    }
 }
 fontSize = parseInt(fontSize);
 $('.md-setting-font-size-view').text(fontSize);
 $('.reader-content').css('font-size',fontSize+'px');
-
 //加载字体
 var fontFamily = localStorage.getItem('fontFamily');
 if (fontFamily == null || fontFamily == undefined || fontFamily == ''){
@@ -44,7 +47,13 @@ $(document).ready(function () {
     checkLayout()
 
     var width = $('.layui-container').width();
-    $('.reader-setting-md').width(width / 5 * 2);
+    if (width<600){
+        $('.reader-setting-md').width(width-40);
+        $('.reader-content').css('margin','10px');
+    }else {
+        $('.reader-setting-md').width(width / 5 * 2);
+        $('.reader-content').css('margin','50px');
+    }
 
     //设置按钮
     $('.md-setting-open').click(function () {
@@ -273,13 +282,17 @@ function checkLayout() {
     $('.layui-fixset').css('top', top + 'px');
 
     var left = $('#container').offset().left;
-    left = left - 46;
-    if (left < 15) {
-        left = 15;
-    }
-    $('.layui-fixset').css('left', left + 'px');
+    if (left<100){
+        $('.layui-fixbar').css('right',  '15px');
+    }else {
+        left = left - 46;
+        if (left < 15) {
+            left = 15;
+        }
+        $('.layui-fixset').css('left', left + 'px');
 
-    left = left + $('#container').width() + 65;
-    $('.layui-fixbar').css('left', left + 'px');
+        left = left + $('#container').width() + 65;
+        $('.layui-fixbar').css('left', left + 'px');
+    }
     // console.info(scrollTop);
 }

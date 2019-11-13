@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <title>逗逼小说-搜索结果</title>
+    <title>逗逼阅读-搜索结果</title>
     <style>
         .content {
             padding-top: 20px;
@@ -30,18 +30,28 @@
             font-size: 18px;
             font-weight: bold;
         }
+        .nothing-tips{
+            margin: 15px;
+        }
     </style>
     <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
+
+<!-- 导航栏 -->
+<div th:replace="public/top::header">
+
+</div>
 
 <div class="layui-container">
     <div class="content">
         <form action="./search" method="post" class=" layui-fluid">
             <div class="layui-row layui-col-space20">
                 <div class="layui-col-xs8 layui-col-md9">
-                    <input th:value="${name}" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名"
+                    <input th:value="${name}" type="text" name="name" required lay-verify="required"
+                           placeholder="请输入书名或作者名"
                            class="layui-input">
                 </div>
                 <div class="layui-col-xs4 layui-col-md3">
@@ -51,35 +61,43 @@
         </form>
     </div>
 
+    <div class="nothing-tips" th:if="${list==null}">
+        未查询到&nbsp;"&nbsp;<span style="color: blue;" th:text="${name}">我下边有人</span>&nbsp;"&nbsp;相关书籍
+    </div>
+
     <table class="layui-tab">
         <tbody>
-            <tr th:each="data:${list}">
-                <td class="book-img">
-                    <a th:href="@{/book/detail(url=${data.bookUrl})}"
-                       href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
-                        <img th:src="${data.bookImg}" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg" th:onerror="#{data.bookImgError}">
-                    </a>
-                </td>
-                <td class="book-info">
-                    <a th:href="@{/book/detail(url=${data.bookUrl})}"
-                       href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
-                        <p class="book-name" th:text="${data.name}">九星毒奶</p>
-                    </a>
-                    <p class="book-des layui-hide-xs" th:text="${data.novelDes}">
-                        这是一个充满了星力的平行世界。星图、星技、星宠、觉醒者大行其道。魂穿而来的江晓，体内蕴含着一张奇特的内视星图，成为一名稀有的医疗系觉醒者。他本想成为一只快乐的大奶，但却被众人冠上了毒奶之名。这一切的故...</p>
-                    <p class="book-author" th:text="'作者：'+${data.author}">作者： 育</p>
-                    <p class="book-type" th:text="'类型：'+${data.novelType}">类型： 科幻灵异</p>
-                    <p class="book-update" th:text="'更新时间：'+${data.lastUpdate}">更新时间： 2019-11-09</p>
-                    <p class="book-new" th:text="'最新章节：'+${data.lastNew}">最新章节： 835 惊心动魄</p>
-                    <p class="book-source">
-                        来源： <a th:href="${data.bookSourceLink}" th:text="${data.bookSourceName}" href="https://www.xbiquge6.com/" target="_blank">新笔趣阁</a>
-                    </p>
-                </td>
-            </tr>
+        <tr th:each="data:${list}">
+            <td class="book-img">
+                <a th:href="@{/book/detail(url=${data.bookUrl})}"
+                   href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
+                    <img th:src="${data.bookImg}" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg"
+                         th:onerror="#{data.bookImgError}">
+                </a>
+            </td>
+            <td class="book-info">
+                <a th:href="@{/book/detail(url=${data.bookUrl})}"
+                   href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
+                    <p class="book-name" th:text="${data.name}">九星毒奶</p>
+                </a>
+                <p class="book-des layui-hide-xs" th:text="${data.novelDes}">
+                    这是一个充满了星力的平行世界。星图、星技、星宠、觉醒者大行其道。魂穿而来的江晓，体内蕴含着一张奇特的内视星图，成为一名稀有的医疗系觉醒者。他本想成为一只快乐的大奶，但却被众人冠上了毒奶之名。这一切的故...</p>
+                <p class="book-author" th:text="'作者：'+${data.author}">作者： 育</p>
+                <p class="book-type" th:text="'类型：'+${data.novelType}">类型： 科幻灵异</p>
+                <p class="book-update" th:text="'更新时间：'+${data.lastUpdate}">更新时间： 2019-11-09</p>
+                <p class="book-new" th:text="'最新章节：'+${data.lastNew}">最新章节： 835 惊心动魄</p>
+                <p class="book-source">
+                    来源： <a th:href="${data.bookSourceLink}" th:text="${data.bookSourceName}"
+                           href="https://www.xbiquge6.com/" target="_blank">新笔趣阁</a>
+                </p>
+            </td>
+        </tr>
         </tbody>
     </table>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
 <script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
 </body>
 </html>

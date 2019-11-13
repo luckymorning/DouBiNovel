@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Controller
-@RequestMapping("/search")
 public class SearchController {
     @Autowired
     private BiQuGe6NovelAnalysis biQuGe6NovelAnalysis;
@@ -22,13 +21,16 @@ public class SearchController {
     public String search(@Param("name") String name, Model model){
         if (StringUtils.isEmpty(name)){
             model.addAttribute("msg","搜索名称不能为空");
-            return "/public/error";
+            return "public/error";
         }
         model.addAttribute("name",name);
         List<BookInfo> list = new ArrayList<>();
         //新笔趣阁查询书籍
         list.addAll(biQuGe6NovelAnalysis.searchByName(name));
-        model.addAttribute("list",list);
-        return "/search/list";
+
+        if (list.size()>0){
+            model.addAttribute("list",list);
+        }
+        return "search/list";
     }
 }

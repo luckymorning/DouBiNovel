@@ -4,8 +4,6 @@
     padding: 0;
 }
 body{
-    background: #f3e9c6 url('/imgs/reader/theme/theme_1_bg.1ae7b.png') repeat;
-    color: #262626;
     text-align: left;
     user-select: none;
 }
@@ -21,11 +19,16 @@ body{
     height: 100%;
 }
 
-.header-item span{
+.header-item .title{
     line-height: 50px;
     font-size: 20px;
     font-weight: bold;
     margin-left: 10px;
+}
+
+.header-item .tips{
+    margin-left: 30px;
+    font-size: 12px;
 }
 
 .header-logo{

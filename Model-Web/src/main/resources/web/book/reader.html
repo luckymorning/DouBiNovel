@@ -3,32 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <title th:text="${catalogName}">逗逼小说-阅读器</title>
+    <title th:text="${catalogName}">逗逼阅读-阅读器</title>
     <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static/css/home.css">
     <link rel="stylesheet" th:href="@{/css/reader.css}" href="../../static/css/reader.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
 
-<div class="layui-row novel-header">
-    <div class="header-item layui-col-md2 layui-col-md-offset1">
-        <img src="../../static/imgs/icon/logo.png" th:src="${/imgs/icon/logo.png}" class="header-logo">
-        <span>逗逼联盟-阅读</span>
-    </div>
+<!-- 导航栏 -->
+<div th:replace="public/top::header">
 
-    <div class="header-item layui-col-md3 layui-col-md-offset6 layui-row">
-        <form action="/search/search" method="post" id="form">
-            <div class="layui-col-md8 header-search">
-                <input id="name" class="layui-input" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名">
-            </div>
-            <div class="layui-col-md3 header-search">
-                <i class="layui-icon" onclick="submit()">&#xe615;</i>
-            </div>
-
-        </form>
-    </div>
 </div>
 
+<!--阅读正文-->
 <div class="layui-container" id="container">
     <div class="content content-wrap">
         <h2 class="catalog-name" th:text="${catalogName}">章节标题</h2>
@@ -40,20 +28,23 @@
     </div>
     <div class="layui-row content-wrap catalog-control">
         <span th:if="${preCatalog==null}" class="layui-col-xs4 layui-col-md4 layui-disabled">上一章</span>
-        <a th:href="@{/book/reader(url=${preCatalog})}"th:if="${preCatalog!=null}" href="#" class="layui-col-xs4 layui-col-md4">上一章</a>
+        <a th:href="@{/book/reader(url=${preCatalog})}" th:if="${preCatalog!=null}" href="#"
+           class="layui-col-xs4 layui-col-md4">上一章</a>
         <a th:href="@{/book/detail(url=${catalogs})}" href="#" class="layui-col-xs4 layui-col-md4">目录</a>
         <span th:if="${nextCatalog==null}" class="layui-col-xs4 layui-col-md4 layui-disabled">下一章</span>
-        <a th:href="@{/book/reader(url=${nextCatalog})}" th:if="${nextCatalog!=null}" href="#" class="layui-col-xs4 layui-col-md4">下一章</a>
+        <a th:href="@{/book/reader(url=${nextCatalog})}" th:if="${nextCatalog!=null}" href="#"
+           class="layui-col-xs4 layui-col-md4">下一章</a>
     </div>
 
     <!-- 设置 -->
-    <div class="layui-fixset layui-hide-xs">
+<!--    <div class="layui-fixset layui-hide-xs">-->
+    <div class="layui-fixset">
         <ul>
             <li class="layui-icon md-setting-open content-wrap"><i class="layui-icon">&#xe614;</i><br>设置</li>
         </ul>
         <div class="reader-setting-md panel-wrap" style="display: none">
             <div class="layui-row">
-                <i class="layui-col-md-offset11 layui-col-md1 layui-icon md-setting-close">&#x1006;</i>
+                <i class="layui-col-xs-offset10 layui-col-xs2 layui-col-md-offset11 layui-col-md1 layui-icon md-setting-close">&#x1006;</i>
             </div>
             <div class="layui-row">
                 <h3 class="layui-col-md12">设置</h3>
@@ -61,33 +52,33 @@
             <br>
             <br>
             <div class="layui-row">
-                <div class="layui-col-md3 md-setting-title">阅读主题</div>
-                <div class="layui-col-md9 layui-row">
-                    <div class="layui-col-md2  reader-theme">
+                <div class="layui-col-xs3 layui-col-md3 md-setting-title">阅读主题</div>
+                <div class="layui-col-xs9 layui-col-md9 layui-row">
+                    <div class="layui-col-xs2 layui-col-md2  reader-theme">
                         <div class=" layui-circle theme-0 default">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
                     </div>
 
-                    <div class="layui-col-md2  reader-theme">
+                    <div class="layui-col-xs2 layui-col-md2  reader-theme">
                         <div class=" layui-circle theme-1 act">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
                     </div>
 
-                    <div class="layui-col-md2  reader-theme">
+                    <div class="layui-col-xs2 layui-col-md2  reader-theme">
                         <div class=" layui-circle theme-2 default">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
                     </div>
 
-                    <div class="layui-col-md2  reader-theme">
+                    <div class="layui-col-xs2 layui-col-md2  reader-theme">
                         <div class=" layui-circle theme-3 default">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
                     </div>
 
-                    <div class="layui-col-md2  reader-theme">
+                    <div class="layui-col-xs2 layui-col-md2  reader-theme">
                         <div class=" layui-circle theme-4 default">
                             <i class="layui-icon">&#xe605;</i>
                         </div>
@@ -102,9 +93,12 @@
                 <div class="layui-col-md3 md-setting-title">正文字体</div>
                 <div class="layui-col-md9 layui-row">
                     <div class="layui-col-md10 layui-row md-setting-font-family">
-                        <div class="layui-col-md4 md-setting-font-family-btn md-setting-font-family-yahei default">雅黑</div>
-                        <div class="layui-col-md4 md-setting-font-family-btn md-setting-font-family-song default">宋体</div>
-                        <div class="layui-col-md4 md-setting-font-family-btn md-setting-font-family-kai default">楷书</div>
+                        <div class="layui-col-md4 md-setting-font-family-btn md-setting-font-family-yahei default">雅黑
+                        </div>
+                        <div class="layui-col-md4 md-setting-font-family-btn md-setting-font-family-song default">宋体
+                        </div>
+                        <div class="layui-col-md4 md-setting-font-family-btn md-setting-font-family-kai default">楷书
+                        </div>
                     </div>
                 </div>
             </div>
@@ -128,9 +122,13 @@
                 <div class="layui-col-md3 md-setting-title">页面宽度</div>
                 <div class="layui-col-md9">
                     <div class="layui-col-md10 layui-row md-setting-font-size">
-                        <div class="layui-col-md4   md-setting-page-size-btn md-setting-page-size-smaller"><i class="layui-icon">&#xe647;</i> -</div>
+                        <div class="layui-col-md4   md-setting-page-size-btn md-setting-page-size-smaller"><i
+                                class="layui-icon">&#xe647;</i> -
+                        </div>
                         <span class="layui-col-md4 md-setting-page-size-view">100%</span>
-                        <div class="layui-col-md4   md-setting-page-size-btn md-setting-page-size-bigger"><i class="layui-icon">&#xe647;</i> +</div>
+                        <div class="layui-col-md4   md-setting-page-size-btn md-setting-page-size-bigger"><i
+                                class="layui-icon">&#xe647;</i> +
+                        </div>
                     </div>
                 </div>
             </div>
@@ -139,8 +137,10 @@
     </div>
 
     <!--  滚动到顶部 -->
-    <ul class="layui-fixbar content-wrap layui-hide-xs" style="right: auto;">
-        <li class="layui-icon layui-fixbar-top" lay-type="top" style="display:none;color: #1a1a1a;background-color: rgba(0,0,0,0);"></li>
+    <ul class="layui-fixbar content-wrap" style="right: auto;">
+        <li class="layui-icon layui-fixbar-top" lay-type="top"
+            style="display:none;color: #1a1a1a;background-color: rgba(0,0,0,0);">
+        </li>
     </ul>
 </div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>

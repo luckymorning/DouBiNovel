@@ -3,21 +3,60 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <title>逗逼小说-搜索</title>
+    <title>逗逼阅读-搜索</title>
     <style>
-        .content{
+        .content {
             padding-top: 10%;
+        }
+
+        .title-logo {
+            height: 60px;
+        }
+
+        .title-item {
+            font-size: 30px;
+            font-weight: bolder;
+            line-height: 50px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .ps {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 60px;
         }
     </style>
     <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
+
+<!-- 导航栏 -->
+<div th:replace="public/top::header">
+
+</div>
+
+<div class="layui-container">
+
+
+    <div class="layui-row">
+        <div class="title-item layui-col-md4 layui-col-md-offset4">
+            <img src="../../static/imgs/icon/logo.png" th:src="@{/imgs/icon/logo.png}" class="title-logo">
+            <span>逗逼联盟-逗逼阅读</span>
+
+        </div>
+
+    </div>
+
+
     <div class="content">
-        <form action="/search/search" method="post" class=" layui-fluid">
+        <form action="/search" method="post" class=" layui-fluid">
             <div class="layui-row layui-col-space20">
                 <div class="layui-col-xs6 layui-col-xs-offset1 layui-col-sm7 layui-col-sm-offset1 layui-col-md4 layui-col-md-offset3">
-                    <input type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名" class="layui-input">
+                    <input type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名"
+                           class="layui-input">
                 </div>
                 <div class="layui-col-xs4 layui-col-sm3 layui-col-md2">
                     <button type="submit" class="layui-btn layui-btn-fluid layui-btn-radius">搜索</button>
@@ -25,6 +64,28 @@
             </div>
         </form>
     </div>
-    <script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
+
+    <div class="ps layui-row">
+        PS:每个搜索源只取前十，搜索时请尽量输入完整名称
+    </div>
+
+    <div class="layui-row">
+        <ul class="layui-timeline layui-col-md-offset5 layui-col-xs-offset3">
+            <li class="layui-timeline-item">
+                <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
+                <div class="layui-timeline-content layui-text">
+                    <h3 class="layui-timeline-title">2019年11月13日</h3>
+                    <p>
+                        完成初版网站，并上线
+                    </p>
+                </div>
+            </li>
+        </ul>
+
+    </div>
+</div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
 </body>
 </html>

@@ -9,3 +9,10 @@ function submit() {
         layui.layer.alert('请填写书籍名称');
     }
 }
+
+//加载主题
+var theme = localStorage.getItem('theme');
+if (theme == null || theme == undefined || theme == ''){
+    theme = 'theme-0';
+}
+$('body').addClass(theme);

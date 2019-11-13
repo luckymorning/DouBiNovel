@@ -1,0 +1,87 @@
+
+.theme-0 {
+    background-color: rgba(250, 245, 235, .8);
+}
+
+.theme-0 .content-wrap {
+    border: 1px solid #d8d8d8;
+    background: #ede7da url('/imgs/reader/theme/basic_bg.edf95.png') repeat;
+    letter-spacing: 0.2rem;
+}
+
+.theme-0 .panel-wrap {
+    border: 1px solid #d8d8d8;
+    background: #fefdf7 url('/imgs/reader/theme/base_theme_popup.f1a43.png') repeat;
+    letter-spacing: 0.2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+}
+
+.theme-1 {
+    background-color: rgba(245, 234, 204, .8)
+}
+
+.theme-1 .content-wrap {
+    border: 1px solid #d8d8d8;
+    background: #f3e9c6 url('/imgs/reader/theme/theme_1_bg.1ae7b.png') repeat;
+    letter-spacing: 0.2rem;
+}
+
+.theme-1 .panel-wrap {
+    border: 1px solid #d8d8d8;
+    background: #f8f1d9 url(/imgs/reader/theme/theme_1_popup_bg.9bb69.png) repeat;
+    letter-spacing: 0.2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+}
+
+.theme-2 {
+    background-color: rgba(230, 242, 230, .8);
+}
+
+.theme-2 .content-wrap {
+    border: 1px solid #d8d8d8;
+    background: #cddfcd url('/imgs/reader/theme/body_theme2_bg.75a33.png') repeat;
+    letter-spacing: 0.2rem;
+}
+
+.theme-2 .panel-wrap {
+    border: 1px solid #d8d8d8;
+    background: #f3fbf3 url('/imgs/reader/theme/theme_2_popup_bg.b3538.png') repeat;
+    letter-spacing: 0.2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+}
+
+.theme-3 {
+    background-color: rgba(228, 241, 245, .8);
+}
+
+.theme-3 .content-wrap {
+    border: 1px solid #d8d8d8;
+    background: #cfdde1 url('/imgs/reader/theme/body_theme3_bg.b8eff.png') repeat;
+    letter-spacing: 0.2rem;
+}
+
+.theme-3 .panel-wrap {
+    border: 1px solid #d8d8d8;
+    background: #e7f5f6 url('/imgs/reader/theme/theme_3_popup_bg.7ecca.png') repeat;
+    letter-spacing: 0.2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+}
+
+.theme-4 {
+    background-color: rgba(25, 27, 28, .8);
+}
+
+.theme-4 .content-wrap {
+    border: 1px solid #d8d8d8;
+    background: #0f1112 url('/imgs/reader/theme/body_theme6_bg.a8d28.png') repeat;
+    letter-spacing: 0.2rem;
+    color: #666;
+}
+
+.theme-4 .panel-wrap {
+    border: 1px solid #d8d8d8;
+    background: #111 url('/imgs/reader/theme/theme_6_bg.45ad3.png') repeat;
+    letter-spacing: 0.2rem;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, .2);
+    color: #666;
+}

@@ -3,22 +3,28 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <title></title>
+    <title>顶部导航栏</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
 
-<div class="layui-row novel-header">
-    <div class="header-item layui-col-md2 layui-col-md-offset1">
-        <img src="../../static/imgs/icon/logo.png" th:src="${/imgs/icon/logo.png}" class="header-logo">
-        <span>逗逼联盟-阅读</span>
+<div class="layui-row novel-header" th:fragment="header">
+    <div class="header-item layui-col-xs8 layui-col-md8 layui-col-md-offset1">
+        <a href="../search/index.html" th:href="@{/index}">
+            <img src="../../static/imgs/icon/logo.png" th:src="@{/imgs/icon/logo.png}" class="header-logo">
+            <span class="title">逗逼联盟-逗逼阅读</span>
+        </a>
+        <span class="tips layui-hide-xs">做最精简，最舒服的小说聚合网站</span>
     </div>
 
-    <div class="header-item layui-col-md3 layui-col-md-offset6 layui-row">
-        <form action="/search/search" method="post" id="form">
-            <div class="layui-col-md8 header-search">
+    <div class="header-item layui-col-xs4 layui-col-md3 layui-row">
+        <form action="/search" method="post" id="form">
+            <div class="layui-col-xs9 layui-col-md10 header-search">
                 <input id="name" class="layui-input" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名">
             </div>
-            <div class="layui-col-md3 header-search">
+            <div class="layui-col-xs3 layui-col-md2 header-search">
                 <i class="layui-icon" onclick="submit()">&#xe615;</i>
             </div>
 
@@ -26,5 +32,8 @@
     </div>
 </div>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+<script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
 </body>
 </html>
