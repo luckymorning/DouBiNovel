@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 12/11/2019 17:54:03
+ Date: 14/11/2019 17:48:44
 */
 
 SET NAMES utf8mb4;
@@ -43,7 +43,7 @@ CREATE TABLE `m_book_info`  (
 DROP TABLE IF EXISTS `m_update_log`;
 CREATE TABLE `m_update_log`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `update_des` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `update_des` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
   `created` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE

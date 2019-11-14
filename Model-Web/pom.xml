@@ -11,7 +11,7 @@
     <groupId>Model-Web</groupId>
     <artifactId>Model-Web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>DouBiNovel</name>
+    <name>Model-Web</name>
     <packaging>war</packaging>
     <description>Model-Web for Spring Boot</description>
 
