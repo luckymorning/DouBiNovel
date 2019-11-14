@@ -3,36 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <title>逗逼阅读-错误页面</title>
-    <style>
-        .msg {
-            margin-top: 40px;
-            text-align: center;
-            color: red;
-        }
-    </style>
+    <title>底部导航栏</title>
     <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
     <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
 </head>
 <body>
 
-<!-- 导航栏 -->
-<div th:replace="public/top::header">
-
-</div>
-
-<div class="layui-container">
-    <div class="layui-row">
-        <h2 class="layui-col-md12 msg" th:text="${msg}">错误描述</h2>
+<div class="novel-footer" th:fragment="footer">
+    <div class="footer-item layui-row">
+        本站所有小说为转载作品，所有章节均由网友上传，转载至本站只是为了宣传本书让更多读者欣赏。
+    </div>
+    <br>
+    <div class="footer-item layui-row">
+        Copyright © 2019 <a href="/index" style="font-weight: bolder">逗逼阅读</a> All Rights Reserved.
     </div>
 </div>
 
-
-<!-- 底部 -->
-<div th:replace="public/bottom::footer">
-
-</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 <script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
 <script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>

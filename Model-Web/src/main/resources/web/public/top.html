@@ -12,15 +12,15 @@
 
 <div class="layui-row novel-header" th:fragment="header">
     <div class="header-item layui-col-xs8 layui-col-md8 layui-col-md-offset1">
-        <a href="../search/index.html" th:href="@{/index}">
+        <a href="../index.html" th:href="@{/index}">
             <img src="../../static/imgs/icon/logo.png" th:src="@{/imgs/icon/logo.png}" class="header-logo">
             <span class="title">逗逼联盟-逗逼阅读</span>
         </a>
-        <span class="tips layui-hide-xs">做最精简，最舒服的小说聚合网站</span>
+        <span class="tips layui-hide-xs">做最简洁，最干净的小说聚合网站</span>
     </div>
 
     <div class="header-item layui-col-xs4 layui-col-md3 layui-row">
-        <form action="/search" method="post" id="form">
+        <form th:action="@{/search}" action="/search" method="post" id="form">
             <div class="layui-col-xs9 layui-col-md10 header-search">
                 <input id="name" class="layui-input" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名">
             </div>

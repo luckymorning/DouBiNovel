@@ -19,22 +19,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.net.SocketTimeoutException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
 @Component
-public class BiQuGe6NovelAnalysis {
+public class DingDiannNovelAnalysis {
     private static final Logger logger = Logs.get();
-    public static final String BASE_URL = "https://www.xbiquge6.com";
-    private static final String SOURCE_NAME = "新笔趣阁";
+    public static final String BASE_URL = "https://www.dingdiann.com";
+    private static final String SOURCE_NAME = "顶点小说";
     private static final String IMG_ONERROR = "$(this).attr('src', '/imgs/nocover.jpg')";
     private Headers headers;
 
     @Autowired
     private CacheService cacheService;
 
-    public BiQuGe6NovelAnalysis() {
+    public DingDiannNovelAnalysis() {
         headers = new Headers.Builder()
                 .add("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36")
                 .build();
@@ -47,27 +48,31 @@ public class BiQuGe6NovelAnalysis {
      * @return
      */
     public MvcResult searchByName(String name) {
-        String url = String.format(BASE_URL + "/search.php?keyword=%s", name);
         MvcResult result = MvcResult.create();
         try {
+            name = URLEncoder.encode(name, "utf8");
+
+            String url = String.format(BASE_URL + "/searchbook.php?keyword=%s", name);
             List<BookInfo> list = (List<BookInfo>) cacheService.get(Const.cache.BOOK_SEARCH_RESULT + url);
             if (list == null) {
                 list = new ArrayList<>();
                 Response response = NetWorkUtil.get(url, headers, true);
                 Document html = Jsoup.parse(response.body().string());
-                Elements divs = html.select(".result-game-item");
-                for (Element div : divs) {
+                Element listDiv = html.selectFirst(".novelslist2");
+                Elements lis = listDiv.select("li");
+
+                for (int index = 1; index < lis.size(); index++) {
+                    Element li = lis.get(index);
                     BookInfo info = new BookInfo();
-                    info.setName(div.selectFirst(".result-game-item-title-link").text());
-                    info.setBookUrl(div.selectFirst(".result-game-item-title-link").attr("href"));
-                    info.setBookImg(div.selectFirst(".result-game-item-pic-link-img").attr("src"));
+                    info.setName(li.selectFirst(".s2").text());
+                    info.setBookUrl(BASE_URL + li.selectFirst(".s2").child(0).attr("href"));
+                    info.setBookImg("/imgs/nocover.jpg");
                     info.setBookImgError(IMG_ONERROR);
-                    info.setNovelDes(div.selectFirst(".result-game-item-desc").text());
-                    Elements infos = div.select(".result-game-item-info-tag");
-                    info.setAuthor(infos.get(0).child(1).text());
-                    info.setNovelType(infos.get(1).child(1).text());
-                    info.setLastUpdate(infos.get(2).child(1).text());
-                    info.setLastNew(infos.get(3).child(1).text());
+                    info.setNovelDes("");
+                    info.setAuthor(li.selectFirst(".s4").text());
+                    info.setNovelType(li.selectFirst(".s1").text());
+                    info.setLastUpdate(li.selectFirst(".s6").text());
+                    info.setLastNew(li.selectFirst(".s3").text());
                     info.setBookSourceLink(info.getBookUrl());
                     info.setBookSourceName(SOURCE_NAME);
                     list.add(info);
@@ -79,7 +84,7 @@ public class BiQuGe6NovelAnalysis {
             logger.error("查找书籍出错",e);
             result.setSuccess(false);
             result.setMessage("《"+SOURCE_NAME+"》网络连接超时");
-        }catch (Exception e) {
+        } catch (Exception e) {
             logger.error("查找书籍出错",e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
@@ -104,17 +109,19 @@ public class BiQuGe6NovelAnalysis {
                 Element infoDiv = html.selectFirst("#info");
                 BookInfo bookInfo = new BookInfo();
                 bookInfo.setName(infoDiv.child(0).text());
+
                 String author = infoDiv.child(1).text();
                 bookInfo.setAuthor(author.substring(author.indexOf("：") + 1));
+
                 String lastUpdate = infoDiv.child(3).text();
                 bookInfo.setLastUpdate(lastUpdate.substring(lastUpdate.indexOf("：") + 1));
                 bookInfo.setLastNew(infoDiv.child(4).selectFirst("a").text());
 
                 Element introDiv = html.selectFirst("#intro");
-                bookInfo.setNovelDes(introDiv.child(0).text());
+                bookInfo.setNovelDes(introDiv.text());
 
                 Element fmimgDiv = html.selectFirst("#fmimg");
-                bookInfo.setBookImg(fmimgDiv.child(0).attr("src"));
+                bookInfo.setBookImg(BASE_URL + fmimgDiv.child(0).attr("src"));
                 bookInfo.setBookImgError(IMG_ONERROR);
                 bookInfo.setBookUrl(url);
                 bookInfo.setBookSourceLink(bookInfo.getBookUrl());
@@ -125,7 +132,8 @@ public class BiQuGe6NovelAnalysis {
 
                 Element listDiv = html.selectFirst("#list");
                 Elements dds = listDiv.select("dd");
-                for (Element dd : dds) {
+                for (int index = 12; index < dds.size(); index++) {
+                    Element dd = dds.get(index);
                     Element link = dd.child(0);
                     String name = link.text();
                     String href = link.attr("href");
@@ -137,9 +145,9 @@ public class BiQuGe6NovelAnalysis {
 
                 cacheService.set(Const.cache.BOOK_DETAIL + url, map, Const.cache.BOOK_DETAIL_TTL);
             }
+
             result.setSuccess(true);
             result.addAllVal(map);
-
 
         }catch (SocketTimeoutException e){
             logger.error("获取书籍详情出错",e);
@@ -172,22 +180,21 @@ public class BiQuGe6NovelAnalysis {
                 map.put("catalogName", name.child(0).text());
 
                 Element div = html.selectFirst("#content");
-                String content = div.html();
-                while (content.indexOf("\n<br>\n<br>") != -1) {
-                    content = content.replaceAll("\n<br>\n<br>", "<br>");
+                String content = div.html().replaceAll("\n", "");
+                while (content.indexOf("<br><br>") != -1) {
+                    content = content.replaceAll("<br><br>", "<br>");
                 }
-                content.replaceAll("\n<br>", "<br>");
                 map.put("content", content);
 
                 Element bottom = html.selectFirst(".bottem2");
                 Elements links = bottom.select("a");
-                String preCatalog = links.get(0).attr("href");
+                String preCatalog = links.get(1).attr("href");
                 if (preCatalog.endsWith(".html")) {
                     map.put("preCatalog", BASE_URL + preCatalog);
                 }
-                String catalogs = links.get(1).attr("href");
+                String catalogs = links.get(2).attr("href");
                 map.put("catalogs", BASE_URL + catalogs);
-                String nextCatalog = links.get(2).attr("href");
+                String nextCatalog = links.get(3).attr("href");
                 if (nextCatalog.endsWith(".html")) {
                     map.put("nextCatalog", BASE_URL + nextCatalog);
                 }
@@ -198,11 +205,11 @@ public class BiQuGe6NovelAnalysis {
             result.addAllVal(map);
 
         }catch (SocketTimeoutException e){
-            logger.error("获取书籍章节内容出错",e);
+            logger.error("获取章节内容出错",e);
             result.setSuccess(false);
             result.setMessage("《"+SOURCE_NAME+"》网络连接超时");
         } catch (Exception e) {
-            logger.error("获取书籍章节内容出错",e);
+            logger.error("获取章节内容出错",e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }

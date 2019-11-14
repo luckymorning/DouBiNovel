@@ -34,14 +34,19 @@ public class Const {
         public static final String BOOK_CATALOG_CONTENT = "book.catalog.content.";
 
         /**
-         * 根据网址保存书籍章节内容详情
+         * 根据网址保存书籍章节内容详情过期时间
          */
-        public static final int BOOK_CATALOG_CONTENT_TTL = 60 * 60 * 24;
+        public static final int BOOK_CATALOG_CONTENT_TTL = 60 * 60 * 24 * 3;
 
-    }
+        /**
+         * 根据网址保存书籍搜索结果
+         */
+        public static final String BOOK_SEARCH_RESULT = "book.search.result.";
 
-    public static class analysisSource{
-        public static final String BI_QU_GE6 = "https://www.xbiquge6.com/";
+        /**
+         * 根据网址保存书籍搜索结果过期时间
+         */
+        public static final int BOOK_SEARCH_RESULT_TTL = 60 * 60 * 24;
 
     }
 

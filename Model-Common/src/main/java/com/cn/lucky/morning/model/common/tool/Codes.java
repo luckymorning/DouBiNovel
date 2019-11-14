@@ -1,5 +1,7 @@
 package com.cn.lucky.morning.model.common.tool;
 
+import org.springframework.util.Base64Utils;
+
 import javax.crypto.Cipher;
 import javax.crypto.SecretKey;
 import javax.crypto.SecretKeyFactory;
@@ -54,7 +56,7 @@ public class Codes {
     @SuppressWarnings("restriction")
     public static String encrypt(String data, String key) throws Exception {
         byte[] bt = encrypt(data.getBytes(), key.getBytes());
-        return new sun.misc.BASE64Encoder().encode(bt);
+        return Base64Utils.encodeToString(bt);
     }
     
     /**
@@ -97,8 +99,7 @@ public class Codes {
     public static String decrypt(String data, String key) throws Exception {
         if (data == null)
             return null;
-        sun.misc.BASE64Decoder decoder = new sun.misc.BASE64Decoder();
-        byte[] buf = decoder.decodeBuffer(data);
+        byte[] buf = Base64Utils.decodeFromString(data);
         byte[] bt = decrypt(buf, key.getBytes());
         return new String(bt);
     }

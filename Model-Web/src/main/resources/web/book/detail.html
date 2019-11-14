@@ -52,9 +52,16 @@
         <a th:each="data:${catalogs}" class="layui-col-xs6 layui-col-md4" href="https://www.xbiquge6.com/84_84291/35306.html" th:href="@{/book/reader(url=${data.value})}" th:text="${data.name}">001 划重点？</a>
     </div>
 </div>
+
 <ul class="layui-fixbar">
     <li class="layui-icon layui-fixbar-top" lay-type="top" style="display: list-item;"></li>
 </ul>
+
+
+<!-- 底部 -->
+<div th:replace="public/bottom::footer">
+
+</div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 <script>
     $(".layui-fixbar-top").click(function () {

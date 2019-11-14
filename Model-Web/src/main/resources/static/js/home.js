@@ -16,3 +16,13 @@ if (theme == null || theme == undefined || theme == ''){
     theme = 'theme-0';
 }
 $('body').addClass(theme);
+
+$(document).ready(function () {
+    var height = $('.novel-footer').height() + 30;
+    var top = $('.novel-footer').offset().top;
+    var screenHeight = $(window).height();
+    var marginTop = screenHeight - height - top;
+    if (marginTop>0){
+        $('.novel-footer').css('margin-top',marginTop+'px');
+    }
+});

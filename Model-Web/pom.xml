@@ -11,7 +11,8 @@
     <groupId>Model-Web</groupId>
     <artifactId>Model-Web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <name>Model-Web</name>
+    <name>DouBiNovel</name>
+    <packaging>war</packaging>
     <description>Model-Web for Spring Boot</description>
 
     <properties>
@@ -45,6 +46,7 @@
                 </exclusion>
             </exclusions>
         </dependency>
+
         <dependency>
             <groupId>DouBiNovel-Base</groupId>
             <artifactId>Model-Common</artifactId>
@@ -55,12 +57,6 @@
         <dependency>
             <groupId>DouBiNovel-Base</groupId>
             <artifactId>Model-Service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>DouBiNovel-Base</groupId>
-            <artifactId>Model-AnalysisNovels</artifactId>
             <version>0.0.1-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

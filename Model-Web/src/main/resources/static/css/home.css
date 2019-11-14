@@ -6,6 +6,7 @@
 body{
     text-align: left;
     user-select: none;
+    position: relative;
 }
 
 .novel-header{
@@ -44,4 +45,16 @@ body{
     font-size: 30px;
     cursor: pointer;
     margin-left: 5px;
+}
+
+.novel-footer{
+    padding: 15px 0;
+    background-color: rgba(255,255,255,.4);
+    bottom: 0;
+    width: 100%;
+}
+
+.footer-item{
+    text-align: center;
+    font-size: 16px;
 }

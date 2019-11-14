@@ -12,6 +12,7 @@
 
         .book-img {
             padding: 10px;
+            max-width: 220px;
         }
 
         .book-info {
@@ -24,6 +25,7 @@
 
         img {
             z-index: 1;
+            width: 100%;
         }
 
         .book-name {
@@ -47,7 +49,7 @@
 
 <div class="layui-container">
     <div class="content">
-        <form action="./search" method="post" class=" layui-fluid">
+        <form th:action="@{/search}" action="./search" method="post" class=" layui-fluid">
             <div class="layui-row layui-col-space20">
                 <div class="layui-col-xs8 layui-col-md9">
                     <input th:value="${name}" type="text" name="name" required lay-verify="required"
@@ -94,6 +96,12 @@
         </tr>
         </tbody>
     </table>
+</div>
+
+
+<!-- 底部 -->
+<div th:replace="public/bottom::footer">
+
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
