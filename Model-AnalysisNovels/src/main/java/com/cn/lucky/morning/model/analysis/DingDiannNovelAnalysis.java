@@ -16,6 +16,8 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
 import java.net.SocketTimeoutException;
@@ -23,6 +25,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 @Component
 public class DingDiannNovelAnalysis {
@@ -47,7 +50,8 @@ public class DingDiannNovelAnalysis {
      * @param name
      * @return
      */
-    public MvcResult searchByName(String name) {
+    @Async
+    public Future<MvcResult> searchByName(String name) {
         MvcResult result = MvcResult.create();
         try {
             name = URLEncoder.encode(name, "utf8");
@@ -80,16 +84,16 @@ public class DingDiannNovelAnalysis {
                 cacheService.set(Const.cache.BOOK_SEARCH_RESULT + url, list, Const.cache.BOOK_SEARCH_RESULT_TTL);
             }
             result.addVal("list", list);
-        }catch (SocketTimeoutException e){
-            logger.error("查找书籍出错",e);
+        } catch (SocketTimeoutException e) {
+            logger.error("查找书籍出错", e);
             result.setSuccess(false);
-            result.setMessage("《"+SOURCE_NAME+"》网络连接超时");
+            result.setMessage("《" + SOURCE_NAME + "》网络连接超时");
         } catch (Exception e) {
-            logger.error("查找书籍出错",e);
+            logger.error("查找书籍出错", e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
-        return result;
+        return new AsyncResult<MvcResult>(result);
     }
 
     /**
@@ -98,7 +102,8 @@ public class DingDiannNovelAnalysis {
      * @param url
      * @return
      */
-    public MvcResult loadBookInfo(String url) {
+    @Async
+    public Future<MvcResult> loadBookInfo(String url) {
         MvcResult result = MvcResult.create();
         try {
             Map<String, Object> map = (Map<String, Object>) cacheService.get(Const.cache.BOOK_DETAIL + url);
@@ -149,16 +154,16 @@ public class DingDiannNovelAnalysis {
             result.setSuccess(true);
             result.addAllVal(map);
 
-        }catch (SocketTimeoutException e){
-            logger.error("获取书籍详情出错",e);
+        } catch (SocketTimeoutException e) {
+            logger.error("获取书籍详情出错", e);
             result.setSuccess(false);
-            result.setMessage("《"+SOURCE_NAME+"》网络连接超时");
+            result.setMessage("《" + SOURCE_NAME + "》网络连接超时");
         } catch (Exception e) {
-            logger.error("获取书籍详情出错",e);
+            logger.error("获取书籍详情出错", e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
-        return result;
+        return new AsyncResult<MvcResult>(result);
     }
 
     /**
@@ -167,7 +172,8 @@ public class DingDiannNovelAnalysis {
      * @param url
      * @return
      */
-    public MvcResult loadContent(String url) {
+    @Async
+    public Future<MvcResult> loadContent(String url) {
         MvcResult result = MvcResult.create();
         try {
 
@@ -204,15 +210,62 @@ public class DingDiannNovelAnalysis {
             result.setSuccess(true);
             result.addAllVal(map);
 
-        }catch (SocketTimeoutException e){
-            logger.error("获取章节内容出错",e);
+        } catch (SocketTimeoutException e) {
+            logger.error("获取章节内容出错", e);
             result.setSuccess(false);
-            result.setMessage("《"+SOURCE_NAME+"》网络连接超时");
+            result.setMessage("《" + SOURCE_NAME + "》网络连接超时");
         } catch (Exception e) {
-            logger.error("获取章节内容出错",e);
+            logger.error("获取章节内容出错", e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
-        return result;
+        return new AsyncResult<MvcResult>(result);
+    }
+
+    /**
+     * 预览章节内容
+     *
+     * @param url
+     * @return
+     */
+    @Async
+    public void loadNextContent(String url) {
+        try {
+
+            Map<String, Object> map = (Map<String, Object>) cacheService.get(Const.cache.BOOK_CATALOG_CONTENT + url);
+            if (map == null) {
+                map = Maps.newHashMap();
+                Response response = NetWorkUtil.get(url, headers, true);
+                Document html = Jsoup.parse(response.body().string());
+                Element name = html.selectFirst(".bookname");
+                map.put("catalogName", name.child(0).text());
+
+                Element div = html.selectFirst("#content");
+                String content = div.html().replaceAll("\n", "");
+                while (content.indexOf("<br><br>") != -1) {
+                    content = content.replaceAll("<br><br>", "<br>");
+                }
+                map.put("content", content);
+
+                Element bottom = html.selectFirst(".bottem2");
+                Elements links = bottom.select("a");
+                String preCatalog = links.get(1).attr("href");
+                if (preCatalog.endsWith(".html")) {
+                    map.put("preCatalog", BASE_URL + preCatalog);
+                }
+                String catalogs = links.get(2).attr("href");
+                map.put("catalogs", BASE_URL + catalogs);
+                String nextCatalog = links.get(3).attr("href");
+                if (nextCatalog.endsWith(".html")) {
+                    map.put("nextCatalog", BASE_URL + nextCatalog);
+                }
+                cacheService.set(Const.cache.BOOK_CATALOG_CONTENT + url, map, Const.cache.BOOK_CATALOG_CONTENT_TTL);
+            }
+
+        } catch (SocketTimeoutException e) {
+            logger.error("获取章节内容出错", e);
+        } catch (Exception e) {
+            logger.error("获取章节内容出错", e);
+        }
     }
 }

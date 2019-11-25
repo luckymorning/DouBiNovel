@@ -7,4 +7,5 @@ public interface BookAnalysisService {
     MvcResult searchByName(String name);
     MvcResult loadBookDetail(String url);
     MvcResult loadBookContent(String url);
+    void loadNextCatalogContent(String url);
 }

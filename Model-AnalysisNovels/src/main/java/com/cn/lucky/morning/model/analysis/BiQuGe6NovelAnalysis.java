@@ -16,12 +16,15 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.Future;
 
 @Component
 public class BiQuGe6NovelAnalysis {
@@ -46,7 +49,8 @@ public class BiQuGe6NovelAnalysis {
      * @param name
      * @return
      */
-    public MvcResult searchByName(String name) {
+    @Async
+    public Future<MvcResult> searchByName(String name) {
         String url = String.format(BASE_URL + "/search.php?keyword=%s", name);
         MvcResult result = MvcResult.create();
         try {
@@ -84,7 +88,7 @@ public class BiQuGe6NovelAnalysis {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
-        return result;
+        return new AsyncResult<MvcResult>(result);
     }
 
     /**
@@ -93,7 +97,8 @@ public class BiQuGe6NovelAnalysis {
      * @param url
      * @return
      */
-    public MvcResult loadBookInfo(String url) {
+    @Async
+    public Future<MvcResult> loadBookInfo(String url) {
         MvcResult result = MvcResult.create();
         try {
             Map<String, Object> map = (Map<String, Object>) cacheService.get(Const.cache.BOOK_DETAIL + url);
@@ -150,7 +155,7 @@ public class BiQuGe6NovelAnalysis {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
-        return result;
+        return new AsyncResult<MvcResult>(result);
     }
 
     /**
@@ -159,7 +164,8 @@ public class BiQuGe6NovelAnalysis {
      * @param url
      * @return
      */
-    public MvcResult loadContent(String url) {
+    @Async
+    public Future<MvcResult> loadContent(String url) {
         MvcResult result = MvcResult.create();
         try {
 
@@ -206,6 +212,56 @@ public class BiQuGe6NovelAnalysis {
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
-        return result;
+        return new AsyncResult<MvcResult>(result);
     }
+
+    /**
+     * 预加载章节内容
+     *
+     * @param url
+     * @return
+     */
+    @Async
+    public void loadNextContent(String url) {
+        try {
+            Map<String, Object> map = (Map<String, Object>) cacheService.get(Const.cache.BOOK_CATALOG_CONTENT + url);
+            if (map == null) {
+                map = Maps.newHashMap();
+                Response response = NetWorkUtil.get(url, headers, true);
+                Document html = Jsoup.parse(response.body().string());
+                Element name = html.selectFirst(".bookname");
+                map.put("catalogName", name.child(0).text());
+
+                Element div = html.selectFirst("#content");
+                String content = div.html();
+                while (content.indexOf("\n<br>\n<br>") != -1) {
+                    content = content.replaceAll("\n<br>\n<br>", "<br>");
+                }
+                content.replaceAll("\n<br>", "<br>");
+                map.put("content", content);
+
+                Element bottom = html.selectFirst(".bottem2");
+                Elements links = bottom.select("a");
+                String preCatalog = links.get(0).attr("href");
+                if (preCatalog.endsWith(".html")) {
+                    map.put("preCatalog", BASE_URL + preCatalog);
+                }
+                String catalogs = links.get(1).attr("href");
+                map.put("catalogs", BASE_URL + catalogs);
+                String nextCatalog = links.get(2).attr("href");
+                if (nextCatalog.endsWith(".html")) {
+                    map.put("nextCatalog", BASE_URL + nextCatalog);
+                }
+
+                cacheService.set(Const.cache.BOOK_CATALOG_CONTENT + url, map, Const.cache.BOOK_CATALOG_CONTENT_TTL);
+            }
+
+        }catch (SocketTimeoutException e){
+            logger.error("获取书籍章节内容出错",e);
+        } catch (Exception e) {
+            logger.error("获取书籍章节内容出错",e);
+        }
+    }
+
+
 }

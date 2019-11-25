@@ -2,18 +2,22 @@ package com.cn.lucky.morning.model.service.impl;
 
 import com.cn.lucky.morning.model.analysis.BiQuGe6NovelAnalysis;
 import com.cn.lucky.morning.model.analysis.DingDiannNovelAnalysis;
+import com.cn.lucky.morning.model.common.log.Logs;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.domain.BookInfo;
 import com.cn.lucky.morning.model.service.BookAnalysisService;
 import org.apache.commons.lang.StringUtils;
+import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.Future;
 
 @Service
 public class BookAnalysisServiceImpl implements BookAnalysisService {
+    private static final Logger logger = Logs.get();
     @Autowired
     private BiQuGe6NovelAnalysis biQuGe6NovelAnalysis;
     @Autowired
@@ -28,24 +32,33 @@ public class BookAnalysisServiceImpl implements BookAnalysisService {
             List<BookInfo> list = new ArrayList<>();
             boolean isAllError = true;
             //新笔趣阁查询书籍
-            MvcResult searchResult = biQuGe6NovelAnalysis.searchByName(name);
-            if (searchResult.isSuccess()){
-                isAllError = false;
-                list.addAll(searchResult.getVal("list"));
-            }
+            Future<MvcResult> biQuGeFuture = biQuGe6NovelAnalysis.searchByName(name);
             //顶点查询书籍
-            searchResult = dingDiannNovelAnalysis.searchByName(name);
-            if (searchResult.isSuccess()){
-                isAllError = false;
-                list.addAll(searchResult.getVal("list"));
-            }
-            if (isAllError){
-                result.setSuccess(false);
-                result.setMessage(searchResult.getMessage());
-            }else {
-                if (list.size()>0){
-                    result.addVal("list",list);
+            Future<MvcResult> dingDianFuture = dingDiannNovelAnalysis.searchByName(name);
+
+            try {
+                MvcResult biQuGeResult = biQuGeFuture.get();
+                if (biQuGeResult.isSuccess()){
+                    isAllError = false;
+                    list.addAll(biQuGeResult.getVal("list"));
                 }
+                MvcResult dingDianResult = dingDianFuture.get();
+                if (dingDianResult.isSuccess()){
+                    isAllError = false;
+                    list.addAll(dingDianResult.getVal("list"));
+                }
+                if (isAllError){
+                    result.setSuccess(false);
+                    result.setMessage(dingDianResult.getMessage());
+                }else {
+                    if (list.size()>0){
+                        result.addVal("list",list);
+                    }
+                }
+            }catch (Exception e){
+                result.setSuccess(false);
+                result.setMessage("查询出错："+e.getMessage());
+                logger.error("查询书籍【"+name+"】出错",e);
             }
         }
         return result;
@@ -58,13 +71,22 @@ public class BookAnalysisServiceImpl implements BookAnalysisService {
             result.setSuccess(false);
             result.setMessage("解析地址不能为空");
         }else {
-            if (url.contains(biQuGe6NovelAnalysis.BASE_URL)){
-                result = biQuGe6NovelAnalysis.loadBookInfo(url);
-            }else if (url.contains(dingDiannNovelAnalysis.BASE_URL)){
-                result = dingDiannNovelAnalysis.loadBookInfo(url);
-            }else {
+            try {
+                Future<MvcResult> future;
+                if (url.contains(biQuGe6NovelAnalysis.BASE_URL)){
+                    future = biQuGe6NovelAnalysis.loadBookInfo(url);
+                    result = future.get();
+                }else if (url.contains(dingDiannNovelAnalysis.BASE_URL)){
+                    future = dingDiannNovelAnalysis.loadBookInfo(url);
+                    result = future.get();
+                }else {
+                    result.setSuccess(false);
+                    result.setMessage("未知解析源，请直接访问 【"+url+"】");
+                }
+            }catch (Exception e){
                 result.setSuccess(false);
-                result.setMessage("未知解析源");
+                result.setMessage("解析书籍详情出错（"+e.getMessage()+"），请刷新重试，或直接访问【"+url+"】");
+                logger.error("解析书籍详情【"+url+"】出错",e);
             }
         }
         return result;
@@ -77,15 +99,45 @@ public class BookAnalysisServiceImpl implements BookAnalysisService {
             result.setSuccess(false);
             result.setMessage("解析地址不能为空");
         }else {
-            if (url.contains(biQuGe6NovelAnalysis.BASE_URL)){
-                result = biQuGe6NovelAnalysis.loadContent(url);
-            }else if (url.contains(dingDiannNovelAnalysis.BASE_URL)){
-                result = dingDiannNovelAnalysis.loadContent(url);
-            }else {
+            try {
+                Future<MvcResult> future;
+                if (url.contains(biQuGe6NovelAnalysis.BASE_URL)){
+                    future = biQuGe6NovelAnalysis.loadContent(url);
+                    result = future.get();
+                }else if (url.contains(dingDiannNovelAnalysis.BASE_URL)){
+                    future = dingDiannNovelAnalysis.loadContent(url);
+                    result = future.get();
+                }else {
+                    result.setSuccess(false);
+                    result.setMessage("未知解析源");
+                }
+            }catch (Exception e){
                 result.setSuccess(false);
-                result.setMessage("未知解析源");
+                result.setMessage("解析章节内容出错（"+e.getMessage()+"），请刷新重试，或直接访问【"+url+"】");
+                logger.error("解析章节内容【"+url+"】出错",e);
             }
+        }
+        if (result.isSuccess()){
+            loadNextCatalogContent(result.getVal("nextCatalog"));
         }
         return result;
     }
+
+    @Override
+    public void loadNextCatalogContent(String url) {
+        if (!StringUtils.isEmpty(url)){
+            try {
+                Future<MvcResult> future;
+                if (url.contains(biQuGe6NovelAnalysis.BASE_URL)){
+                    biQuGe6NovelAnalysis.loadNextContent(url);
+                }else if (url.contains(dingDiannNovelAnalysis.BASE_URL)){
+                    dingDiannNovelAnalysis.loadNextContent(url);
+                }
+            }catch (Exception e){
+                logger.error("解析预览章节内容【"+url+"】出错",e);
+            }
+        }
+    }
+
+
 }
