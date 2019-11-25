@@ -7,7 +7,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-@RequestMapping("/user")
+@RequestMapping("/admin/user")
 public class UserController {
     @Autowired
     private UserService userService;
@@ -16,6 +16,13 @@ public class UserController {
     @RequiresPermissions("USER_VIEW")
     public String list(){
 
-        return "admin/user/list";
+        return "admin/index";
+    }
+
+    @RequestMapping("/doAdd")
+    @RequiresPermissions("USER_ADD")
+    public String doAdd(){
+
+        return "admin/user/add";
     }
 }

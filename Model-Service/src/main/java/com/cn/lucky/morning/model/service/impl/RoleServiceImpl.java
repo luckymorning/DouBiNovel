@@ -31,10 +31,6 @@ public class RoleServiceImpl implements RoleService {
 
         RoleExample exp = new RoleExample();
         RoleExample.Criteria criteria = exp.createCriteria();
-        if (query.isNotEmpty("customerId")) {
-            criteria.andBelongCustomeEqualTo(query.getLong("customerId"));
-        }
-
 
         Date[] ds = DateTool.getDateCondition(query);
         Date start = ds[0];

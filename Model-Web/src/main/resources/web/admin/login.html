@@ -44,9 +44,9 @@
     <div class="message">智慧云平台后台管理 V1.0-登录</div>
     <div id="darkbannerwrap"></div>
     <form method="post" class="layui-form">
-        <input name="username" placeholder="用户名" type="text" lay-verify="required" class="layui-input">
+        <input name="username" placeholder="用户名" type="text" lay-verify="required" th:value="${username}" class="layui-input">
         <hr class="hr15">
-        <input name="password" lay-verify="required" placeholder="密码" type="password" class="layui-input">
+        <input name="password" lay-verify="required" placeholder="密码" type="password" th:value="${password}" class="layui-input">
 <!--        <hr class="hr15">-->
 <!--        <div class="verificationCode">-->
 <!--            <span>验证码：</span>-->

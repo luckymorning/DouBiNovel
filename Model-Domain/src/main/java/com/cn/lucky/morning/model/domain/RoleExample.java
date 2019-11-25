@@ -321,66 +321,6 @@ public class RoleExample {
             return (Criteria) this;
         }
 
-        public Criteria andBelongCustomeIsNull() {
-            addCriterion("belong_custome is null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeIsNotNull() {
-            addCriterion("belong_custome is not null");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeEqualTo(Long value) {
-            addCriterion("belong_custome =", value, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeNotEqualTo(Long value) {
-            addCriterion("belong_custome <>", value, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeGreaterThan(Long value) {
-            addCriterion("belong_custome >", value, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeGreaterThanOrEqualTo(Long value) {
-            addCriterion("belong_custome >=", value, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeLessThan(Long value) {
-            addCriterion("belong_custome <", value, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeLessThanOrEqualTo(Long value) {
-            addCriterion("belong_custome <=", value, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeIn(List<Long> values) {
-            addCriterion("belong_custome in", values, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeNotIn(List<Long> values) {
-            addCriterion("belong_custome not in", values, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeBetween(Long value1, Long value2) {
-            addCriterion("belong_custome between", value1, value2, "belongCustome");
-            return (Criteria) this;
-        }
-
-        public Criteria andBelongCustomeNotBetween(Long value1, Long value2) {
-            addCriterion("belong_custome not between", value1, value2, "belongCustome");
-            return (Criteria) this;
-        }
-
         public Criteria andNameIsNull() {
             addCriterion("name is null");
             return (Criteria) this;
