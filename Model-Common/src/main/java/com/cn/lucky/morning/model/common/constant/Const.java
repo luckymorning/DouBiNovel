@@ -8,7 +8,34 @@ public class Const {
 
     }
 
+    public static class role {
+
+        public static final int IS_SUPER = 1;
+
+        public static final int NOT_SUPER = 0;
+
+    }
+
     public static class cache {
+        /**
+         * 根据ID保存用户
+         */
+        public static final String USER_ID = "user.id.";
+
+        /**
+         * 根据ID保存权限
+         */
+        public static final String AUTHORITY_ID = "authority.id.";
+
+        /**
+         * 根据ID保存角色过期权限
+         */
+        public static final int AUTHORITY_ID_TTL = 60 * 60 * 24;
+
+        /**
+         * 根据ID保存用户过期时间
+         */
+        public static final int USER_ID_TTL = 60 * 60 * 24;
         /**
          * 根据ID保存角色
          */

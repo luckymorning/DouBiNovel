@@ -22,6 +22,6 @@ public class SearchController {
         }
         model.addAttribute("list",result.getVal("list"));
         model.addAttribute("name",name);
-        return "search/list";
+        return "front/search/list";
     }
 }

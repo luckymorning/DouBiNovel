@@ -27,13 +27,13 @@
             margin-bottom: 60px;
         }
     </style>
-    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
-    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../static/css/custom_theme.css">
-    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../static/lib/layui/css/layui.css">
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
 </head>
 <body class="theme-0">
-<script th:src="@{/js/home.js}" src="../static/js/home.js"></script>
+<script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
 
 <!-- 导航栏 -->
 <div th:replace="public/top::header">
@@ -101,6 +101,6 @@
 <div th:replace="public/bottom::footer" style="position: fixed">
 
 </div>
-<script th:src="@{/lib/layui/layui.all.js}" src="../static/lib/layui/layui.all.js"></script>
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
 </body>
 </html>

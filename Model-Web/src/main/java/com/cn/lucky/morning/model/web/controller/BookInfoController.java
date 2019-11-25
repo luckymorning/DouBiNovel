@@ -24,7 +24,7 @@ public class BookInfoController {
             return "public/error";
         }
         model.addAllAttributes(result.getValues());
-        return "book/detail";
+        return "front/book/detail";
     }
 
     @RequestMapping("/reader")
@@ -35,6 +35,6 @@ public class BookInfoController {
             return "public/error";
         }
         model.addAllAttributes(result.getValues());
-        return "book/reader";
+        return "front/book/reader";
     }
 }

@@ -18,6 +18,30 @@
 
         <javaClientGenerator targetPackage="com.cn.lucky.morning.model.dao" targetProject="/media/plant/_dde_data/customer/codes/java/DouBiNovel/Model-Dao/src/main/java" type="XMLMAPPER" />
 
+        <table domainObjectName="Authority" tableName="m_authority">
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
+            <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+            <columnOverride column="updated" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+        </table>
+
+        <table domainObjectName="AuthorityGroup" tableName="m_authority_group">
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
+            <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+            <columnOverride column="updated" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+        </table>
+
+        <table domainObjectName="Role" tableName="m_role">
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
+            <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+            <columnOverride column="updated" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+        </table>
+
+        <table domainObjectName="User" tableName="m_user">
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
+            <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+            <columnOverride column="updated" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+        </table>
+
         <table domainObjectName="BookInfo" tableName="m_book_info">
             <generatedKey column="id" sqlStatement="MySql" />
         </table>

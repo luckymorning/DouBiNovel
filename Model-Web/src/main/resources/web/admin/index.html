@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <title>逗逼阅读-后台管理</title>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+</head>
+<body class="theme-0">
+<script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
+
+<!-- 导航栏 -->
+<div th:replace="public/top::header">
+
+</div>
+
+<div class="layui-container">
+
+    <center>
+        <h1 style="margin-top: 150px;">后台管理主页</h1>
+    </center>
+
+</div>
+
+<!-- 底部 -->
+<div th:replace="public/bottom::footer" style="position: fixed">
+
+</div>
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
+</body>
+</html>
