@@ -3,7 +3,9 @@ var theme = localStorage.getItem('theme');
 if (theme == null || theme == undefined || theme == ''){
     theme = 'theme-0';
 }
-$('body').addClass(theme);
+if (!$('body').hasClass(theme)){
+    $('body').addClass(theme);
+}
 
 //加载字体大小
 var fontSize = localStorage.getItem("fontSize");
@@ -116,7 +118,9 @@ function bindingThemeBtn() {
             $('body').removeClass('theme-2');
             $('body').removeClass('theme-3');
             $('body').removeClass('theme-4');
-            $('body').addClass('theme-0');
+            if (! $('body').hasClass('theme-0')){
+                $('body').addClass('theme-0');
+            }
             localStorage.setItem('theme','theme-0')
         }
     });
@@ -128,7 +132,9 @@ function bindingThemeBtn() {
             $('body').removeClass('theme-2');
             $('body').removeClass('theme-3');
             $('body').removeClass('theme-4');
-            $('body').addClass('theme-1');
+            if (! $('body').hasClass('theme-1')){
+                $('body').addClass('theme-1');
+            }
             localStorage.setItem('theme','theme-1')
         }
     });
@@ -140,7 +146,9 @@ function bindingThemeBtn() {
             $('body').removeClass('theme-1');
             $('body').removeClass('theme-3');
             $('body').removeClass('theme-4');
-            $('body').addClass('theme-2');
+            if (! $('body').hasClass('theme-2')){
+                $('body').addClass('theme-2');
+            }
             localStorage.setItem('theme','theme-2')
         }
     });
@@ -152,7 +160,9 @@ function bindingThemeBtn() {
             $('body').removeClass('theme-1');
             $('body').removeClass('theme-2');
             $('body').removeClass('theme-4');
-            $('body').addClass('theme-3');
+            if (! $('body').hasClass('theme-3')){
+                $('body').addClass('theme-3');
+            }
             localStorage.setItem('theme','theme-3')
         }
     });
@@ -164,7 +174,9 @@ function bindingThemeBtn() {
             $('body').removeClass('theme-1');
             $('body').removeClass('theme-2');
             $('body').removeClass('theme-3');
-            $('body').addClass('theme-4');
+            if (! $('body').hasClass('theme-4')){
+                $('body').addClass('theme-4');
+            }
             localStorage.setItem('theme','theme-4')
         }
     });

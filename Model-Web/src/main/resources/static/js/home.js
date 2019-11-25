@@ -15,7 +15,9 @@ var theme = localStorage.getItem('theme');
 if (theme == null || theme == undefined || theme == ''){
     theme = 'theme-0';
 }
-$('body').addClass(theme);
+if (!$('body').hasClass(theme)){
+    $('body').addClass(theme);
+}
 
 $(document).ready(function () {
     var height = $('.novel-footer').height() + 30;
