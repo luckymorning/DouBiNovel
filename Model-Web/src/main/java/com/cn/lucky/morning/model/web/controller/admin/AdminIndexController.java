@@ -13,9 +13,14 @@ import java.util.Map;
 @RequestMapping("/admin")
 public class AdminIndexController {
 
-    @RequestMapping({"/","/index"})
+    @RequestMapping(value = {"","/","/index"})
     public String index(){
         return "admin/index";
+    }
+
+    @RequestMapping("/welcome")
+    public String welcome(){
+        return "admin/welcome";
     }
 
     @RequestMapping("/login")
@@ -43,8 +48,6 @@ public class AdminIndexController {
             }
         }
         map.put("msg", msg);
-        map.put("username",request.getAttribute("username"));
-        map.put("password",request.getAttribute("password"));
         // 此方法不处理登录成功,由shiro进行处理
         return "admin/login";
     }
