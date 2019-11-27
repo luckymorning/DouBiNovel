@@ -5,6 +5,7 @@ import com.cn.lucky.morning.model.analysis.BiQuGe6NovelAnalysis;
 import com.cn.lucky.morning.model.analysis.DingDiannNovelAnalysis;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.service.BookAnalysisService;
+import com.cn.lucky.morning.model.web.tools.CodeUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -26,6 +27,14 @@ class ModelWebApplicationTests {
 
     @Autowired
     private TestAsynTask testAsynTask;
+
+    @Test
+    void md5Password(){
+        String password = "123321abc";
+        String username = "admin";
+        password = CodeUtils.MD5Pwd(username,password);
+        System.out.println("加密后密码："+password);
+    }
 
     @Test
     void testAsync() throws ExecutionException, InterruptedException {

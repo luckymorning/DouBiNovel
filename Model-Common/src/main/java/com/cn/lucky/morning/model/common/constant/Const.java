@@ -6,6 +6,8 @@ public class Const {
 
         public static final String LOGIN_ADMIN = "login_admin";
 
+        public static final String VERIFICATION_CODE = "verificationCode";
+
     }
 
     public static class role {
