@@ -1,5 +1,6 @@
 package com.cn.lucky.morning.model.common.mvc;
 
+import com.alibaba.fastjson.JSON;
 import com.google.common.collect.Maps;
 import org.apache.commons.collections.MapUtils;
 
@@ -122,4 +123,8 @@ public class MvcResult {
         return values;
     }
 
+    @Override
+    public String toString() {
+        return JSON.toJSONString(this);
+    }
 }

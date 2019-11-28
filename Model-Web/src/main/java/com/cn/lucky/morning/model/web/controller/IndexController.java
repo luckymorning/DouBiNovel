@@ -10,16 +10,4 @@ public class IndexController {
     public String index(){
         return "front/index";
     }
-
-    @RequestMapping("/403")
-    public String error403(Model model){
-        model.addAttribute("msg","无权限");
-        return "public/error";
-    }
-
-    @RequestMapping("/404")
-    public String error404(Model model){
-        model.addAttribute("msg","很抱歉，你访问的页面找不到了");
-        return "public/error";
-    }
 }

@@ -1,5 +1,6 @@
 package com.cn.lucky.morning.model.web.shiro;
 
+import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.domain.Authority;
 import com.cn.lucky.morning.model.domain.Role;
 import com.cn.lucky.morning.model.domain.User;
@@ -21,6 +22,7 @@ import org.springframework.util.StringUtils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Component
 public class MyShiroRealm extends AuthorizingRealm {
@@ -40,6 +42,9 @@ public class MyShiroRealm extends AuthorizingRealm {
             return null;
         }
         authorizationInfo.addRole(role.getId().toString());
+        if (Objects.equals(Const.role.IS_SUPER,role.getIsSuper())){
+            authorizationInfo.addStringPermission(Const.role.ROLE_SUPER);
+        }
         if (!StringUtils.isEmpty(role.getAuthority())){
             String [] authorityStrs = role.getAuthority().split(",");
             List<Long> ids = new ArrayList<>();

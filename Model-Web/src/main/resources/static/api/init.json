@@ -38,15 +38,43 @@
           ]
         },
         {
+          "title": "系统设置",
+          "href": "",
+          "icon": "fa fa-gears",
+          "target": "_self",
+          "child": [
+            {
+              "title": "角色权限",
+              "href": "",
+              "icon": "fa fa-barcode",
+              "target": "_self",
+              "child":[
+                {
+                  "title": "权限组管理",
+                  "href": "/admin/authorityGroup/list",
+                  "icon": "fa fa-gears",
+                  "target": "_self"
+                },
+                {
+                  "title": "权限管理",
+                  "href": "/admin/authority/list",
+                  "icon": "fa fa-gears",
+                  "target": "_self"
+                },
+                {
+                  "title": "角色管理",
+                  "href": "/admin/role/list",
+                  "icon": "fa fa-gears",
+                  "target": "_self"
+                }
+              ]
+            }
+          ]
+        },
+        {
           "title": "菜单管理",
           "href": "page/menu.html",
           "icon": "fa fa-window-maximize",
-          "target": "_self"
-        },
-        {
-          "title": "系统设置",
-          "href": "page/setting.html",
-          "icon": "fa fa-gears",
           "target": "_self"
         },
         {

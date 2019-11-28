@@ -207,10 +207,7 @@
                         if (message == null || message == '' || message == undefined){
                             message = '登录成功';
                         }
-                        layer.close(index);
-                        layer.alert(message, function () {
-                            window.location = '/admin/index';
-                        });
+                        window.location = '/admin/index';
                         return;
                     }
                     changeImg();

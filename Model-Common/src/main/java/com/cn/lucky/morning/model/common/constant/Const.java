@@ -16,13 +16,21 @@ public class Const {
 
         public static final int NOT_SUPER = 0;
 
+        public static final String ROLE_SUPER = "role.super";
+
     }
 
     public static class cache {
+
         /**
-         * 根据ID保存用户
+         * 根据ID保存权限组
          */
-        public static final String USER_ID = "user.id.";
+        public static final String AUTHORITY_GROUP_ID = "authorityGroup.id.";
+
+        /**
+         * 根据ID保存权限组过期权限
+         */
+        public static final int AUTHORITY_ID_GROUP_TTL = 60 * 60 * 24;
 
         /**
          * 根据ID保存权限
@@ -30,9 +38,13 @@ public class Const {
         public static final String AUTHORITY_ID = "authority.id.";
 
         /**
-         * 根据ID保存角色过期权限
+         * 根据ID保存权限过期权限
          */
         public static final int AUTHORITY_ID_TTL = 60 * 60 * 24;
+        /**
+         * 根据ID保存用户
+         */
+        public static final String USER_ID = "user.id.";
 
         /**
          * 根据ID保存用户过期时间

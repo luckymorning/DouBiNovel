@@ -68,7 +68,7 @@ public class UserServiceImpl implements UserService {
         User user = (User)cacheService.get(Const.cache.USER_ID + id);
         if (user == null) {
             user = userMapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.USER_ID + id, user, Const.cache.ROLE_ID_TTL);
+            cacheService.set(Const.cache.USER_ID + id, user, Const.cache.USER_ID_TTL);
         }
         return user;
     }

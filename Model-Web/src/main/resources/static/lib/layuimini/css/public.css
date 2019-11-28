@@ -7,3 +7,7 @@ body {margin:15px 15px 15px 15px;background:#f2f2f2;}
 .layuimini-form>.layui-form-item>.layui-form-label {width:120px !important;}
 .layuimini-form>.layui-form-item>.layui-input-block {margin-left:150px !important;}
 .layuimini-form>.layui-form-item>.layui-input-block >tip {display:inline-block;margin-top:10px;line-height:10px;font-size:10px;color:#a29c9c;}
+
+.we-red{
+    color: red;
+}

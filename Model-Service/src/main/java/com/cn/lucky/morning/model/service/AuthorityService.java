@@ -28,4 +28,6 @@ public interface AuthorityService {
     Authority getById(Long id);
 
     boolean getByCode(String code);
+
+    boolean deleteByAuthorityGroupId(Long authorityGroupId);
 }

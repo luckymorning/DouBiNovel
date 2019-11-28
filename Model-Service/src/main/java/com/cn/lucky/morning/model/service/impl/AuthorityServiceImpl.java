@@ -142,4 +142,11 @@ public class AuthorityServiceImpl implements AuthorityService {
         } else return false;
     }
 
+    @Override
+    public boolean deleteByAuthorityGroupId(Long authorityGroupId) {
+        AuthorityExample example = new AuthorityExample();
+        example.createCriteria().andGroupIdEqualTo(authorityGroupId);
+        return authorityMapper.deleteByExample(example)>0;
+    }
+
 }
