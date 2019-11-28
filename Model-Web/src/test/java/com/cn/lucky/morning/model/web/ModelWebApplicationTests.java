@@ -12,6 +12,8 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @SpringBootTest
 class ModelWebApplicationTests {
@@ -27,6 +29,15 @@ class ModelWebApplicationTests {
 
     @Autowired
     private TestAsynTask testAsynTask;
+
+    @Test
+    void regexMatchesTest(){
+        String str = "&sdas;哈哈哈哈&123;嘿嘿额&asda123;";
+        String pattern = "[&]\\d*\\w*[;]";
+
+        System.out.println("替换前："+str);
+        System.out.println("替换后："+str.replaceAll(pattern,""));
+    }
 
     @Test
     void md5Password(){

@@ -182,7 +182,7 @@ public class BiQuGe6NovelAnalysis {
                 while (content.indexOf("\n<br>\n<br>") != -1) {
                     content = content.replaceAll("\n<br>\n<br>", "<br>");
                 }
-                content.replaceAll("\n<br>", "<br>");
+                content = content.replaceAll("\n<br>", "<br>").replaceAll("[&]\\d*\\w*[;]","");
                 map.put("content", content);
 
                 Element bottom = html.selectFirst(".bottem2");
@@ -237,7 +237,7 @@ public class BiQuGe6NovelAnalysis {
                 while (content.indexOf("\n<br>\n<br>") != -1) {
                     content = content.replaceAll("\n<br>\n<br>", "<br>");
                 }
-                content.replaceAll("\n<br>", "<br>");
+                content = content.replaceAll("\n<br>", "<br>").replaceAll("[&]\\d*\\w*[;]","");
                 map.put("content", content);
 
                 Element bottom = html.selectFirst(".bottem2");
