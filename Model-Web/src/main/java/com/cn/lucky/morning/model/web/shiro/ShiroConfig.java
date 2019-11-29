@@ -27,7 +27,6 @@ public class ShiroConfig {
         //拦截器.
         Map<String, String> filterChainDefinitionMap = new LinkedHashMap<String, String>();
         // 配置不会被拦截的链接 顺序判断
-        filterChainDefinitionMap.put("/static/**", "anon");
         filterChainDefinitionMap.put("/admin/verificationCode", "anon");
         filterChainDefinitionMap.put("/admin/doLogin", "anon");
         //配置退出 过滤器,其中的具体的退出代码Shiro已经替我们实现了, 主要属性：redirectUrl：退出成功后重定向的地址（/）
@@ -36,6 +35,8 @@ public class ShiroConfig {
         //<!-- 过滤链定义，从上向下顺序执行，一般将/**放在最为下边 -->:这是一个坑呢，一不小心代码就不好使了;
         //<!-- authc:所有url都必须认证通过才可以访问; anon:所有url都都可以匿名访问-->
         filterChainDefinitionMap.put("/admin/**", "authc");
+
+        filterChainDefinitionMap.put("/**", "anon");
 
         // 如果不设置默认会自动寻找Web工程根目录下的"/login.jsp"页面
         shiroFilterFactoryBean.setLoginUrl("/admin/login");

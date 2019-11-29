@@ -3,15 +3,15 @@
 
  Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 50721
+ Source Server Version : 100137
  Source Host           : localhost:3306
  Source Schema         : novel
 
  Target Server Type    : MySQL
- Target Server Version : 50721
+ Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 25/11/2019 21:24:37
+ Date: 29/11/2019 16:36:52
 */
 
 SET NAMES utf8mb4;
@@ -49,12 +49,13 @@ CREATE TABLE `m_authority_group`  (
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1001 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1008 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_authority_group
 -- ----------------------------
 INSERT INTO `m_authority_group` VALUES (1000, '用户管理', '2019-11-25 20:22:00', '2019-11-25 20:22:00', '用户管理权限组');
+INSERT INTO `m_authority_group` VALUES (1001, '修改修改1', '2019-11-28 11:47:18', '2019-11-28 11:53:22', '11111111');
 
 -- ----------------------------
 -- Table structure for m_book_info
@@ -107,7 +108,7 @@ CREATE TABLE `m_update_log`  (
   `created` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1000 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Table structure for m_user
@@ -135,6 +136,6 @@ CREATE TABLE `m_user`  (
 -- ----------------------------
 -- Records of m_user
 -- ----------------------------
-INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', '123321abc', '超级管理员', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1000, '2019-11-25 19:51:44', '2019-11-25 19:58:22');
+INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', 'a3283151138b3877deedbb8f5693880b', '超级管理员', NULL, NULL, NULL, NULL, NULL, NULL, 1, 1000, '2019-11-25 19:51:44', '2019-11-27 14:58:46');
 
 SET FOREIGN_KEY_CHECKS = 1;

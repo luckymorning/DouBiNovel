@@ -27,16 +27,18 @@ class ModelWebApplicationTests {
     @Autowired
     private BookAnalysisService bookAnalysisService;
 
-    @Autowired
-    private TestAsynTask testAsynTask;
-
     @Test
-    void regexMatchesTest(){
-        String str = "&sdas;哈哈哈哈&123;嘿嘿额&asda123;";
+    void regexMatchesTest() throws ExecutionException, InterruptedException {
+        String str = biQuGe6NovelAnalysis.loadContent("https://www.xbiquge6.com/79_79471/359171.html").get().getVal("content");
         String pattern = "[&]\\d*\\w*[;]";
-
-        System.out.println("替换前："+str);
-        System.out.println("替换后："+str.replaceAll(pattern,""));
+//
+//        System.out.println("替换前                    ："+str);
+//        str = str.replaceAll("&nbsp;","##");
+//        System.out.println("替换&nbsp;为##后："+str);
+//        str = str.replaceAll( "[&]\\d*\\w*[;]*\\d*\\w*[;]","");
+//        System.out.println("替换后                    ："+str);
+//        str = str.replaceAll("##","&nbsp;");
+//        System.out.println("还原##为&nbsp;后："+str);
     }
 
     @Test
@@ -45,16 +47,6 @@ class ModelWebApplicationTests {
         String username = "admin";
         password = CodeUtils.MD5Pwd(username,password);
         System.out.println("加密后密码："+password);
-    }
-
-    @Test
-    void testAsync() throws ExecutionException, InterruptedException {
-        long time = System.currentTimeMillis();
-        Future<String> future1 = testAsynTask.test("future1:sleep()",5000L);
-        Future<String> future2 = testAsynTask.test("future2:sleep()",5000L);
-        System.out.println("future1:"+future1.get());
-        System.out.println("future2:"+future2.get());
-        System.out.println("耗时："+(System.currentTimeMillis() - time));
     }
 
     @Test

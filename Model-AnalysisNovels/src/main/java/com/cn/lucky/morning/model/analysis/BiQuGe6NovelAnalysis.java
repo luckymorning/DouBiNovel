@@ -32,6 +32,7 @@ public class BiQuGe6NovelAnalysis {
     public static final String BASE_URL = "https://www.xbiquge6.com";
     private static final String SOURCE_NAME = "新笔趣阁";
     private static final String IMG_ONERROR = "$(this).attr('src', '/imgs/nocover.jpg')";
+    private static final String REGEX = "[&]\\d*\\w*[;]*\\d*\\w*[;]";
     private Headers headers;
 
     @Autowired
@@ -182,7 +183,13 @@ public class BiQuGe6NovelAnalysis {
                 while (content.indexOf("\n<br>\n<br>") != -1) {
                     content = content.replaceAll("\n<br>\n<br>", "<br>");
                 }
-                content = content.replaceAll("\n<br>", "<br>").replaceAll("[&]\\d*\\w*[;]","");
+                content = content.replaceAll("\n<br>", "<br>");
+
+
+                content = content.replaceAll("&nbsp;","##");
+                content = content.replaceAll( REGEX,"");
+                content = content.replaceAll("##","&nbsp;");
+
                 map.put("content", content);
 
                 Element bottom = html.selectFirst(".bottem2");
@@ -237,7 +244,12 @@ public class BiQuGe6NovelAnalysis {
                 while (content.indexOf("\n<br>\n<br>") != -1) {
                     content = content.replaceAll("\n<br>\n<br>", "<br>");
                 }
-                content = content.replaceAll("\n<br>", "<br>").replaceAll("[&]\\d*\\w*[;]","");
+                content = content.replaceAll("\n<br>", "<br>");
+
+                content = content.replaceAll("&nbsp;","##");
+                content = content.replaceAll( REGEX,"");
+                content = content.replaceAll("##","&nbsp;");
+
                 map.put("content", content);
 
                 Element bottom = html.selectFirst(".bottem2");
