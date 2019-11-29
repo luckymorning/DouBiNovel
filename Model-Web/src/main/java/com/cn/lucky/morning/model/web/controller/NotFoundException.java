@@ -44,7 +44,7 @@ public class NotFoundException implements ErrorController {
                     response.sendRedirect("/404");
                 }else {
                     MvcResult result = MvcResult.createFail(404,"路径不存在");
-                    response.getOutputStream().write(result.toString().getBytes());
+                    response.getOutputStream().write(result.toString().getBytes("utf8"));
                 }
                 break;
             default:
@@ -52,7 +52,7 @@ public class NotFoundException implements ErrorController {
                     response.sendRedirect("/msgError?msg="+ URLEncoder.encode("未知异常","utf8"));
                 }else {
                     MvcResult result = MvcResult.createFail(2,"未知异常");
-                    response.getOutputStream().write(result.toString().getBytes());
+                    response.getOutputStream().write(result.toString().getBytes("utf8"));
                 }
                 break;
         }

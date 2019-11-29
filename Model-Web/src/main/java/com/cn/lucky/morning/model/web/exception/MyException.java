@@ -18,14 +18,14 @@ public class MyException {
                 resp.sendRedirect("/403");
             }else {
                 MvcResult result = MvcResult.createFail(403,"无访问权限");
-                resp.getOutputStream().write(result.toString().getBytes());
+                resp.getOutputStream().write(result.toString().getBytes("utf8"));
             }
         }else {
             if (accept.contains("text/html")){
                 resp.sendRedirect("/error");
             }else {
                 MvcResult result = MvcResult.createFail(403,"无访问权限");
-                resp.getOutputStream().write(result.toString().getBytes());
+                resp.getOutputStream().write(result.toString().getBytes("utf8"));
             }
         }
     }
