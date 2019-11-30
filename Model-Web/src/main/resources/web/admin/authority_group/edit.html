@@ -67,11 +67,10 @@
                             message = '修改成功';
                         }
                         layer.close(index);
-                        layer.msg(message, function () {
-                            var index = parent.layer.getFrameIndex(window.name);
-                            parent.layer.close(index);
-                            parent.reloadTable();
-                        });
+
+                        index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.reloadTable();
                         return;
                     }
                     if (message == null || message == '' || message == undefined) {

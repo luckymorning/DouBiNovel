@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>逗逼阅读 - 权限组添加</title>
+    <title>逗逼阅读 - 权限添加</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -27,10 +27,31 @@
 
             <div class="layui-form-item">
                 <label class="layui-form-label">
+                    <span class="we-red">*</span>权限code:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="code" required lay-verify="required" placeholder="请输入权限code"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
                     描述:
                 </label>
                 <div class="layui-input-block">
                     <textarea placeholder="请输入描述" name="description" class="layui-textarea"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>所属权限组
+                </label>
+                <div class="layui-input-block">
+                    <select name="groupId" lay-verify="required" lay-search="">
+                        <option th:each="groupMap:${groups}" th:value="${groupMap.id}" th:text="${groupMap.name}" value="">直接选择或搜索选择</option>
+                    </select>
                 </div>
             </div>
 

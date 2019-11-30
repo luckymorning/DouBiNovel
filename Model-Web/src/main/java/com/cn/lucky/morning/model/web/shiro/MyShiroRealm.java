@@ -47,13 +47,11 @@ public class MyShiroRealm extends AuthorizingRealm {
         }
         if (!StringUtils.isEmpty(role.getAuthority())){
             String [] authorityStrs = role.getAuthority().split(",");
-            List<Long> ids = new ArrayList<>();
-            for (String authority : authorityStrs){
-                ids.add(Long.valueOf(authority));
-            }
-            List<Authority> authorities = authorityService.getByIds(ids);
-            for(Authority authority:authorities){
-                authorizationInfo.addStringPermission(authority.getCode());
+            for (String id : authorityStrs){
+                Authority authority = authorityService.getById(Long.valueOf(id));
+                if (authority!=null){
+                    authorizationInfo.addStringPermission(authority.getCode());
+                }
             }
         }
         return authorizationInfo;

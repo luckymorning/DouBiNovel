@@ -6,7 +6,6 @@ import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.domain.AuthorityGroup;
 import com.cn.lucky.morning.model.service.AuthorityGroupService;
-import com.google.common.collect.Maps;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import java.util.Arrays;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/authorityGroup")
@@ -25,7 +23,7 @@ public class AuthorityGroupController {
     private AuthorityGroupService authorityGroupService;
 
     @RequestMapping("/list")
-//    @RequiresPermissions(value = {"AUTHORITY_GROUP_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"AUTHORITY_GROUP_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String list() {
         return "admin/authority_group/list";
     }

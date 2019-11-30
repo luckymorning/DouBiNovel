@@ -31,7 +31,7 @@ public class NotFoundException implements ErrorController {
     @RequestMapping(value = {"/msgError"})
     public String msgError(String msg, Model model){
         model.addAttribute("msg",msg);
-        return "error";
+        return "public/error";
     }
 
     @RequestMapping(value = {"/error"})
