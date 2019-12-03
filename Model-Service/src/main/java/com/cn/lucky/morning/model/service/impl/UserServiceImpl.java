@@ -49,8 +49,8 @@ public class UserServiceImpl implements UserService {
         exp.setPage(query.getCurrent(), query.getSize());
 
         PageTemplate<User> page = PageTemplate.create(exp, userMapper, query);
-        if (page.getList()!=null && page.getList().size()>0){
-            for (User user : page.getList()){
+        if (page.getList() != null && page.getList().size() > 0) {
+            for (User user : page.getList()) {
                 user.setPassword(null);
             }
         }
@@ -65,7 +65,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getById(Long id) {
-        User user = (User)cacheService.get(Const.cache.USER_ID + id);
+        User user = (User) cacheService.get(Const.cache.USER_ID + id);
         if (user == null) {
             user = userMapper.selectByPrimaryKey(id);
             cacheService.set(Const.cache.USER_ID + id, user, Const.cache.USER_ID_TTL);
@@ -80,7 +80,7 @@ public class UserServiceImpl implements UserService {
         exp.or().andCodeEqualTo(value);
         exp.or().andEmailEqualTo(value);
         List<User> list = userMapper.selectByExample(exp);
-        User user = (CollectionUtils.isEmpty(list) || list.size() == 0)? null : list.get(0);
+        User user = (CollectionUtils.isEmpty(list) || list.size() == 0) ? null : list.get(0);
         return user;
     }
 

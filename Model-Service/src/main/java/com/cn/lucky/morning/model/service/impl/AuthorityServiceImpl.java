@@ -70,7 +70,7 @@ public class AuthorityServiceImpl implements AuthorityService {
         }
         List<Authority> list = Lists.newArrayList();
         for (Long id : ids) {
-            Authority auth =getById(id);
+            Authority auth = getById(id);
             list.add(auth);
         }
         return list;
@@ -94,16 +94,16 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Override
     public boolean delete(Long id) {
         Authority authority = getById(id);
-        if (authority == null){
+        if (authority == null) {
             return true;
         }
-        cacheService.del(Const.cache.AUTHORITY_ID+id);
+        cacheService.del(Const.cache.AUTHORITY_ID + id);
         return authorityMapper.deleteByPrimaryKey(id) > 0;
     }
 
     @Override
     public boolean edit(Authority authority) {
-        cacheService.del(Const.cache.AUTHORITY_ID+authority.getId());
+        cacheService.del(Const.cache.AUTHORITY_ID + authority.getId());
         return authorityMapper.updateByPrimaryKeySelective(authority) > 0;
     }
 
@@ -131,10 +131,10 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Authority getById(Long id) {
-        Authority authority = (Authority) cacheService.get(Const.cache.AUTHORITY_ID+id);
-        if (authority == null){
+        Authority authority = (Authority) cacheService.get(Const.cache.AUTHORITY_ID + id);
+        if (authority == null) {
             authority = authorityMapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.AUTHORITY_ID+id,authority,Const.cache.AUTHORITY_ID_TTL);
+            cacheService.set(Const.cache.AUTHORITY_ID + id, authority, Const.cache.AUTHORITY_ID_TTL);
         }
         return authorityMapper.selectByPrimaryKey(id);
     }
@@ -154,9 +154,9 @@ public class AuthorityServiceImpl implements AuthorityService {
         AuthorityExample example = new AuthorityExample();
         example.createCriteria().andGroupIdEqualTo(authorityGroupId);
         List<Authority> list = authorityMapper.selectByExample(example);
-        if (list!=null){
-            for (Authority authority : list){
-                if (!delete(authority.getId())){
+        if (list != null) {
+            for (Authority authority : list) {
+                if (!delete(authority.getId())) {
                     return false;
                 }
             }

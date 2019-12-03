@@ -1,6 +1,5 @@
 package com.cn.lucky.morning.model.web.controller.admin;
 
-import com.alibaba.fastjson.JSON;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.web.tools.CaptchaUtils;
@@ -32,7 +31,6 @@ public class AdminIndexController {
         return "admin/welcome";
     }
 
-
     /**
      * 生成验证码
      *
@@ -54,7 +52,7 @@ public class AdminIndexController {
     @RequestMapping("/login")
     public String login() {
         Subject subject = SecurityUtils.getSubject();
-        if (subject.isAuthenticated()){
+        if (subject.isAuthenticated()) {
             return "redirect:/admin/index";
         }
         return "admin/login";
@@ -66,11 +64,11 @@ public class AdminIndexController {
         MvcResult result = MvcResult.create(false);
         if (captcha == null || !Objects.equals(captcha, session.getAttribute(Const.session.VERIFICATION_CODE).toString())) {
             result.setMessage("验证码错误");
-        }else if (StringUtils.isEmpty(username)){
+        } else if (StringUtils.isEmpty(username)) {
             result.setMessage("账号不能为空");
-        }else if (StringUtils.isEmpty(password)){
+        } else if (StringUtils.isEmpty(password)) {
             result.setMessage("密码不能为空");
-        }else {
+        } else {
             Subject subject = SecurityUtils.getSubject();
             UsernamePasswordToken token = new UsernamePasswordToken(username, password, rememberMe);
             try {

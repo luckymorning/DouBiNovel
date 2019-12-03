@@ -10,7 +10,6 @@ import com.cn.lucky.morning.model.service.AuthorityGroupService;
 import com.cn.lucky.morning.model.service.AuthorityService;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -18,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
@@ -25,16 +25,16 @@ import java.util.Objects;
 @Controller
 @RequestMapping("/admin/authority")
 public class AuthorityController {
-    @Autowired
+    @Resource
     private AuthorityService authorityService;
-    @Autowired
+    @Resource
     private AuthorityGroupService authorityGroupService;
 
     @RequestMapping("/list")
     @RequiresPermissions(value = {"AUTHORITY_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String list(Model model) {
         List<AuthorityGroup> groups = authorityGroupService.getAll();
-        model.addAttribute("groups",groups);
+        model.addAttribute("groups", groups);
         return "admin/authority/list";
     }
 
@@ -58,7 +58,7 @@ public class AuthorityController {
     @RequiresPermissions(value = {"AUTHORITY_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add(Model model) {
         List<AuthorityGroup> groups = authorityGroupService.getAll();
-        model.addAttribute("groups",groups);
+        model.addAttribute("groups", groups);
         return "admin/authority/add";
     }
 
@@ -68,24 +68,24 @@ public class AuthorityController {
     public MvcResult doAdd(Authority authority) {
         MvcResult result = MvcResult.create();
         try {
-            if (StringUtils.isEmpty(authority.getCode())){
+            if (StringUtils.isEmpty(authority.getCode())) {
                 result.setSuccess(false);
                 result.setMessage("添加失败：code不能为空");
-            }else if(authorityService.getByCode(authority.getCode())){
+            } else if (authorityService.getByCode(authority.getCode())) {
                 result.setSuccess(false);
                 result.setMessage("添加失败：code已存在");
-            }else if(StringUtils.isEmpty(authority.getName())){
+            } else if (StringUtils.isEmpty(authority.getName())) {
                 result.setSuccess(false);
                 result.setMessage("添加失败：名称不能为空");
-            }else if(authority.getGroupId() == null){
+            } else if (authority.getGroupId() == null) {
                 result.setSuccess(false);
                 result.setMessage("添加失败：请选择所属权限组");
-            }else {
+            } else {
                 AuthorityGroup authorityGroup = authorityGroupService.getById(authority.getGroupId());
-                if (authorityGroup == null){
+                if (authorityGroup == null) {
                     result.setSuccess(false);
                     result.setMessage("所属权限组不存在");
-                }else {
+                } else {
                     authority.setGroupName(authorityGroup.getName());
                     boolean success = authorityService.add(authority);
                     if (!success) {
@@ -105,7 +105,7 @@ public class AuthorityController {
     @RequiresPermissions(value = {"AUTHORITY_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
         List<AuthorityGroup> groups = authorityGroupService.getAll();
-        model.addAttribute("groups",groups);
+        model.addAttribute("groups", groups);
         model.addAttribute("data", authorityService.getById(id));
         return "admin/authority/edit";
     }
@@ -117,26 +117,26 @@ public class AuthorityController {
         MvcResult result = MvcResult.create();
         try {
 
-            if (StringUtils.isEmpty(authority.getCode())){
+            if (StringUtils.isEmpty(authority.getCode())) {
                 result.setSuccess(false);
                 result.setMessage("添加失败：code不能为空");
-            }else if(StringUtils.isEmpty(authority.getName())){
+            } else if (StringUtils.isEmpty(authority.getName())) {
                 result.setSuccess(false);
                 result.setMessage("添加失败：名称不能为空");
-            }else if(authority.getGroupId() == null){
+            } else if (authority.getGroupId() == null) {
                 result.setSuccess(false);
                 result.setMessage("添加失败：请选择所属权限组");
-            }else {
+            } else {
                 AuthorityGroup authorityGroup = authorityGroupService.getById(authority.getGroupId());
-                if (authorityGroup == null){
+                if (authorityGroup == null) {
                     result.setSuccess(false);
                     result.setMessage("所属权限组不存在");
-                }else {
+                } else {
                     Authority source = authorityService.getById(authority.getId());
-                    if (!Objects.equals(source.getCode(),authority.getCode()) && authorityService.getByCode(authority.getCode())){
+                    if (!Objects.equals(source.getCode(), authority.getCode()) && authorityService.getByCode(authority.getCode())) {
                         result.setSuccess(false);
                         result.setMessage("添加失败：code已存在");
-                    }else {
+                    } else {
                         boolean success = authorityService.edit(authority);
                         if (!success) {
                             result.setSuccess(false);

@@ -15,11 +15,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,13 +29,13 @@ import java.util.concurrent.Future;
 @Component
 public class BiQuGe6NovelAnalysis {
     private static final Logger logger = Logs.get();
-    public static final String BASE_URL = "https://www.xbiquge6.com";
+    public static final String[] BASE_URL = new String[]{"https://www.xbiquge6.com", "https://www.xsbiquge.com"};
     private static final String SOURCE_NAME = "新笔趣阁";
     private static final String IMG_ONERROR = "$(this).attr('src', '/imgs/nocover.jpg')";
     private static final String REGEX = "[&]\\d*\\w*[;]*\\d*\\w*[;]";
     private Headers headers;
 
-    @Autowired
+    @Resource
     private CacheService cacheService;
 
     public BiQuGe6NovelAnalysis() {
@@ -47,8 +47,8 @@ public class BiQuGe6NovelAnalysis {
     /**
      * 通过名称查找书籍
      *
-     * @param name
-     * @return
+     * @param name 书籍名称
+     * @return 查询结果
      */
     @Async
     public Future<MvcResult> searchByName(String name) {
@@ -80,12 +80,12 @@ public class BiQuGe6NovelAnalysis {
                 cacheService.set(Const.cache.BOOK_SEARCH_RESULT + url, list, Const.cache.BOOK_SEARCH_RESULT_TTL);
             }
             result.addVal("list", list);
-        }catch (SocketTimeoutException e){
-            logger.error("查找书籍出错",e);
+        } catch (SocketTimeoutException e) {
+            logger.error("查找书籍出错", e);
             result.setSuccess(false);
-            result.setMessage("《"+SOURCE_NAME+"》网络连接超时");
-        }catch (Exception e) {
-            logger.error("查找书籍出错",e);
+            result.setMessage("《" + SOURCE_NAME + "》网络连接超时");
+        } catch (Exception e) {
+            logger.error("查找书籍出错", e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
@@ -95,8 +95,8 @@ public class BiQuGe6NovelAnalysis {
     /**
      * 获取书籍详细信息页
      *
-     * @param url
-     * @return
+     * @param url 详情链接
+     * @return 详情结果
      */
     @Async
     public Future<MvcResult> loadBookInfo(String url) {
@@ -147,12 +147,12 @@ public class BiQuGe6NovelAnalysis {
             result.addAllVal(map);
 
 
-        }catch (SocketTimeoutException e){
-            logger.error("获取书籍详情出错",e);
+        } catch (SocketTimeoutException e) {
+            logger.error("获取书籍详情出错", e);
             result.setSuccess(false);
-            result.setMessage("《"+SOURCE_NAME+"》网络连接超时");
+            result.setMessage("《" + SOURCE_NAME + "》网络连接超时");
         } catch (Exception e) {
-            logger.error("获取书籍详情出错",e);
+            logger.error("获取书籍详情出错", e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
@@ -162,8 +162,8 @@ public class BiQuGe6NovelAnalysis {
     /**
      * 获取章节内容
      *
-     * @param url
-     * @return
+     * @param url 章节内容链接
+     * @return 获取章节内容
      */
     @Async
     public Future<MvcResult> loadContent(String url) {
@@ -186,9 +186,9 @@ public class BiQuGe6NovelAnalysis {
                 content = content.replaceAll("\n<br>", "<br>");
 
 
-                content = content.replaceAll("&nbsp;","##");
-                content = content.replaceAll( REGEX,"");
-                content = content.replaceAll("##","&nbsp;");
+                content = content.replaceAll("&nbsp;", "##");
+                content = content.replaceAll(REGEX, "");
+                content = content.replaceAll("##", "&nbsp;");
 
                 map.put("content", content);
 
@@ -210,12 +210,12 @@ public class BiQuGe6NovelAnalysis {
             result.setSuccess(true);
             result.addAllVal(map);
 
-        }catch (SocketTimeoutException e){
-            logger.error("获取书籍章节内容出错",e);
+        } catch (SocketTimeoutException e) {
+            logger.error("获取书籍章节内容出错", e);
             result.setSuccess(false);
-            result.setMessage("《"+SOURCE_NAME+"》网络连接超时");
+            result.setMessage("《" + SOURCE_NAME + "》网络连接超时，");
         } catch (Exception e) {
-            logger.error("获取书籍章节内容出错",e);
+            logger.error("获取书籍章节内容出错", e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
@@ -225,8 +225,7 @@ public class BiQuGe6NovelAnalysis {
     /**
      * 预加载章节内容
      *
-     * @param url
-     * @return
+     * @param url 章节内容链接
      */
     @Async
     public void loadNextContent(String url) {
@@ -246,9 +245,9 @@ public class BiQuGe6NovelAnalysis {
                 }
                 content = content.replaceAll("\n<br>", "<br>");
 
-                content = content.replaceAll("&nbsp;","##");
-                content = content.replaceAll( REGEX,"");
-                content = content.replaceAll("##","&nbsp;");
+                content = content.replaceAll("&nbsp;", "##");
+                content = content.replaceAll(REGEX, "");
+                content = content.replaceAll("##", "&nbsp;");
 
                 map.put("content", content);
 
@@ -268,12 +267,25 @@ public class BiQuGe6NovelAnalysis {
                 cacheService.set(Const.cache.BOOK_CATALOG_CONTENT + url, map, Const.cache.BOOK_CATALOG_CONTENT_TTL);
             }
 
-        }catch (SocketTimeoutException e){
-            logger.error("获取书籍章节内容出错",e);
+        } catch (SocketTimeoutException e) {
+            logger.error("获取书籍章节内容出错", e);
         } catch (Exception e) {
-            logger.error("获取书籍章节内容出错",e);
+            logger.error("获取书籍章节内容出错", e);
         }
     }
 
-
+    /**
+     * 是否用此类解析链接
+     *
+     * @param url 代解析链接
+     * @return 是否包含在此类中
+     */
+    public boolean isContains(String url) {
+        for (String baseUrl : BASE_URL) {
+            if (url.contains(baseUrl)) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

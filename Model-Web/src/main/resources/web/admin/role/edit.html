@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>逗逼阅读 - 权限组修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/lib/layui-v2.5.4/css/layui.css}"
+          href="../../../../static/lib/layuimini/lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/css/public.css}"
+          href="../../../../static/lib/layuimini/css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <form class="layui-form" method="post" action="doEdit">
+            <input type="hidden" name="id" th:value="${data.id}">
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>名称:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="required" placeholder="请输入名称"
+                           autocomplete="off" class="layui-input" th:value="${data.name}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    描述:
+                </label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入描述" name="description" class="layui-textarea"
+                              th:text="${data.description}"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">超级管理员:</label>
+                <div class="layui-input-inline">
+                    <input type="radio" name="isSuper" title="是" value="1" th:checked="${data.isSuper == 1}"/>
+                    <input type="radio" name="isSuper" title="否" value="0"  th:checked="${data.isSuper == 0}" />
+                </div>
+            </div>
+
+            <div class="layui-form-item" th:each="groupMap : ${authorities}"  th:if="${!#lists.isEmpty(groupMap.value)}">
+                <label class="layui-form-label"><span th:text="${groupMap.key.name}" th:title="${groupMap.key.name}"></span></label>
+                <div class="layui-input-block">
+                    <input type="checkbox" name="authoritys" lay-skin="primary" th:each="groupAut : ${groupMap.value}" th:value="${groupAut.id}" th:title="${groupAut.name}"  th:checked="${(!#lists.isEmpty(roleAuth) && #lists.contains(roleAuth, #strings.toString(groupAut.id))) || data.isSuper == 1}" th:disabled="${data.isSuper == 1}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="data-add-btn">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/lib/layuimini/lib/layui-v2.5.4/layui.js(v=1.0.4)}"
+        src="../../../../static/lib/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
+<script th:src="@{/js/admin.js}" src="../../../../static/js/admin.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form;
+
+        // 监听搜索操作
+        form.on('submit(data-add-btn)', function (data) {
+            var index = layer.load();
+            $.ajax({
+                url: 'doEdit',
+                method: 'post',
+                data: data.field,
+                dataType: 'json',
+                success: function (result) {
+                    var message = result.message;
+                    if (result.success) {
+                        if (message == null || message == '' || message == undefined) {
+                            message = '修改成功';
+                        }
+                        layer.close(index);
+
+                        index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.reloadTable();
+                        return;
+                    }
+                    if (message == null || message == '' || message == undefined) {
+                        message = '修改失败:未知错误';
+                    }
+                    layer.close(index);
+                    layer.msg(message);
+                },
+                error: function () {
+                    changeImg();
+                    layer.close(index);
+                    layer.msg('修改失败:网络异常，请稍后再试');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>

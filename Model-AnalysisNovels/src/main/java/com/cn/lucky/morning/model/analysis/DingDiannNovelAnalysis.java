@@ -15,11 +15,11 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.AsyncResult;
 import org.springframework.stereotype.Component;
 
+import javax.annotation.Resource;
 import java.net.SocketTimeoutException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -30,12 +30,12 @@ import java.util.concurrent.Future;
 @Component
 public class DingDiannNovelAnalysis {
     private static final Logger logger = Logs.get();
-    public static final String BASE_URL = "https://www.dingdiann.com";
+    public static final String[] BASE_URL = new String[]{"https://www.dingdiann.com"};
     private static final String SOURCE_NAME = "顶点小说";
     private static final String IMG_ONERROR = "$(this).attr('src', '/imgs/nocover.jpg')";
     private Headers headers;
 
-    @Autowired
+    @Resource
     private CacheService cacheService;
 
     public DingDiannNovelAnalysis() {
@@ -47,8 +47,8 @@ public class DingDiannNovelAnalysis {
     /**
      * 通过名称查找书籍
      *
-     * @param name
-     * @return
+     * @param name 书籍名称
+     * @return 查询结果
      */
     @Async
     public Future<MvcResult> searchByName(String name) {
@@ -99,8 +99,8 @@ public class DingDiannNovelAnalysis {
     /**
      * 获取书籍详细信息页
      *
-     * @param url
-     * @return
+     * @param url 详情链接
+     * @return 详情结果
      */
     @Async
     public Future<MvcResult> loadBookInfo(String url) {
@@ -169,8 +169,8 @@ public class DingDiannNovelAnalysis {
     /**
      * 获取章节内容
      *
-     * @param url
-     * @return
+     * @param url 章节内容链接
+     * @return 获取章节内容
      */
     @Async
     public Future<MvcResult> loadContent(String url) {
@@ -223,10 +223,9 @@ public class DingDiannNovelAnalysis {
     }
 
     /**
-     * 预览章节内容
+     * 预加载章节内容
      *
-     * @param url
-     * @return
+     * @param url 章节内容链接
      */
     @Async
     public void loadNextContent(String url) {
@@ -267,5 +266,20 @@ public class DingDiannNovelAnalysis {
         } catch (Exception e) {
             logger.error("获取章节内容出错", e);
         }
+    }
+
+    /**
+     * 是否用此类解析链接
+     *
+     * @param url 代解析链接
+     * @return 是否包含在此类中
+     */
+    public boolean isContains(String url) {
+        for (String baseUrl : BASE_URL) {
+            if (url.contains(baseUrl)) {
+                return true;
+            }
+        }
+        return false;
     }
 }

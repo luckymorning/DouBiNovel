@@ -41,19 +41,19 @@ public class AuthorityGroupServiceImpl implements AuthorityGroupService {
 
     @Override
     public boolean add(AuthorityGroup authorityGroup) {
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID+"all");
+        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + "all");
         return authorityGroupMapper.insertSelective(authorityGroup) > 0;
     }
 
     @Override
     public boolean delete(Long id) {
         AuthorityGroup authorityGroup = getById(id);
-        if (authorityGroup == null){
+        if (authorityGroup == null) {
             return true;
         }
         authorityService.deleteByAuthorityGroupId(id);
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID+id);
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID+"all");
+        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + id);
+        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + "all");
         return authorityGroupMapper.deleteByPrimaryKey(id) > 0;
     }
 
@@ -62,15 +62,15 @@ public class AuthorityGroupServiceImpl implements AuthorityGroupService {
         AuthorityGroup authorityGroup = (AuthorityGroup) cacheService.get(Const.cache.AUTHORITY_GROUP_ID + id);
         if (authorityGroup == null) {
             authorityGroup = authorityGroupMapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.AUTHORITY_GROUP_ID+id,authorityGroup,Const.cache.AUTHORITY_ID_GROUP_TTL);
+            cacheService.set(Const.cache.AUTHORITY_GROUP_ID + id, authorityGroup, Const.cache.AUTHORITY_ID_GROUP_TTL);
         }
         return authorityGroup;
     }
 
     @Override
     public boolean edit(AuthorityGroup authorityGroup) {
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID+"all");
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID+authorityGroup.getId());
+        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + "all");
+        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + authorityGroup.getId());
         return authorityGroupMapper.updateByPrimaryKeySelective(authorityGroup) > 0;
     }
 
@@ -91,11 +91,11 @@ public class AuthorityGroupServiceImpl implements AuthorityGroupService {
 
     @Override
     public List<AuthorityGroup> getAll() {
-        List<AuthorityGroup> list = (List<AuthorityGroup>) cacheService.get(Const.cache.AUTHORITY_GROUP_ID+"all");
-        if (list == null){
+        List<AuthorityGroup> list = (List<AuthorityGroup>) cacheService.get(Const.cache.AUTHORITY_GROUP_ID + "all");
+        if (list == null) {
             AuthorityGroupExample example = new AuthorityGroupExample();
             list = authorityGroupMapper.selectByExample(example);
-            cacheService.set(Const.cache.AUTHORITY_GROUP_ID+"all",list,Const.cache.AUTHORITY_ID_GROUP_TTL);
+            cacheService.set(Const.cache.AUTHORITY_GROUP_ID + "all", list, Const.cache.AUTHORITY_ID_GROUP_TTL);
         }
         return list;
     }

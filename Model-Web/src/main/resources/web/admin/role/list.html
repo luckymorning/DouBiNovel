@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>逗逼阅读 - 角色管理列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/lib/layui-v2.5.4/css/layui.css}"
+          href="../../../../static/lib/layuimini/lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/css/public.css}"
+          href="../../../../static/lib/layuimini/css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <fieldset class="layui-elem-field layuimini-search">
+            <legend>搜索信息</legend>
+            <div style="margin: 10px 10px 10px 10px">
+                <form class="layui-form layui-form-pane" action="">
+                    <div class="layui-form-item">
+                        <div class="layui-inline">
+                            <label class="layui-form-label">角色名称</label>
+                            <div class="layui-input-inline">
+                                <input type="text" name="param[name]" autocomplete="off" class="layui-input">
+                            </div>
+                        </div>
+                        <div class="layui-inline">
+                            <a class="layui-btn" lay-submit="" lay-filter="data-search-btn">搜索</a>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </fieldset>
+        <script type="text/html" id="toolbarLeft">
+            <div class="layui-btn-container">
+                <button class="layui-btn data-add-btn">添加</button>
+                <button class="layui-btn layui-btn-danger data-delete-btn">删除</button>
+            </div>
+        </script>
+        <table class="layui-hide" id="currentTableId" lay-filter="currentTableFilter"></table>
+        <script type="text/html" id="currentTableBar">
+            <a class="layui-btn layui-btn-xs data-count-edit" lay-event="edit">编辑</a>
+            <a class="layui-btn layui-btn-xs layui-btn-danger data-count-delete" lay-event="delete">删除</a>
+        </script>
+    </div>
+</div>
+<script th:src="@{/lib/layuimini/lib/layui-v2.5.4/layui.js(v=1.0.4)}"
+        src="../../../../static/lib/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
+<script th:src="@{/js/admin.js}" src="../../../../static/js/admin.js" charset="utf-8"></script>
+<script>
+    var $;
+    layui.use(['form', 'table'], function () {
+        $ = layui.jquery;
+
+        var form = layui.form,
+            table = layui.table;
+
+        var cols = [
+            {type: "checkbox", width: 50, fixed: "left"},
+            {field: 'id', width: 80, title: 'ID', sort: true},
+            {field: 'name', width: 150, title: '名称', align: "center"},
+            {
+                field: 'isSuper', width: 180, title: '超级管理员', sort: true, templet: function (d) {
+                    if (d.isSuper == 1) {
+                        return '是';
+                    } else {
+                        return '否';
+                    }
+                }
+            },
+            {field: 'description', minWidth: 200, title: '描述'},
+            {field: 'created', width: 180, title: '创建日期', sort: true},
+            {field: 'updated', width: 180, title: '更新日期', sort: true},
+            {title: '操作', minWidth: 50, templet: '#currentTableBar', fixed: "right", align: "center"}
+        ];
+        table.render({
+            elem: '#currentTableId',
+            url: './listJSON',
+            toolbar: '#toolbarLeft',
+            defaultToolbar: ['filter', 'exports', 'print'],
+            parseData: function (res) { //res 即为原始返回的数据
+                var count = 0;
+                var data = null;
+                if (res.data) {
+                    count = res.data.totalSize;
+                    data = res.data.list;
+                }
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": count, //解析数据长度
+                    "data": data //解析数据列表
+                };
+            },
+            request: {
+                pageName: 'current',
+                limitName: 'size'
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            cols: [cols],
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-search-btn)', function (data) {
+            //执行搜索重载
+            table.reload('currentTableId', {
+                page: {
+                    curr: 1
+                }
+                , where: data.field
+            }, 'data');
+            bindingTableOnEvent();
+            return false;
+        });
+
+        function bindingTableOnEvent() {
+            // 监听添加操作
+            $(".data-add-btn").on("click", function () {
+                WeAdminShow('添加', './add', 600, null);
+            });
+
+            // 监听删除操作
+            $(".data-delete-btn").on("click", function () {
+                var checkStatus = table.checkStatus('currentTableId')
+                    , data = checkStatus.data;
+                // layer.alert(JSON.stringify(data));
+                data_delAll(data, 'id', 'name', table);
+            });
+
+            //监听表格复选框选择
+            table.on('checkbox(currentTableFilter)', function (obj) {
+                console.log(obj)
+            });
+
+            table.on('tool(currentTableFilter)', function (obj) {
+                var data = obj.data;
+                if (obj.event === 'edit') {
+                    WeAdminShow('修改', './edit?id=' + data.id, 600, null);
+                    // layer.alert('编辑行：<br>' + JSON.stringify(data))
+                } else if (obj.event === 'delete') {
+                    data_del(obj, data.id);
+                    // layer.confirm('真的删除行么', function (index) {
+                    //     obj.del();
+                    //     layer.close(index);
+                    // });
+                }
+            });
+
+        }
+
+        bindingTableOnEvent();
+
+        window.reloadTable = function () {
+            table.reload('currentTableId', {}, 'data');
+            bindingTableOnEvent();
+        }
+    });
+</script>
+</body>
+</html>
