@@ -140,13 +140,21 @@ public class UserController {
                 result.setSuccess(false);
                 result.setMessage("添加失败：用户账号已存在");
             }else {
+                User source = userService.getById(user.getId());
                 if (!StringUtils.isEmpty(user.getPassword())){
-                    user.setPassword(CodeUtils.MD5Pwd(user.getName(),user.getPassword()));
-                }
-                boolean success = userService.edit(user);
-                if (!success) {
+                    user.setPassword(CodeUtils.MD5Pwd(user.getCode(),user.getPassword()));
+                }else if (!Objects.equal(user.getCode(),source.getCode())){
                     result.setSuccess(false);
-                    result.setMessage("修改失败：未知原因");
+                    result.setMessage("修改code,必须填写密码");
+                }else {
+                    user.setPassword(null);
+                }
+                if (result.isSuccess()){
+                    boolean success = userService.edit(user);
+                    if (!success) {
+                        result.setSuccess(false);
+                        result.setMessage("修改失败：未知原因");
+                    }
                 }
             }
         } catch (Exception e) {

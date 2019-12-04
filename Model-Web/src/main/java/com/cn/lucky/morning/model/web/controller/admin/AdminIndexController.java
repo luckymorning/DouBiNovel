@@ -2,11 +2,13 @@ package com.cn.lucky.morning.model.web.controller.admin;
 
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
+import com.cn.lucky.morning.model.domain.User;
 import com.cn.lucky.morning.model.web.tools.CaptchaUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -22,7 +24,9 @@ import java.util.Objects;
 public class AdminIndexController {
 
     @RequestMapping(value = {"", "/", "/index"})
-    public String index() {
+    public String index(Model model) {
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
+        model.addAttribute("user",user);
         return "admin/index";
     }
 
