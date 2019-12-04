@@ -38,6 +38,10 @@ public class UserServiceImpl implements UserService {
             criteria.andNameLike("%" + query.getString("name") + "%");
         }
 
+        if (query.isNotEmpty("roleId")) {
+            criteria.andRoleIdEqualTo(query.getLong("roleId"));
+        }
+
         if (start == null && end != null) {
             criteria.andCreatedLessThanOrEqualTo(new Timestamp(end.getTime()));
         } else if (start != null && end == null) {
@@ -98,5 +102,26 @@ public class UserServiceImpl implements UserService {
         }
         cacheService.del(Const.cache.USER_ID + id);
         return userMapper.deleteByPrimaryKey(id) > 0;
+    }
+
+    @Override
+    public boolean deleteList(List<Long> ids) {
+        for (Long id : ids) {
+            if (!delete(id)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public boolean codeIsExist(String code, Long selfId) {
+        UserExample example = new UserExample();
+        UserExample.Criteria criteria = example.createCriteria();
+        criteria.andCodeEqualTo(code);
+        if (selfId != null) {
+            criteria.andIdNotEqualTo(selfId);
+        }
+        return userMapper.selectByExample(example).size() > 0;
     }
 }

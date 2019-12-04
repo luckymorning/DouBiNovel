@@ -18,33 +18,13 @@
       "icon": "fa fa-address-book",
       "child": [
         {
-          "title": "主页模板",
-          "href": "",
-          "icon": "fa fa-home",
-          "target": "_self",
-          "child": [
-            {
-              "title": "主页一",
-              "href": "page/welcome-1.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            },
-            {
-              "title": "主页二",
-              "href": "page/welcome-2.html",
-              "icon": "fa fa-tachometer",
-              "target": "_self"
-            }
-          ]
-        },
-        {
           "title": "系统设置",
           "href": "",
           "icon": "fa fa-gears",
           "target": "_self",
           "child": [
             {
-              "title": "角色权限",
+              "title": "角色权限管理",
               "href": "",
               "icon": "fa fa-barcode",
               "target": "_self",
@@ -52,7 +32,7 @@
                 {
                   "title": "权限组管理",
                   "href": "/admin/authorityGroup/list",
-                  "icon": "fa fa-gears",
+                  "icon": "fa fa-object-group",
                   "target": "_self"
                 },
                 {
@@ -64,10 +44,22 @@
                 {
                   "title": "角色管理",
                   "href": "/admin/role/list",
-                  "icon": "fa fa-gears",
+                  "icon": "fa fa-user-circle",
                   "target": "_self"
                 }
               ]
+            },
+            {
+              "title": "用户管理",
+              "href": "/admin/user/list",
+              "icon": "fa fa-users",
+              "target": "_self"
+            },
+            {
+              "title": "平台参数",
+              "href": "",
+              "icon": "fa fa-gear",
+              "target": "_self"
             }
           ]
         },

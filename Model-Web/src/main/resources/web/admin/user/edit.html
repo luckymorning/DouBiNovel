@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title>逗逼阅读 - 权限组修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/lib/layui-v2.5.4/css/layui.css}"
+          href="../../../../static/lib/layuimini/lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/css/public.css}"
+          href="../../../../static/lib/layuimini/css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <form class="layui-form" method="post" action="doEdit">
+            <input type="hidden" name="id" th:value="${data.id}">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>角色
+                </label>
+                <div class="layui-input-block">
+                    <select name="roleId" lay-verify="required" lay-search="">
+                        <option value="">直接选择或搜索选择</option>
+                        <option th:selected="${data.roleId == groupMap.id}" th:each="groupMap:${roles}" th:value="${groupMap.id}" th:text="${groupMap.name}" value="">直接选择或搜索选择</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>名称:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" lay-verify="required" placeholder="请输入名称"
+                           autocomplete="off" class="layui-input" th:value="${data.name}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    手机号:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="phone" lay-verify="phone" placeholder="请输入手机号"
+                           autocomplete="off" class="layui-input" th:value="${data.phone}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    邮箱:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="email" lay-verify="email" placeholder="请输入邮箱"
+                           autocomplete="off" class="layui-input" th:value="${data.email}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>登录账号:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="code" lay-verify="required" placeholder="请输入登录账号"
+                           autocomplete="off" class="layui-input" th:value="${data.code}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    登录密码:
+                </label>
+                <div class="layui-input-block">
+                    <input type="password" name="password" placeholder="不修改就不填"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    描述:
+                </label>
+                <div class="layui-input-block">
+                    <textarea placeholder="请输入描述" name="description" class="layui-textarea"
+                              th:text="${data.description}"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit="" lay-filter="data-add-btn">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/lib/layuimini/lib/layui-v2.5.4/layui.js(v=1.0.4)}"
+        src="../../../../static/lib/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
+<script th:src="@{/js/admin.js}" src="../../../../static/js/admin.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table'], function () {
+        var $ = layui.jquery,
+            form = layui.form;
+
+        //自定义验证
+        form.verify({
+            phone:function (value) {
+                if (value.length > 0) {
+                    var pattern = /(13\d|14[579]|15[^4\D]|17[^49\D]|18\d)\d{8}/g;
+                    if (!pattern.test(value)){
+                        return '手机号格式错误';
+                    }
+                }
+            },
+            email:function (value) {
+                if (value.length > 0) {
+                    var pattern = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/g;
+                    if (!pattern.test(value)){
+                        return '邮箱格式错误';
+                    }
+                }
+            }
+        });
+
+        // 监听搜索操作
+        form.on('submit(data-add-btn)', function (data) {
+            var index = layer.load();
+            $.ajax({
+                url: 'doEdit',
+                method: 'post',
+                data: data.field,
+                dataType: 'json',
+                success: function (result) {
+                    var message = result.message;
+                    if (result.success) {
+                        if (message == null || message == '' || message == undefined) {
+                            message = '修改成功';
+                        }
+                        layer.close(index);
+
+                        index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.reloadTable();
+                        return;
+                    }
+                    if (message == null || message == '' || message == undefined) {
+                        message = '修改失败:未知错误';
+                    }
+                    layer.close(index);
+                    layer.msg(message);
+                },
+                error: function () {
+                    changeImg();
+                    layer.close(index);
+                    layer.msg('修改失败:网络异常，请稍后再试');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>

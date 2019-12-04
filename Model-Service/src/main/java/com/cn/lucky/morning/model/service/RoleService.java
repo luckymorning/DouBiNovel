@@ -19,4 +19,6 @@ public interface RoleService {
     boolean delete(Long id);
 
     boolean deleteList(List<Long> ids);
+
+    List<Role> findAll(boolean isSuper);
 }

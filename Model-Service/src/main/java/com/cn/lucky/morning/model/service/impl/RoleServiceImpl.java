@@ -129,4 +129,13 @@ public class RoleServiceImpl implements RoleService {
         return true;
     }
 
+    @Override
+    public List<Role> findAll(boolean isSuper) {
+        RoleExample example = new RoleExample();
+        if (!isSuper){
+            example.createCriteria().andIsSuperEqualTo(Const.role.NOT_SUPER);
+        }
+        return roleMapper.selectByExample(example);
+    }
+
 }
