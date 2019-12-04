@@ -89,6 +89,16 @@ public class Const {
          */
         public static final int BOOK_SEARCH_RESULT_TTL = 60 * 60 * 24;
 
+        /**
+         * 保存系统设置
+         */
+        public static final String SYSTEM_SETTING = "system.setting";
+
+        /**
+         * 保存系统设置
+         */
+        public static final int SYSTEM_SETTING_TTL = 60 * 60 * 24;
+
     }
 
 }

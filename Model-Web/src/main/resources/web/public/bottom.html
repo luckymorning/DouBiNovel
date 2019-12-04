@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <title>底部导航栏</title>
+    <title th:text="${systemInfo.sitename}+'-底部导航'">底部导航栏</title>
     <link rel="stylesheet" th:href="@{/css/home.css}" href="../../static//css/home.css">
     <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
     <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
@@ -15,8 +15,8 @@
         本站所有小说为转载作品，所有章节均由网友上传，转载至本站只是为了宣传本书让更多读者欣赏。
     </div>
     <br>
-    <div class="footer-item layui-row">
-        Copyright © 2019 <a href="/index" style="font-weight: bolder">逗逼阅读</a> All Rights Reserved.
+    <div class="footer-item layui-row" th:text="${systemInfo.copyrightInfo}">
+        Copyright © 2019 逗逼阅读 All Rights Reserved.
     </div>
 </div>
 

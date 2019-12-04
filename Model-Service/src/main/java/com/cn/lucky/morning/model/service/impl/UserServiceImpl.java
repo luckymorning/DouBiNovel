@@ -4,12 +4,14 @@ import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
 import com.cn.lucky.morning.model.common.cache.CacheService;
 import com.cn.lucky.morning.model.common.constant.Const;
+import com.cn.lucky.morning.model.common.tool.Datas;
 import com.cn.lucky.morning.model.common.tool.DateTool;
 import com.cn.lucky.morning.model.dao.UserMapper;
 import com.cn.lucky.morning.model.domain.User;
 import com.cn.lucky.morning.model.domain.UserExample;
 import com.cn.lucky.morning.model.service.UserService;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
@@ -63,6 +65,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean add(User user) {
+        if (StringUtils.isEmpty(user.getToken())){
+            user.setToken(Datas.getUUID());
+        }
         cacheService.del(Const.cache.USER_ID + "all");
         return userMapper.insertSelective(user) > 0;
     }

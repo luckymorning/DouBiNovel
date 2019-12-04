@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title>逗逼阅读 - 角色管理列表</title>
+    <title th:text="${systemInfo.sitename}+'-角色列表'">逗逼阅读 - 角色管理列表</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -26,7 +26,7 @@
                             </div>
                         </div>
                         <div class="layui-inline">
-                            <a class="layui-btn" lay-submit="" lay-filter="data-search-btn">搜索</a>
+                            <a class="layui-btn" lay-submit lay-filter="data-search-btn">搜索</a>
                         </div>
                     </div>
                 </form>

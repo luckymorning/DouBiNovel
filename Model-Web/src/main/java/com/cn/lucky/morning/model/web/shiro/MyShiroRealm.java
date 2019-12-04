@@ -20,17 +20,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
+import javax.annotation.Resource;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
 @Component
 public class MyShiroRealm extends AuthorizingRealm {
-    @Autowired
+    @Resource
     private UserService userInfoService;
-    @Autowired
+    @Resource
     private RoleService roleService;
-    @Autowired
+    @Resource
     private AuthorityService authorityService;
     @Override
     protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
@@ -80,4 +81,5 @@ public class MyShiroRealm extends AuthorizingRealm {
         );
         return authenticationInfo;
     }
+
 }

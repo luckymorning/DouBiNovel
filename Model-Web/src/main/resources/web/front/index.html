@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
-    <title>逗逼阅读-搜索</title>
+    <title th:text="${systemInfo.sitename}+'-首页'">逗逼阅读-首页</title>
     <style>
         .content {
             padding-top: 10%;
@@ -46,7 +46,7 @@
     <div class="layui-row">
         <div class="title-item layui-col-md4 layui-col-md-offset4">
             <img src="../static/imgs/icon/logo.png" th:src="@{/imgs/icon/logo.png}" class="title-logo">
-            <span>逗逼联盟-逗逼阅读</span>
+            <span th:text="${systemInfo.sitename}">逗逼联盟-逗逼阅读</span>
 
         </div>
 

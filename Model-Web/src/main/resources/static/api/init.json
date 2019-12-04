@@ -21,47 +21,45 @@
           "title": "系统设置",
           "href": "",
           "icon": "fa fa-gears",
+          "target": "_self"
+        },
+        {
+          "title": "角色权限管理",
+          "href": "",
+          "icon": "fa fa-barcode",
           "target": "_self",
-          "child": [
+          "child":[
             {
-              "title": "角色权限管理",
-              "href": "",
-              "icon": "fa fa-barcode",
-              "target": "_self",
-              "child":[
-                {
-                  "title": "权限组管理",
-                  "href": "/admin/authorityGroup/list",
-                  "icon": "fa fa-object-group",
-                  "target": "_self"
-                },
-                {
-                  "title": "权限管理",
-                  "href": "/admin/authority/list",
-                  "icon": "fa fa-gears",
-                  "target": "_self"
-                },
-                {
-                  "title": "角色管理",
-                  "href": "/admin/role/list",
-                  "icon": "fa fa-user-circle",
-                  "target": "_self"
-                }
-              ]
-            },
-            {
-              "title": "用户管理",
-              "href": "/admin/user/list",
-              "icon": "fa fa-users",
+              "title": "权限组管理",
+              "href": "/admin/authorityGroup/list",
+              "icon": "fa fa-object-group",
               "target": "_self"
             },
             {
-              "title": "平台参数",
-              "href": "",
-              "icon": "fa fa-gear",
+              "title": "权限管理",
+              "href": "/admin/authority/list",
+              "icon": "fa fa-gears",
+              "target": "_self"
+            },
+            {
+              "title": "角色管理",
+              "href": "/admin/role/list",
+              "icon": "fa fa-user-circle",
               "target": "_self"
             }
           ]
+        },
+        {
+          "title": "用户管理",
+          "href": "/admin/user/list",
+          "icon": "fa fa-users",
+          "target": "_self"
+        },
+        {
+          "title": "平台参数",
+          "href": "/admin/setting/index",
+          "icon": "fa fa-gear",
+          "target": "_self"
         },
         {
           "title": "菜单管理",

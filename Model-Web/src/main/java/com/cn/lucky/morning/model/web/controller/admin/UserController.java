@@ -140,11 +140,9 @@ public class UserController {
                 result.setSuccess(false);
                 result.setMessage("添加失败：用户账号已存在");
             }else {
-                if (StringUtils.isEmpty(user.getPassword())){
-                    User source = userService.getById(user.getId());
-                    user.setPassword(source.getPassword());
+                if (!StringUtils.isEmpty(user.getPassword())){
+                    user.setPassword(CodeUtils.MD5Pwd(user.getName(),user.getPassword()));
                 }
-                user.setPassword(CodeUtils.MD5Pwd(user.getName(),user.getPassword()));
                 boolean success = userService.edit(user);
                 if (!success) {
                     result.setSuccess(false);

@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${systemInfo.sitename}+'-系统设置'">逗逼阅读 - 系统设置</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/lib/layui-v2.5.4/css/layui.css}"
+          href="../../../../static/lib/layuimini/lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/css/public.css}"
+          href="../../../../static/lib/layuimini/css/public.css" media="all">
+    <style>
+        .layui-form-item .layui-input-company {width: auto;padding-right: 10px;line-height: 38px;}
+    </style>
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <form class="layui-form" method="post" action="doEdit">
+            <input type="hidden" th:value="${data.id}" name="id">
+            <div class="layui-form layuimini-form">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">网站名称</label>
+                <div class="layui-input-block">
+                    <input type="text" name="sitename" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站名称" th:value="${data.sitename}" value="layuimini" class="layui-input">
+                    <tip>填写自己部署网站的名称。</tip>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label required">网站域名</label>
+                <div class="layui-input-block">
+                    <input type="text" name="domain" lay-verify="required" lay-reqtext="网站域名不能为空" placeholder="请输入网站域名" th:value="${data.domain}" value="http://layuimini.99php.cn" class="layui-input">
+                </div>
+            </div>
+
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">缓存时间</label>-->
+<!--                <div class="layui-input-inline" style="width: 80px;">-->
+<!--                    <input type="text" name="cache" lay-verify="number" value="0" class="layui-input">-->
+<!--                </div>-->
+<!--                <div class="layui-input-inline layui-input-company">分钟</div>-->
+<!--                <div class="layui-form-mid layui-word-aux">本地开发一般推荐设置为 0，线上环境建议设置为 10。</div>-->
+<!--            </div>-->
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">最大文件上传</label>-->
+<!--                <div class="layui-input-inline" style="width: 80px;">-->
+<!--                    <input type="text" name="cache" lay-verify="number" value="2048" class="layui-input">-->
+<!--                </div>-->
+<!--                <div class="layui-input-inline layui-input-company">KB</div>-->
+<!--                <div class="layui-form-mid layui-word-aux">提示：1 M = 1024 KB</div>-->
+<!--            </div>-->
+<!--            <div class="layui-form-item">-->
+<!--                <label class="layui-form-label">上传文件类型</label>-->
+<!--                <div class="layui-input-block">-->
+<!--                    <input type="text" name="cache" value="png|gif|jpg|jpeg|zip|rar" class="layui-input">-->
+<!--                </div>-->
+<!--            </div>-->
+
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label required">首页标题</label>
+                <div class="layui-input-block">
+                    <textarea name="adminIndexName" class="layui-textarea" th:text="${data.adminIndexName}">layuimini 简洁易用后台管理模板</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META关键词</label>
+                <div class="layui-input-block">
+                    <textarea name="metaKeywords" class="layui-textarea" placeholder="多个关键词用英文状态 , 号分割" th:text="${data.metaKeywords}"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label">META描述</label>
+                <div class="layui-input-block">
+                    <textarea name="metaDescription" class="layui-textarea" th:text="${data.metaDescription}">layuimini，最简洁、清爽、易用的layui后台框架模板。</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item layui-form-text">
+                <label class="layui-form-label required">版权信息</label>
+                <div class="layui-input-block">
+                    <textarea name="copyrightInfo" class="layui-textarea" th:text="${data.copyrightInfo}">© 2019 layuimini.99php.cn MIT license</textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="setting">确认保存</button>
+                </div>
+            </div>
+        </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/lib/layuimini/lib/layui-v2.5.4/layui.js(v=1.0.4)}"
+        src="../../../../static/lib/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
+<script>
+    layui.use(['form'], function () {
+        var form = layui.form
+            , layer = layui.layer,
+            $ = layui.jquery;
+
+        //监听提交
+        form.on('submit(setting)', function (data) {
+            var index = layer.load();
+            $.ajax({
+                url: 'doEdit',
+                method: 'post',
+                data: data.field,
+                dataType: 'json',
+                success: function (result) {
+                    var message = result.message;
+                    if (result.success) {
+                        if (message == null || message == '' || message == undefined) {
+                            message = '修改成功';
+                        }
+                        layer.close(index);
+                        layer.msg(message);
+                        return;
+                    }
+                    if (message == null || message == '' || message == undefined) {
+                        message = '修改失败:未知错误';
+                    }
+                    layer.close(index);
+                    layer.msg(message);
+                },
+                error: function () {
+                    layer.close(index);
+                    layer.msg('修改失败:网络异常，请稍后再试');
+                }
+            });
+            return false;
+        });
+
+    });
+</script>
+</body>
+</html>

@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 04/12/2019 12:03:34
+ Date: 04/12/2019 17:26:11
 */
 
 SET NAMES utf8mb4;
@@ -100,6 +100,26 @@ CREATE TABLE `m_role`  (
 INSERT INTO `m_role` VALUES (1000, '超级管理员', '超级管理员', 1, '1000', '2019-11-25 19:52:48', '2019-11-25 19:53:22', 1);
 
 -- ----------------------------
+-- Table structure for m_system_setting
+-- ----------------------------
+DROP TABLE IF EXISTS `m_system_setting`;
+CREATE TABLE `m_system_setting`  (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `sitename` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `domain` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `admin_index_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `meta_keywords` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `meta_description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `copyright_info` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of m_system_setting
+-- ----------------------------
+INSERT INTO `m_system_setting` VALUES (1, '逗逼联盟 - 逗逼阅读', 'http://novel.luckymorning.cn', '逗逼阅读后台管理', '逗逼联盟,逗逼阅读,无广告,小说', '做最简洁，最干净的小说聚合网站', 'Copyright © 2019 逗逼阅读 All Rights Reserved.');
+
+-- ----------------------------
 -- Table structure for m_update_log
 -- ----------------------------
 DROP TABLE IF EXISTS `m_update_log`;
@@ -137,6 +157,6 @@ CREATE TABLE `m_user`  (
 -- ----------------------------
 -- Records of m_user
 -- ----------------------------
-INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', 'ca98d0413030969214785e56cd4ea34a', '超级管理员', '18582369504', NULL, NULL, 'lucky_morning@163.com', '整个平台超级管理员', NULL, 1, 1000, '2019-11-25 19:51:44', '2019-12-04 11:56:47');
+INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', 'a3283151138b3877deedbb8f5693880b', '超级管理员', '18582369504', NULL, NULL, 'lucky_morning@163.com', '整个平台超级管理员', NULL, 1, 1000, '2019-11-25 19:51:44', '2019-12-04 15:22:48');
 
 SET FOREIGN_KEY_CHECKS = 1;
