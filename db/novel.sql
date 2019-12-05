@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 05/12/2019 12:35:30
+ Date: 05/12/2019 18:01:03
 */
 
 SET NAMES utf8mb4;
@@ -31,13 +31,37 @@ CREATE TABLE `m_authority`  (
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1002 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1026 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_authority
 -- ----------------------------
 INSERT INTO `m_authority` VALUES (1000, '用户管理', 'USER_VIEW', '查看', 1000, '2019-11-25 20:22:54', '2019-11-25 20:22:54', '查看用户权限');
 INSERT INTO `m_authority` VALUES (1001, '用户管理', 'USER_ADD', '添加', 1000, '2019-11-30 12:02:26', '2019-11-30 12:08:42', '用户添加权限');
+INSERT INTO `m_authority` VALUES (1002, '用户管理', 'USER_DELETE', '删除', 1000, '2019-12-05 17:49:55', '2019-12-05 17:49:55', '删除用户权限');
+INSERT INTO `m_authority` VALUES (1003, '用户管理', 'USER_UPDATE', '修改', 1000, '2019-12-05 17:50:12', '2019-12-05 17:50:12', '修改用户权限');
+INSERT INTO `m_authority` VALUES (1004, '权限管理', 'AUTHORITY_VIEW', '查看', 1001, '2019-12-05 17:51:29', '2019-12-05 17:51:29', '权限查看');
+INSERT INTO `m_authority` VALUES (1005, '权限管理', 'AUTHORITY_ADD', '添加', 1001, '2019-12-05 17:51:42', '2019-12-05 17:51:42', '');
+INSERT INTO `m_authority` VALUES (1006, '权限管理', 'AUTHORITY_DELETE', '删除', 1001, '2019-12-05 17:51:57', '2019-12-05 17:51:57', '');
+INSERT INTO `m_authority` VALUES (1007, '权限管理', 'AUTHORITY_UPDATE', '修改', 1001, '2019-12-05 17:52:08', '2019-12-05 17:52:08', '');
+INSERT INTO `m_authority` VALUES (1008, '权限组管理', 'AUTHORITY_GROUP_VIEW', '查看', 1002, '2019-12-05 17:52:38', '2019-12-05 17:52:38', '');
+INSERT INTO `m_authority` VALUES (1009, '权限组管理', 'AUTHORITY_GROUP_ADD', '添加', 1002, '2019-12-05 17:52:49', '2019-12-05 17:52:49', '');
+INSERT INTO `m_authority` VALUES (1010, '权限组管理', 'AUTHORITY_GROUP_DELETE', '删除', 1002, '2019-12-05 17:52:58', '2019-12-05 17:52:58', '');
+INSERT INTO `m_authority` VALUES (1011, '权限组管理', 'AUTHORITY_GROUP_UPDATE', '修改', 1002, '2019-12-05 17:53:11', '2019-12-05 17:53:11', '');
+INSERT INTO `m_authority` VALUES (1012, '角色管理', 'ROLE_VIEW', '查看', 1003, '2019-12-05 17:55:06', '2019-12-05 17:55:06', '角色查看权限');
+INSERT INTO `m_authority` VALUES (1013, '角色管理', 'ROLE_ADD', '添加', 1003, '2019-12-05 17:55:20', '2019-12-05 17:55:20', '角色添加权限');
+INSERT INTO `m_authority` VALUES (1014, '角色管理', 'ROLE_DELETE', '删除', 1003, '2019-12-05 17:55:33', '2019-12-05 17:55:33', '角色删除权限');
+INSERT INTO `m_authority` VALUES (1015, '角色管理', 'ROLE_UPDATE', '修改', 1003, '2019-12-05 17:55:49', '2019-12-05 17:55:49', '角色修改权限');
+INSERT INTO `m_authority` VALUES (1016, '平台参数管理', 'SYSTEM_SETTING_VIEW', '查看', 1004, '2019-12-05 17:56:45', '2019-12-05 17:56:45', '平台参数查看权限');
+INSERT INTO `m_authority` VALUES (1017, '平台参数管理', 'SYSTEM_SETTING_UPDATE', '修改', 1004, '2019-12-05 17:56:58', '2019-12-05 17:56:58', '平台参数修改权限');
+INSERT INTO `m_authority` VALUES (1018, '更新日志管理', 'UPDATE_LOG_VIEW', '查看', 1005, '2019-12-05 17:58:20', '2019-12-05 17:58:20', '更新日志查看权限');
+INSERT INTO `m_authority` VALUES (1019, '更新日志管理', 'UPDATE_LOG_ADD', '添加', 1005, '2019-12-05 17:58:34', '2019-12-05 17:58:34', '更新日志添加权限');
+INSERT INTO `m_authority` VALUES (1020, '更新日志管理', 'UPDATE_LOG_DELETE', '删除', 1005, '2019-12-05 17:58:51', '2019-12-05 17:58:51', '更新日志删除权限');
+INSERT INTO `m_authority` VALUES (1021, '更新日志管理', 'UPDATE_LOG_UPDATE', '修改', 1005, '2019-12-05 17:59:11', '2019-12-05 17:59:11', '更新日志修改权限');
+INSERT INTO `m_authority` VALUES (1022, '书源管理', 'BOOK_SOURCE_VIEW', '查看', 1006, '2019-12-05 18:00:01', '2019-12-05 18:00:01', '书源查看权限');
+INSERT INTO `m_authority` VALUES (1023, '书源管理', 'BOOK_SOURCE_ADD', '添加', 1006, '2019-12-05 18:00:17', '2019-12-05 18:00:17', '书源添加权限');
+INSERT INTO `m_authority` VALUES (1024, '书源管理', 'BOOK_SOURCE_DELETE', '删除', 1006, '2019-12-05 18:00:29', '2019-12-05 18:00:29', '书源删除权限');
+INSERT INTO `m_authority` VALUES (1025, '书源管理', 'BOOK_SOURCE_UPDATE', '修改', 1006, '2019-12-05 18:00:41', '2019-12-05 18:00:41', '书源修改权限');
 
 -- ----------------------------
 -- Table structure for m_authority_group
@@ -50,13 +74,18 @@ CREATE TABLE `m_authority_group`  (
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1002 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1007 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_authority_group
 -- ----------------------------
 INSERT INTO `m_authority_group` VALUES (1000, '用户管理', '2019-11-25 20:22:00', '2019-11-25 20:22:00', '用户管理权限组');
-INSERT INTO `m_authority_group` VALUES (1001, '修改修改1', '2019-11-28 11:47:18', '2019-11-28 11:53:22', '11111111');
+INSERT INTO `m_authority_group` VALUES (1001, '权限管理', '2019-11-28 11:47:18', '2019-12-05 17:50:36', '权限管理');
+INSERT INTO `m_authority_group` VALUES (1002, '权限组管理', '2019-12-05 17:50:50', '2019-12-05 17:50:50', '权限组管理');
+INSERT INTO `m_authority_group` VALUES (1003, '角色管理', '2019-12-05 17:54:31', '2019-12-05 17:54:31', '角色管理权限');
+INSERT INTO `m_authority_group` VALUES (1004, '平台参数管理', '2019-12-05 17:56:18', '2019-12-05 17:57:43', '平台参数权限');
+INSERT INTO `m_authority_group` VALUES (1005, '更新日志管理', '2019-12-05 17:57:26', '2019-12-05 17:58:03', '更新日志管理权限');
+INSERT INTO `m_authority_group` VALUES (1006, '书源管理', '2019-12-05 17:59:25', '2019-12-05 17:59:25', '书源管理权限');
 
 -- ----------------------------
 -- Table structure for m_book_info
@@ -77,6 +106,50 @@ CREATE TABLE `m_book_info`  (
   `last_new` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+
+-- ----------------------------
+-- Table structure for m_book_source
+-- ----------------------------
+DROP TABLE IF EXISTS `m_book_source`;
+CREATE TABLE `m_book_source`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `base_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `image_error` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `search_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `search_result_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `result_item_book_name_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `result_item_book_url_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `result_item_book_image_url_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `result_item_book_des_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `result_item_book_author_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `result_item_book_type_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `result_item_book_last_update_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `result_item_book_last_new_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_book_name_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_book_author_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_book_last_update_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_book_last_new_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_book_des_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_book_image_url_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_catalog_list_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_catalog_item_name_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_detail_catalog_item_link_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_content_catalog_name_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_content_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `content_regex` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_content_pre_catalog_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_content_catalog_list_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_content_next_catalog_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of m_book_source
+-- ----------------------------
+INSERT INTO `m_book_source` VALUES (1, '新笔趣阁', 'https://www.xsbiquge.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/search.php?keyword=%s', 'div.result-game-item', '.result-game-item-title-link', '.result-game-item-title-link', '.result-game-item-pic-link-img', '.result-game-item-desc', '.result-game-item-info-tag:eq(0) > span:eq(1)', '.result-game-item-info-tag:eq(1) > span:eq(1)', '.result-game-item-info-tag:eq(2) > span:eq(1)', '.result-game-item-info-tag:eq(3) > a', '#info > h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '#content', '[&]\\d*\\w*[;]*\\d*\\w*[;]', '.bottem2 > a:eq(0)', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '2019-12-05 17:25:06', '2019-12-05 17:47:09');
 
 -- ----------------------------
 -- Table structure for m_role

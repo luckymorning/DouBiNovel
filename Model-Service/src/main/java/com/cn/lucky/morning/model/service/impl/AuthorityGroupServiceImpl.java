@@ -62,7 +62,7 @@ public class AuthorityGroupServiceImpl implements AuthorityGroupService {
         AuthorityGroup authorityGroup = (AuthorityGroup) cacheService.get(Const.cache.AUTHORITY_GROUP_ID + id);
         if (authorityGroup == null) {
             authorityGroup = authorityGroupMapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.AUTHORITY_GROUP_ID + id, authorityGroup, Const.cache.AUTHORITY_ID_GROUP_TTL);
+            cacheService.set(Const.cache.AUTHORITY_GROUP_ID + id, authorityGroup, Const.cache.AUTHORITY_GROUP_ID_TTL);
         }
         return authorityGroup;
     }
@@ -95,7 +95,7 @@ public class AuthorityGroupServiceImpl implements AuthorityGroupService {
         if (list == null) {
             AuthorityGroupExample example = new AuthorityGroupExample();
             list = authorityGroupMapper.selectByExample(example);
-            cacheService.set(Const.cache.AUTHORITY_GROUP_ID + "all", list, Const.cache.AUTHORITY_ID_GROUP_TTL);
+            cacheService.set(Const.cache.AUTHORITY_GROUP_ID + "all", list, Const.cache.AUTHORITY_GROUP_ID_TTL);
         }
         return list;
     }

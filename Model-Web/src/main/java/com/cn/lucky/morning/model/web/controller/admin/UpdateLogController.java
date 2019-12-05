@@ -25,7 +25,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Controller
-@RequestMapping("/admin/updatelog")
+@RequestMapping("/admin/updateLog")
 public class UpdateLogController {
     @Resource
     private UpdateLogService updateLogService;
@@ -33,7 +33,7 @@ public class UpdateLogController {
     @RequestMapping("/list")
     @RequiresPermissions(value = {"UPDATE_LOG_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String list() {
-        return "admin/updatelog/list";
+        return "admin/updateLog/list";
     }
 
     @RequestMapping("/listJSON")
@@ -55,7 +55,7 @@ public class UpdateLogController {
     @RequestMapping("/add")
     @RequiresPermissions(value = {"UPDATE_LOG_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add() {
-        return "admin/updatelog/add";
+        return "admin/updateLog/add";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/doAdd")
@@ -85,7 +85,7 @@ public class UpdateLogController {
     @RequiresPermissions(value = {"UPDATE_LOG_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
         model.addAttribute("data", updateLogService.getById(id));
-        return "admin/updatelog/edit";
+        return "admin/updateLog/edit";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/doEdit")

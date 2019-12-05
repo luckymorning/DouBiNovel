@@ -55,5 +55,11 @@
         <table domainObjectName="SystemSetting" tableName="m_system_setting">
             <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
         </table>
+
+        <table domainObjectName="BookSource" tableName="m_book_source">
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
+            <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+            <columnOverride column="updated" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+        </table>
     </context>
 </generatorConfiguration>

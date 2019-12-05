@@ -175,6 +175,7 @@ public class BiQuGe6NovelAnalysis {
                 map = Maps.newHashMap();
                 Response response = NetWorkUtil.get(url, headers, true);
                 Document html = Jsoup.parse(response.body().string());
+
                 Element name = html.selectFirst(".bookname");
                 map.put("catalogName", name.child(0).text());
 

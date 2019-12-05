@@ -30,7 +30,7 @@ public class Const {
         /**
          * 根据ID保存权限组过期权限
          */
-        public static final int AUTHORITY_ID_GROUP_TTL = 60 * 60 * 24;
+        public static final int AUTHORITY_GROUP_ID_TTL = 60 * 60 * 24;
 
         /**
          * 根据ID保存权限
@@ -108,6 +108,16 @@ public class Const {
          * 根据ID保存更新日志过期时间
          */
         public static final int UPDATE_LOG_ID_TTL = 60 * 60 * 24;
+
+        /**
+         * 根据ID保存书源信息
+         */
+        public static final String BOOK_SOURCE_ID = "bookSource.id.";
+
+        /**
+         * 根据ID保存书源信息过期权限
+         */
+        public static final int BOOK_SOURCE_ID_TTL = 60 * 60 * 24;
 
     }
 
