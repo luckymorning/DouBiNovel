@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 04/12/2019 17:26:11
+ Date: 05/12/2019 12:35:30
 */
 
 SET NAMES utf8mb4;
@@ -125,11 +125,16 @@ INSERT INTO `m_system_setting` VALUES (1, '逗逼联盟 - 逗逼阅读', 'http:/
 DROP TABLE IF EXISTS `m_update_log`;
 CREATE TABLE `m_update_log`  (
   `id` bigint(20) NOT NULL AUTO_INCREMENT,
-  `update_des` text CHARACTER SET utf8 COLLATE utf8_general_ci NULL,
+  `update_des` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of m_update_log
+-- ----------------------------
+INSERT INTO `m_update_log` VALUES (1, '<p><span>完成初版网站，并上线，开启公测</span></p><p>目前数据源为：</p><p>1. <a target=\"_blank\" href=\"https://www.xbiquge6.com/\">新笔趣阁</a>、<a target=\"_blank\" href=\"https://www.xsbiquge.com/\">新笔趣阁</a></p><p>2. <a target=\"_blank\" href=\"https://www.dingdiann.com/\">顶点小说</a></p>', '2019-12-05 12:13:16', '2019-12-05 12:24:45');
 
 -- ----------------------------
 -- Table structure for m_user
@@ -157,6 +162,6 @@ CREATE TABLE `m_user`  (
 -- ----------------------------
 -- Records of m_user
 -- ----------------------------
-INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', 'a3283151138b3877deedbb8f5693880b', '超级管理员', '18582369504', NULL, NULL, 'lucky_morning@163.com', '整个平台超级管理员', NULL, 1, 1000, '2019-11-25 19:51:44', '2019-12-04 15:22:48');
+INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', 'a3283151138b3877deedbb8f5693880b', '超级管理员', '18582369504', NULL, NULL, 'lucky_morning@163.com', '整个平台超级管理员', NULL, 1, 1000, '2019-11-25 19:51:44', '2019-12-04 17:41:07');
 
 SET FOREIGN_KEY_CHECKS = 1;

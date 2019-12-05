@@ -95,9 +95,19 @@ public class Const {
         public static final String SYSTEM_SETTING = "system.setting";
 
         /**
-         * 保存系统设置
+         * 保存系统设置过期时间
          */
         public static final int SYSTEM_SETTING_TTL = 60 * 60 * 24;
+
+        /**
+         * 根据ID保存更新日志
+         */
+        public static final String UPDATE_LOG_ID = "update.log.id.";
+
+        /**
+         * 根据ID保存更新日志过期时间
+         */
+        public static final int UPDATE_LOG_ID_TTL = 60 * 60 * 24;
 
     }
 

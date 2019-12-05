@@ -321,6 +321,76 @@ public class UpdateLogExample {
             return (Criteria) this;
         }
 
+        public Criteria andUpdateDesIsNull() {
+            addCriterion("update_des is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesIsNotNull() {
+            addCriterion("update_des is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesEqualTo(String value) {
+            addCriterion("update_des =", value, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesNotEqualTo(String value) {
+            addCriterion("update_des <>", value, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesGreaterThan(String value) {
+            addCriterion("update_des >", value, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesGreaterThanOrEqualTo(String value) {
+            addCriterion("update_des >=", value, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesLessThan(String value) {
+            addCriterion("update_des <", value, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesLessThanOrEqualTo(String value) {
+            addCriterion("update_des <=", value, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesLike(String value) {
+            addCriterion("update_des like", value, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesNotLike(String value) {
+            addCriterion("update_des not like", value, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesIn(List<String> values) {
+            addCriterion("update_des in", values, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesNotIn(List<String> values) {
+            addCriterion("update_des not in", values, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesBetween(String value1, String value2) {
+            addCriterion("update_des between", value1, value2, "updateDes");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdateDesNotBetween(String value1, String value2) {
+            addCriterion("update_des not between", value1, value2, "updateDes");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedIsNull() {
             addCriterion("created is null");
             return (Criteria) this;

@@ -26,6 +26,9 @@ public class AdminIndexController {
     @RequestMapping(value = {"", "/", "/index"})
     public String index(Model model) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
+        if (user == null){
+            return "redirect:/admin/logout";
+        }
         model.addAttribute("user",user);
         return "admin/index";
     }

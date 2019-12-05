@@ -73,20 +73,11 @@
 
     <div class="layui-row">
         <ul class="layui-timeline layui-col-md-offset5 layui-col-xs-offset3">
-            <li class="layui-timeline-item">
+            <li class="layui-timeline-item" th:each="groupMap : ${list}">
                 <i class="layui-icon layui-timeline-axis">&#xe63f;</i>
                 <div class="layui-timeline-content layui-text">
-                    <h3 class="layui-timeline-title">2019年11月13日</h3>
-                    <p>
-                        完成初版网站，并上线，开启公测
-                    </p>
-                    <p>
-                        目前数据源为：
-                    </p>
-                    <ul>
-                        <li><a href="https://www.xbiquge6.com" target="_blank">新笔趣阁</a></li>
-                        <li><a href="https://www.dingdiann.com" target="_blank">顶点</a></li>
-                    </ul>
+                    <h3 class="layui-timeline-title" th:text="${#dates.format(groupMap.created,'yyyy年MM月dd日')}">2019年11月13日</h3>
+                    <div th:utext="${groupMap.updateDes}">内容</div>
                 </div>
             </li>
         </ul>

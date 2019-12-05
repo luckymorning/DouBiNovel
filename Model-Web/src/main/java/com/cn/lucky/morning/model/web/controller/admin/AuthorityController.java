@@ -119,13 +119,13 @@ public class AuthorityController {
 
             if (StringUtils.isEmpty(authority.getCode())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：code不能为空");
+                result.setMessage("修改失败：code不能为空");
             } else if (StringUtils.isEmpty(authority.getName())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：名称不能为空");
+                result.setMessage("修改失败：名称不能为空");
             } else if (authority.getGroupId() == null) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：请选择所属权限组");
+                result.setMessage("修改失败：请选择所属权限组");
             } else {
                 AuthorityGroup authorityGroup = authorityGroupService.getById(authority.getGroupId());
                 if (authorityGroup == null) {
@@ -135,7 +135,7 @@ public class AuthorityController {
                     Authority source = authorityService.getById(authority.getId());
                     if (!Objects.equals(source.getCode(), authority.getCode()) && authorityService.getByCode(authority.getCode())) {
                         result.setSuccess(false);
-                        result.setMessage("添加失败：code已存在");
+                        result.setMessage("修改失败：code已存在");
                     } else {
                         boolean success = authorityService.edit(authority);
                         if (!success) {

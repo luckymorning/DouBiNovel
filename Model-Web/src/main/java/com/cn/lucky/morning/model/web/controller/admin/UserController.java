@@ -129,16 +129,16 @@ public class UserController {
         try {
             if (StringUtils.isEmpty(user.getName())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：用户名称不能为空");
+                result.setMessage("修改失败：用户名称不能为空");
             }else if (user.getRoleId() == null){
                 result.setSuccess(false);
-                result.setMessage("添加失败：用户角色不能为空");
+                result.setMessage("修改失败：用户角色不能为空");
             }else if (StringUtils.isEmpty(user.getCode())){
                 result.setSuccess(false);
-                result.setMessage("添加失败：用户账号不能为空");
+                result.setMessage("修改失败：用户账号不能为空");
             }else if (userService.codeIsExist(user.getCode(),user.getId())){
                 result.setSuccess(false);
-                result.setMessage("添加失败：用户账号已存在");
+                result.setMessage("修改失败：用户账号已存在");
             }else {
                 User source = userService.getById(user.getId());
                 if (!StringUtils.isEmpty(user.getPassword())){
