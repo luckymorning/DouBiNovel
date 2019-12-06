@@ -30,6 +30,7 @@
     <result column="book_detail_catalog_item_name_selector" jdbcType="VARCHAR" property="bookDetailCatalogItemNameSelector" />
     <result column="book_detail_catalog_item_link_selector" jdbcType="VARCHAR" property="bookDetailCatalogItemLinkSelector" />
     <result column="book_content_catalog_name_selector" jdbcType="VARCHAR" property="bookContentCatalogNameSelector" />
+    <result column="book_content_name_selector" jdbcType="VARCHAR" property="bookContentNameSelector" />
     <result column="book_content_selector" jdbcType="VARCHAR" property="bookContentSelector" />
     <result column="content_regex" jdbcType="VARCHAR" property="contentRegex" />
     <result column="book_content_pre_catalog_selector" jdbcType="VARCHAR" property="bookContentPreCatalogSelector" />
@@ -115,8 +116,8 @@
     result_item_book_last_new_selector, book_detail_book_name_selector, book_detail_book_author_selector, 
     book_detail_book_last_update_selector, book_detail_book_last_new_selector, book_detail_book_des_selector, 
     book_detail_book_image_url_selector, book_detail_catalog_list_selector, book_detail_catalog_item_name_selector, 
-    book_detail_catalog_item_link_selector, book_content_catalog_name_selector, book_content_selector, 
-    content_regex, book_content_pre_catalog_selector, book_content_catalog_list_selector, 
+    book_detail_catalog_item_link_selector, book_content_catalog_name_selector, book_content_name_selector, 
+    book_content_selector, content_regex, book_content_pre_catalog_selector, book_content_catalog_list_selector, 
     book_content_next_catalog_selector, created, updated
   </sql>
   <select id="selectByExample" parameterType="com.cn.lucky.morning.model.domain.BookSourceExample" resultMap="BaseResultMap">
@@ -186,8 +187,8 @@
       book_detail_book_last_new_selector, book_detail_book_des_selector, 
       book_detail_book_image_url_selector, book_detail_catalog_list_selector, 
       book_detail_catalog_item_name_selector, book_detail_catalog_item_link_selector, 
-      book_content_catalog_name_selector, book_content_selector, 
-      content_regex, book_content_pre_catalog_selector, 
+      book_content_catalog_name_selector, book_content_name_selector, 
+      book_content_selector, content_regex, book_content_pre_catalog_selector, 
       book_content_catalog_list_selector, book_content_next_catalog_selector, 
       created, updated)
     values (#{name,jdbcType=VARCHAR}, #{baseUrl,jdbcType=VARCHAR}, #{imageError,jdbcType=VARCHAR}, 
@@ -200,8 +201,8 @@
       #{bookDetailBookLastNewSelector,jdbcType=VARCHAR}, #{bookDetailBookDesSelector,jdbcType=VARCHAR}, 
       #{bookDetailBookImageUrlSelector,jdbcType=VARCHAR}, #{bookDetailCatalogListSelector,jdbcType=VARCHAR}, 
       #{bookDetailCatalogItemNameSelector,jdbcType=VARCHAR}, #{bookDetailCatalogItemLinkSelector,jdbcType=VARCHAR}, 
-      #{bookContentCatalogNameSelector,jdbcType=VARCHAR}, #{bookContentSelector,jdbcType=VARCHAR}, 
-      #{contentRegex,jdbcType=VARCHAR}, #{bookContentPreCatalogSelector,jdbcType=VARCHAR}, 
+      #{bookContentCatalogNameSelector,jdbcType=VARCHAR}, #{bookContentNameSelector,jdbcType=VARCHAR}, 
+      #{bookContentSelector,jdbcType=VARCHAR}, #{contentRegex,jdbcType=VARCHAR}, #{bookContentPreCatalogSelector,jdbcType=VARCHAR}, 
       #{bookContentCatalogListSelector,jdbcType=VARCHAR}, #{bookContentNextCatalogSelector,jdbcType=VARCHAR}, 
       #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
   </insert>
@@ -283,6 +284,9 @@
       </if>
       <if test="bookContentCatalogNameSelector != null">
         book_content_catalog_name_selector,
+      </if>
+      <if test="bookContentNameSelector != null">
+        book_content_name_selector,
       </if>
       <if test="bookContentSelector != null">
         book_content_selector,
@@ -375,6 +379,9 @@
       </if>
       <if test="bookContentCatalogNameSelector != null">
         #{bookContentCatalogNameSelector,jdbcType=VARCHAR},
+      </if>
+      <if test="bookContentNameSelector != null">
+        #{bookContentNameSelector,jdbcType=VARCHAR},
       </if>
       <if test="bookContentSelector != null">
         #{bookContentSelector,jdbcType=VARCHAR},
@@ -488,6 +495,9 @@
       <if test="record.bookContentCatalogNameSelector != null">
         book_content_catalog_name_selector = #{record.bookContentCatalogNameSelector,jdbcType=VARCHAR},
       </if>
+      <if test="record.bookContentNameSelector != null">
+        book_content_name_selector = #{record.bookContentNameSelector,jdbcType=VARCHAR},
+      </if>
       <if test="record.bookContentSelector != null">
         book_content_selector = #{record.bookContentSelector,jdbcType=VARCHAR},
       </if>
@@ -544,6 +554,7 @@
       book_detail_catalog_item_name_selector = #{record.bookDetailCatalogItemNameSelector,jdbcType=VARCHAR},
       book_detail_catalog_item_link_selector = #{record.bookDetailCatalogItemLinkSelector,jdbcType=VARCHAR},
       book_content_catalog_name_selector = #{record.bookContentCatalogNameSelector,jdbcType=VARCHAR},
+      book_content_name_selector = #{record.bookContentNameSelector,jdbcType=VARCHAR},
       book_content_selector = #{record.bookContentSelector,jdbcType=VARCHAR},
       content_regex = #{record.contentRegex,jdbcType=VARCHAR},
       book_content_pre_catalog_selector = #{record.bookContentPreCatalogSelector,jdbcType=VARCHAR},
@@ -631,6 +642,9 @@
       <if test="bookContentCatalogNameSelector != null">
         book_content_catalog_name_selector = #{bookContentCatalogNameSelector,jdbcType=VARCHAR},
       </if>
+      <if test="bookContentNameSelector != null">
+        book_content_name_selector = #{bookContentNameSelector,jdbcType=VARCHAR},
+      </if>
       <if test="bookContentSelector != null">
         book_content_selector = #{bookContentSelector,jdbcType=VARCHAR},
       </if>
@@ -684,6 +698,7 @@
       book_detail_catalog_item_name_selector = #{bookDetailCatalogItemNameSelector,jdbcType=VARCHAR},
       book_detail_catalog_item_link_selector = #{bookDetailCatalogItemLinkSelector,jdbcType=VARCHAR},
       book_content_catalog_name_selector = #{bookContentCatalogNameSelector,jdbcType=VARCHAR},
+      book_content_name_selector = #{bookContentNameSelector,jdbcType=VARCHAR},
       book_content_selector = #{bookContentSelector,jdbcType=VARCHAR},
       content_regex = #{contentRegex,jdbcType=VARCHAR},
       book_content_pre_catalog_selector = #{bookContentPreCatalogSelector,jdbcType=VARCHAR},

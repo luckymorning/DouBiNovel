@@ -20,11 +20,14 @@ if (!$('body').hasClass(theme)){
 }
 
 $(document).ready(function () {
-    var height = $('.novel-footer').height() + 30;
-    var top = $('.novel-footer').offset().top;
-    var screenHeight = $(window).height();
-    var marginTop = screenHeight - height - top;
-    if (marginTop>0){
-        $('.novel-footer').css('margin-top',marginTop+'px');
+    var footer = $('.novel-footer');
+    if (footer.offset() != undefined){
+        var height = footer.height() + 30;
+        var top = footer.offset().top;
+        var screenHeight = $(window).height();
+        var marginTop = screenHeight - height - top;
+        if (marginTop>0){
+            footer.css('margin-top',marginTop+'px');
+        }
     }
 });

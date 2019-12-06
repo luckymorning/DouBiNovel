@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说" th:content="${systemInfo.metaKeywords}" />
+    <meta name="description" content="做最简洁，最干净的小说聚合网站" th:content="${systemInfo.metaDescription}" />
     <title th:text="${systemInfo.sitename}+'-首页'">逗逼阅读-首页</title>
     <style>
         .content {
@@ -45,7 +47,7 @@
 
     <div class="layui-row">
         <div class="title-item layui-col-md4 layui-col-md-offset4">
-            <img src="../static/imgs/icon/logo.png" th:src="@{/imgs/icon/logo.png}" class="title-logo">
+            <img src="../../static/imgs/icon/logo.png" th:src="@{/imgs/icon/logo.png}" class="title-logo">
             <span th:text="${systemInfo.sitename}">逗逼联盟-逗逼阅读</span>
 
         </div>

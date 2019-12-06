@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说" th:content="${systemInfo.metaKeywords}" />
+    <meta name="description" content="做最简洁，最干净的小说聚合网站" th:content="${systemInfo.metaDescription}" />
     <title th:text="${systemInfo.sitename}+'-搜索结果'">逗逼阅读-搜索结果</title>
     <style>
         .content {
@@ -75,8 +77,7 @@
             <td class="book-img">
                 <a th:href="@{/book/detail(url=${data.bookUrl})}"
                    href="../book/detail.html?url=https%3A%2F%2Fwww.xbiquge6.com%2F84_84291%2F">
-                    <img th:src="${data.bookImg}" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg"
-                         th:onerror="#{data.bookImgError}">
+                    <img th:src="${data.bookImg}" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg" onerror="$(this).attr('src', '/imgs/nocover.jpg')">
                 </a>
             </td>
             <td class="book-info">

@@ -1931,6 +1931,76 @@ public class BookSourceExample {
             return (Criteria) this;
         }
 
+        public Criteria andBookContentNameSelectorIsNull() {
+            addCriterion("book_content_name_selector is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorIsNotNull() {
+            addCriterion("book_content_name_selector is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorEqualTo(String value) {
+            addCriterion("book_content_name_selector =", value, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorNotEqualTo(String value) {
+            addCriterion("book_content_name_selector <>", value, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorGreaterThan(String value) {
+            addCriterion("book_content_name_selector >", value, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorGreaterThanOrEqualTo(String value) {
+            addCriterion("book_content_name_selector >=", value, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorLessThan(String value) {
+            addCriterion("book_content_name_selector <", value, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorLessThanOrEqualTo(String value) {
+            addCriterion("book_content_name_selector <=", value, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorLike(String value) {
+            addCriterion("book_content_name_selector like", value, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorNotLike(String value) {
+            addCriterion("book_content_name_selector not like", value, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorIn(List<String> values) {
+            addCriterion("book_content_name_selector in", values, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorNotIn(List<String> values) {
+            addCriterion("book_content_name_selector not in", values, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorBetween(String value1, String value2) {
+            addCriterion("book_content_name_selector between", value1, value2, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentNameSelectorNotBetween(String value1, String value2) {
+            addCriterion("book_content_name_selector not between", value1, value2, "bookContentNameSelector");
+            return (Criteria) this;
+        }
+
         public Criteria andBookContentSelectorIsNull() {
             addCriterion("book_content_selector is null");
             return (Criteria) this;

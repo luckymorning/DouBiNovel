@@ -2,16 +2,17 @@ package com.cn.lucky.morning.model.web.controller;
 
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.service.BookAnalysisService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import javax.annotation.Resource;
+
 @Controller
 public class SearchController {
-    @Autowired
+    @Resource
     private BookAnalysisService bookAnalysisService;
     @RequestMapping(method = RequestMethod.POST,value = "search")
     public String search(@Param("name") String name, Model model){

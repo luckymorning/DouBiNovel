@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 05/12/2019 18:01:03
+ Date: 06/12/2019 15:33:02
 */
 
 SET NAMES utf8mb4;
@@ -136,6 +136,7 @@ CREATE TABLE `m_book_source`  (
   `book_detail_catalog_item_name_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `book_detail_catalog_item_link_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `book_content_catalog_name_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_content_name_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `book_content_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `content_regex` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `book_content_pre_catalog_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -149,7 +150,7 @@ CREATE TABLE `m_book_source`  (
 -- ----------------------------
 -- Records of m_book_source
 -- ----------------------------
-INSERT INTO `m_book_source` VALUES (1, '新笔趣阁', 'https://www.xsbiquge.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/search.php?keyword=%s', 'div.result-game-item', '.result-game-item-title-link', '.result-game-item-title-link', '.result-game-item-pic-link-img', '.result-game-item-desc', '.result-game-item-info-tag:eq(0) > span:eq(1)', '.result-game-item-info-tag:eq(1) > span:eq(1)', '.result-game-item-info-tag:eq(2) > span:eq(1)', '.result-game-item-info-tag:eq(3) > a', '#info > h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '#content', '[&]\\d*\\w*[;]*\\d*\\w*[;]', '.bottem2 > a:eq(0)', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '2019-12-05 17:25:06', '2019-12-05 17:47:09');
+INSERT INTO `m_book_source` VALUES (1, '新笔趣阁', 'https://www.xsbiquge.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/search.php?keyword=%s', 'div.result-game-item', '.result-game-item-title-link', '.result-game-item-title-link', '.result-game-item-pic-link-img', '.result-game-item-desc', '.result-game-item-info-tag:eq(0) > span:eq(1)', '.result-game-item-info-tag:eq(1) > span:eq(1)', '.result-game-item-info-tag:eq(2) > span:eq(1)', '.result-game-item-info-tag:eq(3) > a', '#info > h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '.con_top > a:eq(3)', '#content', '[&]\\d*\\w*[;]*\\d*\\w*[;]', '.bottem2 > a:eq(0)', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '2019-12-05 17:25:06', '2019-12-06 15:02:31');
 
 -- ----------------------------
 -- Table structure for m_role
