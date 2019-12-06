@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 06/12/2019 15:33:02
+ Date: 06/12/2019 15:51:08
 */
 
 SET NAMES utf8mb4;
@@ -145,12 +145,13 @@ CREATE TABLE `m_book_source`  (
   `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of m_book_source
 -- ----------------------------
 INSERT INTO `m_book_source` VALUES (1, '新笔趣阁', 'https://www.xsbiquge.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/search.php?keyword=%s', 'div.result-game-item', '.result-game-item-title-link', '.result-game-item-title-link', '.result-game-item-pic-link-img', '.result-game-item-desc', '.result-game-item-info-tag:eq(0) > span:eq(1)', '.result-game-item-info-tag:eq(1) > span:eq(1)', '.result-game-item-info-tag:eq(2) > span:eq(1)', '.result-game-item-info-tag:eq(3) > a', '#info > h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '.con_top > a:eq(3)', '#content', '[&]\\d*\\w*[;]*\\d*\\w*[;]', '.bottem2 > a:eq(0)', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '2019-12-05 17:25:06', '2019-12-06 15:02:31');
+INSERT INTO `m_book_source` VALUES (2, '顶点小说', 'https://www.dingdiann.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/searchbook.php?keyword=%s', '.novelslist2 li:gt(1)', '.s2 a', '.s2 a', '', '', '.s4', '.s1', '.s6', '.s3 a', '#info h1', '', '', '', '', '', '#list dd', 'a', 'a', '.bookname > h1', '', '#content', '', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '.bottem2 > a:eq(3)', '2019-12-06 15:49:45', '2019-12-06 15:49:45');
 
 -- ----------------------------
 -- Table structure for m_role
