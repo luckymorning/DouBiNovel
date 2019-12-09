@@ -9,7 +9,6 @@ import com.cn.lucky.morning.model.common.network.NetWorkUtil;
 import com.cn.lucky.morning.model.domain.BookInfo;
 import com.cn.lucky.morning.model.domain.BookSource;
 import com.google.common.collect.Maps;
-import com.sun.org.apache.xpath.internal.objects.XNull;
 import okhttp3.Headers;
 import okhttp3.Response;
 import org.apache.commons.lang.StringUtils;

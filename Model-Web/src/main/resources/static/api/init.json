@@ -1,6 +1,6 @@
 {
   "clearInfo": {
-    "clearUrl": "/api/clear.json"
+    "clearUrl": "/admin/clearCache"
   },
   "homeInfo": {
     "title": "首页",

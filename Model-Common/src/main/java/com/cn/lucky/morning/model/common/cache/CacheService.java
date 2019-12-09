@@ -17,6 +17,7 @@ public interface CacheService {
     long getExpire(String key);
     boolean hasKey(String key);
     void del(String... key);
+    boolean flushAll();
     Object get(String key);
     boolean set(String key, Object value);
     boolean set(String key, Object value, long time);

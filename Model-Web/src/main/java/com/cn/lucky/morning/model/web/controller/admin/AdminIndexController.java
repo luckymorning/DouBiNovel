@@ -1,9 +1,11 @@
 package com.cn.lucky.morning.model.web.controller.admin;
 
+import com.cn.lucky.morning.model.common.cache.CacheService;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.domain.User;
 import com.cn.lucky.morning.model.web.tools.CaptchaUtils;
+import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.subject.Subject;
@@ -14,14 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Map;
 import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin")
 public class AdminIndexController {
+    @Resource
+    private CacheService cacheService;
 
     @RequestMapping(value = {"", "/", "/index"})
     public String index(Model model) {
@@ -110,4 +116,27 @@ public class AdminIndexController {
         return "admin/login";
     }
 
+    @RequestMapping("/clearCache")
+    @ResponseBody
+    public Map<String,Object> clearCache(){
+        Map<String,Object> map = Maps.newHashMap();
+        try {
+            boolean isSuccess = cacheService.flushAll();
+            if (isSuccess){
+                map.put("code",1);
+                map.put("msg","清除成功");
+            }else {
+                map.put("code",2);
+                map.put("msg","清除失败,redis清空失败");
+            }
+        }catch (Exception e){
+            map.put("code",2);
+            if (StringUtils.isEmpty(e.getMessage())){
+                map.put("msg","未知异常");
+            }else {
+                map.put("msg",e.getMessage());
+            }
+        }
+        return map;
+    }
 }

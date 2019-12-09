@@ -46,17 +46,6 @@ class ModelWebApplicationTests {
     private CacheService cacheService;
 
     @Test
-    void customerTest() throws InterruptedException {
-        long currentTime = System.currentTimeMillis();
-        cacheService.set("testDelay",currentTime,5);
-        for (int index = 0; index < 10; index++){
-            System.out.println("第【"+index+"】秒，取值："+cacheService.get("testDelay"));
-            Thread.sleep(1000);
-        }
-        System.out.println("结束");
-    }
-
-    @Test
     void bookSourceAnalysisTest() throws ExecutionException, InterruptedException {
         List<BookSource> list = bookSourceService.getAll();
         for (BookSource bookSource : list){
