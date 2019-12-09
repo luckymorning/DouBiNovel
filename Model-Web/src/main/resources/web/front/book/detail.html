@@ -39,14 +39,14 @@
 <div class="layui-container" style="margin-top: 50px;">
     <div class="layui-row layui-col-space10">
         <div class="layui-col-xs4 layui-col-md2">
-            <img th:src="${info.bookImg}" th:onerror="#{info.bookImgError}" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg">
+            <img th:src="${info.bookImg}" onerror="$(this).attr('src', '/imgs/nocover.jpg')" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg">
         </div>
         <div class="layui-col-xs6 layui-col-md10">
             <p class="book-name" th:text="${info.name}">九星毒奶</p>
-            <p class="book-author" th:text="'作者：'+${info.author}">作者： 育</p>
-            <p class="layui-hide-xs" th:text="${info.novelDes}">这是一个充满了星力的平行世界。<br>星图、星技、星宠、觉醒者大行其道。<br>魂穿而来的江晓，体内蕴含着一张奇特的内视星图，成为一名稀有的医疗系觉醒者。<br>他本想成为一只快乐的大奶，但却被众人冠上了毒奶之名。<br>这一切的故事，<br>从高中入学的前一周开始。<br>要从......那一巴掌开始说起......<br>**沉重的故事写累了，写点轻松搞笑的。**<br>**已完结4本小说，500余万字，量大管饱，点击作者名观看，欢迎品读。**</p>
-            <p class="book-update" th:text="'更新时间：'+${info.lastUpdate}">更新时间： 2019-11-09</p>
-            <p class="book-new" th:text="'最新章节：'+${info.lastNew}">最新章节： 835 惊心动魄</p>
+            <p class="book-author" th:text="'作者：'+${info.author==null?'作者：未知':info.author}">作者： 育</p>
+            <p class="layui-hide-xs" th:utext="${info.novelDes==null?'无描述':info.novelDes}">这是一个充满了星力的平行世界。<br>星图、星技、星宠、觉醒者大行其道。<br>魂穿而来的江晓，体内蕴含着一张奇特的内视星图，成为一名稀有的医疗系觉醒者。<br>他本想成为一只快乐的大奶，但却被众人冠上了毒奶之名。<br>这一切的故事，<br>从高中入学的前一周开始。<br>要从......那一巴掌开始说起......<br>**沉重的故事写累了，写点轻松搞笑的。**<br>**已完结4本小说，500余万字，量大管饱，点击作者名观看，欢迎品读。**</p>
+            <p class="book-update" th:text="'更新时间：'+${info.lastUpdate==null?'更新时间：未知':info.lastUpdate}">更新时间： 2019-11-09</p>
+            <p class="book-new" th:text="'最新章节：'+${info.lastNew==null?'最新章节： 未知':info.lastNew}">最新章节： 835 惊心动魄</p>
             <p class="book-source">来源： <a th:href="${info.bookSourceLink}" th:text="${info.bookSourceName}" href="https://www.xbiquge6.com/" target="_blank">新笔趣阁</a></p>
         </div>
     </div>

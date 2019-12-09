@@ -150,6 +150,12 @@
                 </div>
             </div>
 
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="data-test0-btn">测试搜索解析</button>
+                </div>
+            </div>
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>书籍详情解析</legend>
             </fieldset>
@@ -243,6 +249,12 @@
                 </div>
             </div>
 
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="data-test1-btn">测试章节列表解析</button>
+                </div>
+            </div>
+
             <fieldset class="layui-elem-field layui-field-title" style="margin-top: 20px;">
                 <legend>章节内容解析</legend>
             </fieldset>
@@ -322,6 +334,12 @@
 
             <div class="layui-form-item">
                 <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="data-test2-btn">测试章节内容解析</button>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
                     <button class="layui-btn" lay-submit lay-filter="data-add-btn">提交</button>
                 </div>
             </div>
@@ -335,6 +353,109 @@
     layui.use(['form', 'table'], function () {
         var $ = layui.jquery,
             form = layui.form;
+
+        //监听测试0提交操作
+        form.on('submit(data-test0-btn)', function (data) {
+            layer.prompt({
+                title:'请输入搜索书籍名称',
+                formType:2,
+            },function (text,index) {
+                layer.close(index);
+                index = layer.load();
+                data.field.key = text;
+                data.field.type=0;
+                $.ajax({
+                    url: 'doTest',
+                    method: 'post',
+                    data: data.field,
+                    dataType: 'json',
+                    success: function (result) {
+                        var message = result.message;
+                        if (result.success) {
+                            layer.close(index);
+                            parent.layer.alert(JSON.stringify(result.values));
+                            return;
+                        }
+                        layer.close(index);
+                        parent.layer.alert(message);
+                    },
+                    error: function () {
+                        layer.close(index);
+                        layer.msg('测试失败:网络异常，请稍后再试');
+                    }
+                });
+            });
+            return false;
+        });
+
+        //监听测试1提交操作
+        form.on('submit(data-test1-btn)', function (data) {
+            layer.prompt({
+                title:'请输入书籍章节地址',
+                formType:2,
+            },function (text,index) {
+                layer.close(index);
+                index = layer.load();
+                data.field.key = text;
+                data.field.type=1;
+                $.ajax({
+                    url: 'doTest',
+                    method: 'post',
+                    data: data.field,
+                    dataType: 'json',
+                    success: function (result) {
+                        var message = result.message;
+                        if (result.success) {
+                            layer.close(index);
+                            parent.layer.alert(JSON.stringify(result.values));
+                            return;
+                        }
+                        layer.close(index);
+                        parent.layer.alert(message);
+                    },
+                    error: function () {
+                        layer.close(index);
+                        layer.msg('测试失败:网络异常，请稍后再试');
+                    }
+                });
+            });
+            return false;
+        });
+
+        //监听测试2提交操作
+        form.on('submit(data-test2-btn)', function (data) {
+            layer.prompt({
+                title:'请输入书籍阅读界面地址',
+                formType:2,
+            },function (text,index) {
+                layer.close(index);
+                index = layer.load();
+                data.field.key = text;
+                data.field.type=2;
+                $.ajax({
+                    url: 'doTest',
+                    method: 'post',
+                    data: data.field,
+                    dataType: 'json',
+                    success: function (result) {
+                        var message = result.message;
+                        if (result.success) {
+                            layer.close(index);
+                            result.values.content = result.values.content.substring(0,100)+'......(屏蔽后续过多内容)';
+                            parent.layer.alert(JSON.stringify(result.values));
+                            return;
+                        }
+                        layer.close(index);
+                        parent.layer.alert(message);
+                    },
+                    error: function () {
+                        layer.close(index);
+                        layer.msg('测试失败:网络异常，请稍后再试');
+                    }
+                });
+            });
+            return false;
+        });
 
         // 监听提交操作
         form.on('submit(data-add-btn)', function (data) {

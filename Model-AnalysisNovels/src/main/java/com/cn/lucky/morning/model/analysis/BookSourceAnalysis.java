@@ -64,46 +64,72 @@ public class BookSourceAnalysis {
                 for (Element resultItem : resultListElements) {
                     BookInfo info = new BookInfo();
 
-                    Element nameElem = resultItem.selectFirst(bookSource.getResultItemBookNameSelector());
-                    if (nameElem != null) {
-                        info.setName(nameElem.text());
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookNameSelector())){
+                        Element nameElem = resultItem.selectFirst(bookSource.getResultItemBookNameSelector());
+                        if (nameElem != null) {
+                            info.setName(nameElem.text());
+                        }
                     }
 
-                    Element bookUrlElem = resultItem.selectFirst(bookSource.getResultItemBookUrlSelector());
-                    if (bookUrlElem != null) {
-                        info.setBookUrl(bookUrlElem.attr("href"));
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookUrlSelector())){
+                        Element bookUrlElem = resultItem.selectFirst(bookSource.getResultItemBookUrlSelector());
+                        if (bookUrlElem != null) {
+                            info.setBookUrl(bookUrlElem.attr("href"));
+                            if (StringUtils.isBlank(info.getBookUrl())){
+                                continue;
+                            }else if (!info.getBookUrl().contains(bookSource.getBaseUrl())){
+                                info.setBookUrl(bookSource.getBaseUrl()+info.getBookUrl());
+                            }
+                        }
                     }
 
-                    Element bookImgElem = resultItem.selectFirst(bookSource.getResultItemBookImageUrlSelector());
-                    if (bookImgElem != null) {
-                        info.setBookImg(bookImgElem.attr("src"));
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookImageUrlSelector())){
+                        Element bookImgElem = resultItem.selectFirst(bookSource.getResultItemBookImageUrlSelector());
+                        if (bookImgElem != null) {
+                            info.setBookImg(bookImgElem.attr("src"));
+                            if (StringUtils.isBlank(info.getBookImg())){
+                                continue;
+                            }else if (!info.getBookImg().contains(bookSource.getBaseUrl())){
+                                info.setBookImg(bookSource.getBaseUrl()+info.getBookImg());
+                            }
+                        }
                     }
 
                     info.setBookImgError(bookSource.getImageError());
 
-                    Element bookDesElem = resultItem.selectFirst(bookSource.getResultItemBookDesSelector());
-                    if (bookDesElem != null) {
-                        info.setNovelDes(bookDesElem.text());
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookDesSelector())){
+                        Element bookDesElem = resultItem.selectFirst(bookSource.getResultItemBookDesSelector());
+                        if (bookDesElem != null) {
+                            info.setNovelDes(bookDesElem.text());
+                        }
                     }
 
-                    Element authorElem = resultItem.selectFirst(bookSource.getResultItemBookAuthorSelector());
-                    if (authorElem != null) {
-                        info.setAuthor(authorElem.text());
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookAuthorSelector())){
+                        Element authorElem = resultItem.selectFirst(bookSource.getResultItemBookAuthorSelector());
+                        if (authorElem != null) {
+                            info.setAuthor(authorElem.text());
+                        }
                     }
 
-                    Element novelTypeElem = resultItem.selectFirst(bookSource.getResultItemBookTypeSelector());
-                    if (novelTypeElem != null) {
-                        info.setNovelType(novelTypeElem.text());
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookTypeSelector())){
+                        Element novelTypeElem = resultItem.selectFirst(bookSource.getResultItemBookTypeSelector());
+                        if (novelTypeElem != null) {
+                            info.setNovelType(novelTypeElem.text());
+                        }
                     }
 
-                    Element updateElem = resultItem.selectFirst(bookSource.getResultItemBookLastUpdateSelector());
-                    if (updateElem != null) {
-                        info.setLastUpdate(updateElem.text());
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookLastUpdateSelector())){
+                        Element updateElem = resultItem.selectFirst(bookSource.getResultItemBookLastUpdateSelector());
+                        if (updateElem != null) {
+                            info.setLastUpdate(updateElem.text());
+                        }
                     }
 
-                    Element lastNewElem = resultItem.selectFirst(bookSource.getResultItemBookLastNewSelector());
-                    if (lastNewElem != null) {
-                        info.setLastNew(lastNewElem.text());
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookLastNewSelector())){
+                        Element lastNewElem = resultItem.selectFirst(bookSource.getResultItemBookLastNewSelector());
+                        if (lastNewElem != null) {
+                            info.setLastNew(lastNewElem.text());
+                        }
                     }
                     info.setBookSourceLink(info.getBookUrl());
                     info.setBookSourceName(bookSource.getName());
@@ -145,36 +171,51 @@ public class BookSourceAnalysis {
                 //加载书籍详情
                 BookInfo bookInfo = new BookInfo();
 
-                Element nameElem = html.selectFirst(bookSource.getBookDetailBookNameSelector());
-                if (nameElem != null) {
-                    bookInfo.setName(nameElem.text());
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookNameSelector())){
+                    Element nameElem = html.selectFirst(bookSource.getBookDetailBookNameSelector());
+                    if (nameElem != null) {
+                        bookInfo.setName(nameElem.text());
+                    }
                 }
 
-                Element authorElem = html.selectFirst(bookSource.getBookDetailBookAuthorSelector());
-                if (authorElem != null) {
-                    String author = authorElem.text();
-                    bookInfo.setAuthor(author.substring(author.indexOf("：") + 1));
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookAuthorSelector())){
+                    Element authorElem = html.selectFirst(bookSource.getBookDetailBookAuthorSelector());
+                    if (authorElem != null) {
+                        String author = authorElem.text();
+                        bookInfo.setAuthor(author.substring(author.indexOf("：") + 1));
+                    }
                 }
 
-                Element updateElem = html.selectFirst(bookSource.getBookDetailBookLastUpdateSelector());
-                if (updateElem != null) {
-                    String lastUpdate = updateElem.text();
-                    bookInfo.setLastUpdate(lastUpdate.substring(lastUpdate.indexOf("：") + 1));
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookLastUpdateSelector())){
+                    Element updateElem = html.selectFirst(bookSource.getBookDetailBookLastUpdateSelector());
+                    if (updateElem != null) {
+                        String lastUpdate = updateElem.text();
+                        bookInfo.setLastUpdate(lastUpdate.substring(lastUpdate.indexOf("：") + 1));
+                    }
                 }
 
-                Element lastNewElem = html.selectFirst(bookSource.getBookDetailBookLastNewSelector());
-                if (lastNewElem != null) {
-                    bookInfo.setLastNew(lastNewElem.text());
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookLastNewSelector())){
+                    Element lastNewElem = html.selectFirst(bookSource.getBookDetailBookLastNewSelector());
+                    if (lastNewElem != null) {
+                        bookInfo.setLastNew(lastNewElem.text());
+                    }
                 }
 
-                Element desElem = html.selectFirst(bookSource.getBookDetailBookDesSelector());
-                if (desElem != null) {
-                    bookInfo.setNovelDes(desElem.text());
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookDesSelector())){
+                    Element desElem = html.selectFirst(bookSource.getBookDetailBookDesSelector());
+                    if (desElem != null) {
+                        bookInfo.setNovelDes(desElem.html());
+                    }
                 }
 
-                Element bookImgElem = html.selectFirst(bookSource.getBookDetailBookImageUrlSelector());
-                if (bookImgElem != null) {
-                    bookInfo.setBookImg(bookImgElem.attr("src"));
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookImageUrlSelector())){
+                    Element bookImgElem = html.selectFirst(bookSource.getBookDetailBookImageUrlSelector());
+                    if (bookImgElem != null) {
+                        bookInfo.setBookImg(bookImgElem.attr("src"));
+                        if (StringUtils.isNotBlank(bookInfo.getBookImg()) && !bookInfo.getBookImg().contains(bookSource.getBaseUrl())){
+                            bookInfo.setBookImg(bookSource.getBaseUrl()+bookInfo.getBookImg());
+                        }
+                    }
                 }
 
                 bookInfo.setBookImgError(bookSource.getImageError());
@@ -250,48 +291,60 @@ public class BookSourceAnalysis {
                 Response response = NetWorkUtil.get(url, headers, true);
                 Document html = Jsoup.parse(response.body().string());
 
-                Element bookNameElem = html.selectFirst(bookSource.getBookContentNameSelector());
-                if (bookNameElem != null) {
-                    map.put("bookName", bookNameElem.text());
-                }
-
-                Element catalogNameElem = html.selectFirst(bookSource.getBookContentCatalogNameSelector());
-                if (catalogNameElem != null) {
-                    map.put("catalogName", catalogNameElem.text());
-                }
-
-                Element contentElem = html.selectFirst(bookSource.getBookContentSelector());
-                if (contentElem != null) {
-                    String content = contentElem.html();
-                    if (StringUtils.isNotBlank(bookSource.getContentRegex())) {
-                        content = content.replaceAll("&nbsp;", "##");
-                        content = content.replaceAll(bookSource.getContentRegex(), "");
-                        content = content.replaceAll("##", "&nbsp;");
-                    }
-                    map.put("content", content);
-                }
-
-                Element preCatalogElem = html.selectFirst(bookSource.getBookContentPreCatalogSelector());
-                if (preCatalogElem != null) {
-                    String preCatalog = preCatalogElem.attr("href");
-                    if (!preCatalog.startsWith("http://") || !preCatalog.startsWith("https://")) {
-                        map.put("preCatalog", bookSource.getBaseUrl() + preCatalog);
+                if (StringUtils.isNotBlank(bookSource.getBookContentNameSelector())){
+                    Element bookNameElem = html.selectFirst(bookSource.getBookContentNameSelector());
+                    if (bookNameElem != null) {
+                        map.put("bookName", bookNameElem.text());
                     }
                 }
 
-                Element catalogsElem = html.selectFirst(bookSource.getBookContentCatalogListSelector());
-                if (catalogsElem != null) {
-                    String catalogs = catalogsElem.attr("href");
-                    if (!catalogs.startsWith("http://") || !catalogs.startsWith("https://")) {
-                        map.put("catalogs", bookSource.getBaseUrl() + catalogs);
+                if (StringUtils.isNotBlank(bookSource.getBookContentCatalogNameSelector())){
+                    Element catalogNameElem = html.selectFirst(bookSource.getBookContentCatalogNameSelector());
+                    if (catalogNameElem != null) {
+                        map.put("catalogName", catalogNameElem.text());
                     }
                 }
 
-                Element nextCatalogElem = html.selectFirst(bookSource.getBookContentNextCatalogSelector());
-                if (nextCatalogElem != null) {
-                    String nextCatalog = nextCatalogElem.attr("href");
-                    if (!nextCatalog.startsWith("http://") || !nextCatalog.startsWith("https://")) {
-                        map.put("nextCatalog", bookSource.getBaseUrl() + nextCatalog);
+                if (StringUtils.isNotBlank(bookSource.getBookContentSelector())){
+                    Element contentElem = html.selectFirst(bookSource.getBookContentSelector());
+                    if (contentElem != null) {
+                        String content = contentElem.html();
+                        if (StringUtils.isNotBlank(bookSource.getContentRegex())) {
+                            content = content.replaceAll("&nbsp;", "##");
+                            content = content.replaceAll(bookSource.getContentRegex(), "");
+                            content = content.replaceAll("##", "&nbsp;");
+                        }
+                        map.put("content", content);
+                    }
+                }
+
+                if (StringUtils.isNotBlank(bookSource.getBookContentPreCatalogSelector())){
+                    Element preCatalogElem = html.selectFirst(bookSource.getBookContentPreCatalogSelector());
+                    if (preCatalogElem != null) {
+                        String preCatalog = preCatalogElem.attr("href");
+                        if (!preCatalog.startsWith("http://") || !preCatalog.startsWith("https://")) {
+                            map.put("preCatalog", bookSource.getBaseUrl() + preCatalog);
+                        }
+                    }
+                }
+
+                if (StringUtils.isNotBlank(bookSource.getBookContentCatalogListSelector())){
+                    Element catalogsElem = html.selectFirst(bookSource.getBookContentCatalogListSelector());
+                    if (catalogsElem != null) {
+                        String catalogs = catalogsElem.attr("href");
+                        if (!catalogs.startsWith("http://") || !catalogs.startsWith("https://")) {
+                            map.put("catalogs", bookSource.getBaseUrl() + catalogs);
+                        }
+                    }
+                }
+
+                if (StringUtils.isNotBlank(bookSource.getBookContentNextCatalogSelector())){
+                    Element nextCatalogElem = html.selectFirst(bookSource.getBookContentNextCatalogSelector());
+                    if (nextCatalogElem != null) {
+                        String nextCatalog = nextCatalogElem.attr("href");
+                        if (!nextCatalog.startsWith("http://") || !nextCatalog.startsWith("https://")) {
+                            map.put("nextCatalog", bookSource.getBaseUrl() + nextCatalog);
+                        }
                     }
                 }
                 cacheService.set(url, map, Const.cache.BOOK_CATALOG_CONTENT_TTL);
@@ -320,61 +373,8 @@ public class BookSourceAnalysis {
     @Async
     public void loadNextContent(String url, BookSource bookSource) {
         try {
-            Map<String, Object> map = (Map<String, Object>) cacheService.get(url);
-            if (map == null) {
-                map = Maps.newHashMap();
-                Response response = NetWorkUtil.get(url, headers, true);
-                Document html = Jsoup.parse(response.body().string());
-
-                Element bookNameElem = html.selectFirst(bookSource.getBookContentNameSelector());
-                if (bookNameElem != null) {
-                    map.put("bookName", bookNameElem.text());
-                }
-
-                Element catalogNameElem = html.selectFirst(bookSource.getBookContentCatalogNameSelector());
-                if (catalogNameElem != null) {
-                    map.put("catalogName", catalogNameElem.text());
-                }
-
-                Element contentElem = html.selectFirst(bookSource.getBookContentSelector());
-                if (contentElem != null) {
-                    String content = contentElem.html();
-                    if (StringUtils.isNotBlank(bookSource.getContentRegex())) {
-                        content = content.replaceAll("&nbsp;", "##");
-                        content = content.replaceAll(bookSource.getContentRegex(), "");
-                        content = content.replaceAll("##", "&nbsp;");
-                    }
-                    map.put("content", content);
-                }
-
-                Element preCatalogElem = html.selectFirst(bookSource.getBookContentPreCatalogSelector());
-                if (preCatalogElem != null) {
-                    String preCatalog = preCatalogElem.attr("href");
-                    if (!preCatalog.startsWith("http://") || !preCatalog.startsWith("https://")) {
-                        map.put("preCatalog", bookSource.getBaseUrl() + preCatalog);
-                    }
-                }
-
-                Element catalogsElem = html.selectFirst(bookSource.getBookContentCatalogListSelector());
-                if (catalogsElem != null) {
-                    String catalogs = catalogsElem.attr("href");
-                    if (!catalogs.startsWith("http://") || !catalogs.startsWith("https://")) {
-                        map.put("catalogs", bookSource.getBaseUrl() + catalogs);
-                    }
-                }
-
-                Element nextCatalogElem = html.selectFirst(bookSource.getBookContentNextCatalogSelector());
-                if (nextCatalogElem != null) {
-                    String nextCatalog = nextCatalogElem.attr("href");
-                    if (!nextCatalog.startsWith("http://") || !nextCatalog.startsWith("https://")) {
-                        map.put("nextCatalog", bookSource.getBaseUrl() + nextCatalog);
-                    }
-                }
-                cacheService.set(url, map, Const.cache.BOOK_CATALOG_CONTENT_TTL);
-            }
-
-        } catch (SocketTimeoutException e) {
-            logger.error("获取书籍章节内容出错", e);
+            Future<MvcResult> future = loadContent(url,bookSource);
+            MvcResult result = future.get();
         } catch (Exception e) {
             logger.error("获取书籍章节内容出错", e);
         }

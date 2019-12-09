@@ -59,12 +59,13 @@ class ModelWebApplicationTests {
     @Test
     void bookSourceAnalysisTest() throws ExecutionException, InterruptedException {
         List<BookSource> list = bookSourceService.getAll();
-//        for (BookSource bookSource : list){
-//            System.out.println("书源信息："+JSON.toJSONString(bookSource));
-//            Future<MvcResult> future = bookSourceAnalysis.searchByName("斗破苍穹",bookSource);
-//            MvcResult result = future.get();
-//            System.out.println("搜索结果："+JSON.toJSONString(result));
-//        }
+        for (BookSource bookSource : list){
+            System.out.println("书源信息："+JSON.toJSONString(bookSource));
+            Future<MvcResult> future = bookSourceAnalysis.searchByName("斗破苍穹",bookSource);
+            MvcResult result = future.get();
+            System.out.println("搜索结果："+JSON.toJSONString(result));
+        }
+
 //        Future<MvcResult> future = bookSourceAnalysis.loadBookInfo("https://www.xsbiquge.com/0_657/", list.get(0));
 //        MvcResult result = future.get();
 //        System.out.println("详情解析结果：" + JSON.toJSONString(result));

@@ -1,5 +1,6 @@
 package com.cn.lucky.morning.model.web.controller.admin;
 
+import com.cn.lucky.morning.model.analysis.BookSourceAnalysis;
 import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
 import com.cn.lucky.morning.model.common.constant.Const;
@@ -7,6 +8,7 @@ import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.domain.BookSource;
 import com.cn.lucky.morning.model.service.BookSourceService;
 import org.apache.commons.lang.StringUtils;
+import org.apache.ibatis.annotations.Param;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
@@ -22,6 +24,8 @@ import java.util.Arrays;
 public class BookSourceController {
     @Resource
     private BookSourceService bookSourceService;
+    @Resource
+    private BookSourceAnalysis bookSourceAnalysis;
 
     @RequestMapping("/list")
     @RequiresPermissions(value = {"BOOK_SOURCE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
@@ -184,6 +188,33 @@ public class BookSourceController {
         } catch (Exception e) {
             result.setSuccess(false);
             result.setMessage("删除失败：" + e.getMessage());
+        }
+        return result;
+    }
+
+    @RequestMapping("/doTest")
+    @ResponseBody
+    @RequiresPermissions(value = {"BOOK_SOURCE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    public MvcResult bookSourceTest(@Param("key") String key, BookSource bookSource, int type){
+        MvcResult result;
+        try {
+            switch (type){
+                case 0:
+                    result = bookSourceAnalysis.searchByName(key,bookSource).get();
+                    break;
+                case 1:
+                    result = bookSourceAnalysis.loadBookInfo(key,bookSource).get();
+                    break;
+                case 2:
+                    result = bookSourceAnalysis.loadContent(key,bookSource).get();
+                    break;
+                default:
+                    result = MvcResult.createFail("未知测试类型");
+                    break;
+            }
+        }catch (Exception e){
+            result = MvcResult.createFail(2,e.getMessage());
+            e.printStackTrace();
         }
         return result;
     }
