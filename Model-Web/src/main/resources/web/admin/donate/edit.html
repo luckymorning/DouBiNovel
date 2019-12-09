@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${systemInfo.sitename}+'-捐赠修改'">逗逼阅读 - 捐赠修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说" th:content="${systemInfo.metaKeywords}" />
+    <meta name="description" content="做最简洁，最干净的小说聚合网站" th:content="${systemInfo.metaDescription}" />
+    <link rel="stylesheet" th:href="@{/lib/layuimini/lib/layui-v2.5.4/css/layui.css}"
+          href="../../../../static/lib/layuimini/lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/css/public.css}"
+          href="../../../../static/lib/layuimini/css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <form class="layui-form" method="post" action="doEdit">
+            <input type="hidden" name="id" th:value="${data.id}">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>姓名:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="name" required lay-verify="required" lay-reqtext="姓名不能为空" placeholder="请输入捐赠人姓名"
+                           th:value="${data.name}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>昵称:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="nickName" required lay-verify="required" lay-reqtext="昵称不能为空" placeholder="请输入捐赠人昵称"
+                           th:value="${data.nickName}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>捐赠金额:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="donateMoney" required lay-verify="required" lay-reqtext="捐赠金额不能为空" placeholder="请输入捐赠金额"
+                           th:value="${data.donateMoney}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>捐赠方式:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="donateSource" required lay-verify="required" lay-reqtext="捐赠方式不能为空" placeholder="请输入捐赠方式"
+                           th:value="${data.donateSource}" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>捐赠日期:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="donateTime" id="donateTime" th:value="${#dates.format(data.donateTime,'yyyy-MM-dd HH:mm:ss')}" lay-verify="datetime|required" lay-reqtext="捐赠日期不能为空" placeholder="请选择捐赠日期" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="data-add-btn">提交</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/lib/layuimini/lib/layui-v2.5.4/layui.js(v=1.0.4)}"
+        src="../../../../static/lib/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
+<script th:src="@{/js/admin.js}" src="../../../../static/js/admin.js" charset="utf-8"></script>
+<script>
+    layui.use(['form', 'table','laydate'], function () {
+        var $ = layui.jquery,
+            form = layui.form,
+            laydate = layui.laydate;
+
+        //日期
+        laydate.render({
+            elem: '#donateTime',
+            type:'datetime'
+        });
+        // 监听提交操作
+        form.on('submit(data-add-btn)', function (data) {
+            var index = layer.load();
+            $.ajax({
+                url: 'doEdit',
+                method: 'post',
+                data: data.field,
+                dataType: 'json',
+                success: function (result) {
+                    var message = result.message;
+                    if (result.success) {
+                        if (message == null || message == '' || message == undefined) {
+                            message = '修改成功';
+                        }
+                        layer.close(index);
+
+                        index = parent.layer.getFrameIndex(window.name);
+                        parent.layer.close(index);
+                        parent.reloadTable();
+                        return;
+                    }
+                    if (message == null || message == '' || message == undefined) {
+                        message = '修改失败:未知错误';
+                    }
+                    layer.close(index);
+                    layer.msg(message);
+                },
+                error: function () {
+                    layer.close(index);
+                    layer.msg('修改失败:网络异常，请稍后再试');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>

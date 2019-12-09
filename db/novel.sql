@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 06/12/2019 15:51:08
+ Date: 09/12/2019 17:59:46
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `m_authority`  (
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1026 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1030 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_authority
@@ -62,6 +62,10 @@ INSERT INTO `m_authority` VALUES (1022, '书源管理', 'BOOK_SOURCE_VIEW', '查
 INSERT INTO `m_authority` VALUES (1023, '书源管理', 'BOOK_SOURCE_ADD', '添加', 1006, '2019-12-05 18:00:17', '2019-12-05 18:00:17', '书源添加权限');
 INSERT INTO `m_authority` VALUES (1024, '书源管理', 'BOOK_SOURCE_DELETE', '删除', 1006, '2019-12-05 18:00:29', '2019-12-05 18:00:29', '书源删除权限');
 INSERT INTO `m_authority` VALUES (1025, '书源管理', 'BOOK_SOURCE_UPDATE', '修改', 1006, '2019-12-05 18:00:41', '2019-12-05 18:00:41', '书源修改权限');
+INSERT INTO `m_authority` VALUES (1026, '捐赠管理', 'DONATE_VIEW', '查看', 1007, '2019-12-09 17:54:47', '2019-12-09 17:54:47', '捐赠查看权限');
+INSERT INTO `m_authority` VALUES (1027, '捐赠管理', 'DONATE_ADD', '添加', 1007, '2019-12-09 17:55:28', '2019-12-09 17:55:28', '捐赠添加权限');
+INSERT INTO `m_authority` VALUES (1028, '捐赠管理', 'DONATE_DELETE', '删除', 1007, '2019-12-09 17:55:46', '2019-12-09 17:55:46', '捐赠删除权限');
+INSERT INTO `m_authority` VALUES (1029, '捐赠管理', 'DONATE_UPDATE', '修改', 1007, '2019-12-09 17:56:02', '2019-12-09 17:56:02', '捐赠修改权限');
 
 -- ----------------------------
 -- Table structure for m_authority_group
@@ -74,7 +78,7 @@ CREATE TABLE `m_authority_group`  (
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1007 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1008 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_authority_group
@@ -86,6 +90,7 @@ INSERT INTO `m_authority_group` VALUES (1003, '角色管理', '2019-12-05 17:54:
 INSERT INTO `m_authority_group` VALUES (1004, '平台参数管理', '2019-12-05 17:56:18', '2019-12-05 17:57:43', '平台参数权限');
 INSERT INTO `m_authority_group` VALUES (1005, '更新日志管理', '2019-12-05 17:57:26', '2019-12-05 17:58:03', '更新日志管理权限');
 INSERT INTO `m_authority_group` VALUES (1006, '书源管理', '2019-12-05 17:59:25', '2019-12-05 17:59:25', '书源管理权限');
+INSERT INTO `m_authority_group` VALUES (1007, '捐赠管理', '2019-12-09 17:53:36', '2019-12-09 17:53:36', '捐赠管理权限');
 
 -- ----------------------------
 -- Table structure for m_book_info
@@ -151,7 +156,26 @@ CREATE TABLE `m_book_source`  (
 -- Records of m_book_source
 -- ----------------------------
 INSERT INTO `m_book_source` VALUES (1, '新笔趣阁', 'https://www.xsbiquge.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/search.php?keyword=%s', 'div.result-game-item', '.result-game-item-title-link', '.result-game-item-title-link', '.result-game-item-pic-link-img', '.result-game-item-desc', '.result-game-item-info-tag:eq(0) > span:eq(1)', '.result-game-item-info-tag:eq(1) > span:eq(1)', '.result-game-item-info-tag:eq(2) > span:eq(1)', '.result-game-item-info-tag:eq(3) > a', '#info > h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '.con_top > a:eq(3)', '#content', '[&]\\d*\\w*[;]*\\d*\\w*[;]', '.bottem2 > a:eq(0)', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '2019-12-05 17:25:06', '2019-12-06 15:02:31');
-INSERT INTO `m_book_source` VALUES (2, '顶点小说', 'https://www.dingdiann.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/searchbook.php?keyword=%s', '.novelslist2 li:gt(1)', '.s2 a', '.s2 a', '', '', '.s4', '.s1', '.s6', '.s3 a', '#info h1', '', '', '', '', '', '#list dd', 'a', 'a', '.bookname > h1', '', '#content', '', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '.bottem2 > a:eq(3)', '2019-12-06 15:49:45', '2019-12-06 15:49:45');
+INSERT INTO `m_book_source` VALUES (2, '顶点小说', 'https://www.dingdiann.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/searchbook.php?keyword=%s', '.novelslist2 li:gt(1)', '.s2 a', '.s2 a', '', '', '.s4', '.s1', '.s6', '.s3 a', '#info h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '.con_top > a:eq(2)', '#content', '', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '.bottem2 > a:eq(3)', '2019-12-06 15:49:45', '2019-12-09 12:12:40');
+
+-- ----------------------------
+-- Table structure for m_donate
+-- ----------------------------
+DROP TABLE IF EXISTS `m_donate`;
+CREATE TABLE `m_donate`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `nick_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `donate_money` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `donate_source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `donate_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of m_donate
+-- ----------------------------
+INSERT INTO `m_donate` VALUES (1, '*晨', '随便瞅瞅', '1RMB', '支付宝', '2019-12-09 17:46:11');
 
 -- ----------------------------
 -- Table structure for m_role
@@ -192,7 +216,7 @@ CREATE TABLE `m_system_setting`  (
 -- ----------------------------
 -- Records of m_system_setting
 -- ----------------------------
-INSERT INTO `m_system_setting` VALUES (1, '逗逼联盟 - 逗逼阅读', 'http://novel.luckymorning.cn', '逗逼阅读后台管理', '逗逼联盟,逗逼阅读,无广告,小说', '做最简洁，最干净的小说聚合网站', 'Copyright © 2019 逗逼阅读 All Rights Reserved.');
+INSERT INTO `m_system_setting` VALUES (1, '逗逼联盟 - 逗逼阅读', 'http://novel.luckymorning.cn', '逗逼阅读后台管理', '逗逼联盟,逗逼阅读,无广告,小说', '做最简洁，最干净的小说聚合网站', 'Copyright © 2019 逗逼联盟-逗逼阅读 All Rights Reserved.');
 
 -- ----------------------------
 -- Table structure for m_update_log
@@ -204,12 +228,13 @@ CREATE TABLE `m_update_log`  (
   `created` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of m_update_log
 -- ----------------------------
 INSERT INTO `m_update_log` VALUES (1, '<p><span>完成初版网站，并上线，开启公测</span></p><p>目前数据源为：</p><p>1. <a target=\"_blank\" href=\"https://www.xbiquge6.com/\">新笔趣阁</a>、<a target=\"_blank\" href=\"https://www.xsbiquge.com/\">新笔趣阁</a></p><p>2. <a target=\"_blank\" href=\"https://www.dingdiann.com/\">顶点小说</a></p>', '2019-12-05 12:13:16', '2019-12-05 12:24:45');
+INSERT INTO `m_update_log` VALUES (2, '<p>1.修改书源为动态书源</p><p>2.增加捐赠入口和捐赠列表</p><p><b>希望喜欢本网站的朋友能捐赠一下支持网站的基本运营</b></p>', '2019-12-09 17:58:04', '2019-12-09 17:58:04');
 
 -- ----------------------------
 -- Table structure for m_user

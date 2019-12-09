@@ -61,33 +61,33 @@ public class BookSourceController {
     public MvcResult doAdd(BookSource bookSource) {
         MvcResult result = MvcResult.create();
         try {
-            if (StringUtils.isBlank(bookSource.getName())){
+            if (StringUtils.isBlank(bookSource.getName())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：书源名称不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getBaseUrl())){
+                result.setMessage("添加失败：书源名称不能为空");
+            } else if (StringUtils.isBlank(bookSource.getBaseUrl())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：书源根路径不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getSearchUrl())){
+                result.setMessage("添加失败：书源根路径不能为空");
+            } else if (StringUtils.isBlank(bookSource.getSearchUrl())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：书源查询路径不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getSearchUrl())){
+                result.setMessage("添加失败：书源查询路径不能为空");
+            } else if (StringUtils.isBlank(bookSource.getSearchUrl())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：书源查询路径不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getSearchResultSelector())){
+                result.setMessage("添加失败：书源查询路径不能为空");
+            } else if (StringUtils.isBlank(bookSource.getSearchResultSelector())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：结果集筛选不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getResultItemBookNameSelector())){
+                result.setMessage("添加失败：结果集筛选不能为空");
+            } else if (StringUtils.isBlank(bookSource.getResultItemBookNameSelector())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：结果集书籍名称筛选不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getResultItemBookUrlSelector())){
+                result.setMessage("添加失败：结果集书籍名称筛选不能为空");
+            } else if (StringUtils.isBlank(bookSource.getResultItemBookUrlSelector())) {
                 result.setSuccess(false);
-                result.setMessage("添加失败：结果集书籍详情地址筛选不能为空" );
-            }else {
-                if (!bookSource.getSearchUrl().startsWith("/")){
-                    bookSource.setSearchUrl("/"+bookSource.getSearchUrl());
+                result.setMessage("添加失败：结果集书籍详情地址筛选不能为空");
+            } else {
+                if (!bookSource.getSearchUrl().startsWith("/")) {
+                    bookSource.setSearchUrl("/" + bookSource.getSearchUrl());
                 }
-                while (bookSource.getBaseUrl().endsWith("/")){
-                    bookSource.setBaseUrl(bookSource.getBaseUrl().substring(0,bookSource.getBaseUrl().length()-1));
+                while (bookSource.getBaseUrl().endsWith("/")) {
+                    bookSource.setBaseUrl(bookSource.getBaseUrl().substring(0, bookSource.getBaseUrl().length() - 1));
                 }
                 boolean success = bookSourceService.add(bookSource);
                 if (!success) {
@@ -115,33 +115,33 @@ public class BookSourceController {
     public MvcResult doEdit(BookSource bookSource) {
         MvcResult result = MvcResult.create();
         try {
-            if (StringUtils.isBlank(bookSource.getName())){
+            if (StringUtils.isBlank(bookSource.getName())) {
                 result.setSuccess(false);
-                result.setMessage("修改失败：书源名称不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getBaseUrl())){
+                result.setMessage("修改失败：书源名称不能为空");
+            } else if (StringUtils.isBlank(bookSource.getBaseUrl())) {
                 result.setSuccess(false);
-                result.setMessage("修改失败：书源根路径不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getSearchUrl())){
+                result.setMessage("修改失败：书源根路径不能为空");
+            } else if (StringUtils.isBlank(bookSource.getSearchUrl())) {
                 result.setSuccess(false);
-                result.setMessage("修改失败：书源查询路径不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getSearchUrl())){
+                result.setMessage("修改失败：书源查询路径不能为空");
+            } else if (StringUtils.isBlank(bookSource.getSearchUrl())) {
                 result.setSuccess(false);
-                result.setMessage("修改失败：书源查询路径不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getSearchResultSelector())){
+                result.setMessage("修改失败：书源查询路径不能为空");
+            } else if (StringUtils.isBlank(bookSource.getSearchResultSelector())) {
                 result.setSuccess(false);
-                result.setMessage("修改失败：结果集筛选不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getResultItemBookNameSelector())){
+                result.setMessage("修改失败：结果集筛选不能为空");
+            } else if (StringUtils.isBlank(bookSource.getResultItemBookNameSelector())) {
                 result.setSuccess(false);
-                result.setMessage("修改失败：结果集书籍名称筛选不能为空" );
-            }else if (StringUtils.isBlank(bookSource.getResultItemBookUrlSelector())){
+                result.setMessage("修改失败：结果集书籍名称筛选不能为空");
+            } else if (StringUtils.isBlank(bookSource.getResultItemBookUrlSelector())) {
                 result.setSuccess(false);
-                result.setMessage("修改失败：结果集书籍详情地址筛选不能为空" );
-            }else {
-                if (!bookSource.getSearchUrl().startsWith("/")){
-                    bookSource.setSearchUrl("/"+bookSource.getSearchUrl());
+                result.setMessage("修改失败：结果集书籍详情地址筛选不能为空");
+            } else {
+                if (!bookSource.getSearchUrl().startsWith("/")) {
+                    bookSource.setSearchUrl("/" + bookSource.getSearchUrl());
                 }
-                while (bookSource.getBaseUrl().endsWith("/")){
-                    bookSource.setBaseUrl(bookSource.getBaseUrl().substring(0,bookSource.getBaseUrl().length()-1));
+                while (bookSource.getBaseUrl().endsWith("/")) {
+                    bookSource.setBaseUrl(bookSource.getBaseUrl().substring(0, bookSource.getBaseUrl().length() - 1));
                 }
                 boolean success = bookSourceService.edit(bookSource);
                 if (!success) {
@@ -195,25 +195,25 @@ public class BookSourceController {
     @RequestMapping("/doTest")
     @ResponseBody
     @RequiresPermissions(value = {"BOOK_SOURCE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
-    public MvcResult bookSourceTest(@Param("key") String key, BookSource bookSource, int type){
+    public MvcResult bookSourceTest(@Param("key") String key, BookSource bookSource, int type) {
         MvcResult result;
         try {
-            switch (type){
+            switch (type) {
                 case 0:
-                    result = bookSourceAnalysis.searchByName(key,bookSource).get();
+                    result = bookSourceAnalysis.searchByName(key, bookSource).get();
                     break;
                 case 1:
-                    result = bookSourceAnalysis.loadBookInfo(key,bookSource).get();
+                    result = bookSourceAnalysis.loadBookInfo(key, bookSource).get();
                     break;
                 case 2:
-                    result = bookSourceAnalysis.loadContent(key,bookSource).get();
+                    result = bookSourceAnalysis.loadContent(key, bookSource).get();
                     break;
                 default:
                     result = MvcResult.createFail("未知测试类型");
                     break;
             }
-        }catch (Exception e){
-            result = MvcResult.createFail(2,e.getMessage());
+        } catch (Exception e) {
+            result = MvcResult.createFail(2, e.getMessage());
             e.printStackTrace();
         }
         return result;

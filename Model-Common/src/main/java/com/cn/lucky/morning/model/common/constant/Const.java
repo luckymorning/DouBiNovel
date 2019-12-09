@@ -105,6 +105,16 @@ public class Const {
          */
         public static final int BOOK_SOURCE_ID_TTL = 60 * 60 * 24;
 
+        /**
+         * 根据ID保存捐赠信息
+         */
+        public static final String DONATE_ID = "donate.id.";
+
+        /**
+         * 根据ID保存捐赠信息过期权限
+         */
+        public static final int DONATE_ID_TTL = 60 * 60 * 24;
+
     }
 
 }

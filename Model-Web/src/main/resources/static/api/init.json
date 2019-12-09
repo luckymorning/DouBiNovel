@@ -68,6 +68,12 @@
           "href": "/admin/user/list",
           "icon": "fa fa-users",
           "target": "_self"
+        },
+        {
+          "title": "捐赠管理",
+          "href": "/admin/donate/list",
+          "icon": "fa fa-money",
+          "target": "_self"
         }
       ]
     },

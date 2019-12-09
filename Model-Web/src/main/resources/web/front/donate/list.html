@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说" th:content="${systemInfo.metaKeywords}" />
+    <meta name="description" content="做最简洁，最干净的小说聚合网站" th:content="${systemInfo.metaDescription}" />
+    <title th:text="${systemInfo.sitename}+'-捐赠榜单'">逗逼阅读-捐赠榜单</title>
+    <style>
+        .content {
+            padding-top: 20px;
+            padding-bottom: 20px;
+        }
+
+        .book-img {
+            padding: 10px;
+            max-width: 220px;
+        }
+
+        .book-info {
+            padding: 10px;
+        }
+
+        .book-info p {
+            padding: 2px;
+        }
+
+        img {
+            z-index: 1;
+            width: 100%;
+        }
+
+        .book-name {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .nothing-tips{
+            margin: 15px;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../../static/css/custom_theme.css">
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../../static/lib/layui/css/layui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+</head>
+<body class="theme-0">
+<script th:src="@{/js/home.js}" src="../../../static/js/home.js"></script>
+
+<!-- 导航栏 -->
+<div th:replace="public/top::header">
+
+</div>
+
+<div class="layui-container">
+    <h1 style="text-align: center;margin: 10px">捐赠榜单</h1>
+    <h3 style="text-align: right;color: red">感觉各位的捐赠，你的支持就是我最大的动力</h3>
+    <table class="layui-table">
+        <thead>
+        <tr>
+            <th>捐赠人姓名</th>
+            <th>捐赠人昵称</th>
+            <th>捐赠金额</th>
+            <th>捐赠方式</th>
+            <th>捐赠时间</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="data:${list}">
+            <td th:text="${data.name}">*晨</td>
+            <td th:text="${data.nickName}">随便瞅瞅</td>
+            <td th:text="${data.donateMoney}">100RMB</td>
+            <td th:text="${data.donateSource}">支付宝</td>
+            <td th:text="${#dates.format(data.donateTime,'yyyy年MM月dd日 HH:mm:ss')}">2019-12-9 16:42:00</td>
+        </tr>
+        </tbody>
+    </table>
+
+</div>
+
+
+<!-- 底部 -->
+<div th:replace="public/bottom::footer">
+
+</div>
+
+<script th:src="@{/lib/layui/layui.all.js}" src="../../../static/lib/layui/layui.all.js"></script>
+</body>
+</html>

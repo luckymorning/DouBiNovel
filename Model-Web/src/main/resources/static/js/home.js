@@ -30,4 +30,18 @@ $(document).ready(function () {
             footer.css('margin-top',marginTop+'px');
         }
     }
+
+    $('#donate').click(function () {
+        var html = '' +
+            '<div style="position: relative;overflow: hidden;width: 650px;">' +
+            '<img style="width: 300px;margin: 10px;" src="/imgs/donate_wechat.png" onerror="$(this).attr(\'src\', \'../../static/imgs/donate_wechat.png\')"/>'+
+            '<img style="width: 300px;margin: 10px" src="/imgs/donate_alipay.png" onerror="$(this).attr(\'src\', \'../../static/imgs/donate_alipay.png\')"/>'+
+            '</div>';
+        layui.layer.open({
+            type: 1,
+            title:'捐赠二维码',
+            content:html,
+            area:['650px','500px'],
+        })
+    });
 });
