@@ -251,12 +251,4 @@ class ModelWebApplicationTests {
         }
 
     }
-
-    @Test
-    void md5Password() {
-        String password = "123321abc";
-        String username = "admin";
-        password = CodeUtils.MD5Pwd(username, password);
-        System.out.println("加密后密码：" + password);
-    }
 }

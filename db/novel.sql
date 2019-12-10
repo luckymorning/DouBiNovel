@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 09/12/2019 17:59:46
+ Date: 10/12/2019 16:25:59
 */
 
 SET NAMES utf8mb4;
@@ -262,6 +262,6 @@ CREATE TABLE `m_user`  (
 -- ----------------------------
 -- Records of m_user
 -- ----------------------------
-INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', 'a3283151138b3877deedbb8f5693880b', '超级管理员', '18582369504', NULL, NULL, 'lucky_morning@163.com', '整个平台超级管理员', NULL, 1, 1000, '2019-11-25 19:51:44', '2019-12-04 17:41:07');
+INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', 'e44b960b8f5893ef8cd8f54229527840', '超级管理员', '18582369504', NULL, NULL, 'lucky_morning@163.com', '整个平台超级管理员', NULL, 1, 1000, '2019-11-25 19:51:44', '2019-12-10 16:25:15');
 
 SET FOREIGN_KEY_CHECKS = 1;
