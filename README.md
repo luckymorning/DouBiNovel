@@ -6,7 +6,7 @@
 #### 软件架构
 SpringBoot + MyBatis + Redis
 
-#### 参与贡献
+#### 捐赠
 | 支付宝 | 微信 |
 | :----: | :----: |
 | <img src="./donate_alipay.png" width="100%"> | <img src="./donate_wechat.png" width="100%"> |
