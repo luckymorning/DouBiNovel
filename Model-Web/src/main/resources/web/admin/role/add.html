@@ -47,7 +47,7 @@
             <div class="layui-form-item" th:each="groupMap : ${authorities}" th:if="${!#lists.isEmpty(groupMap.value)}">
                 <label class="layui-form-label"><span th:text="${groupMap.key.name}" th:title="${groupMap.key.name}"></span></label>
                 <div class="layui-input-block">
-                    <input type="checkbox" name="authoritys" lay-skin="primary" th:each="groupAut : ${groupMap.value}" th:value="${groupAut.id}" th:title="${groupAut.name}" >
+                    <input type="checkbox" name="authorities" lay-skin="primary" th:each="groupAut : ${groupMap.value}" th:value="${groupAut.id}" th:title="${groupAut.name}" >
                 </div>
             </div>
 
@@ -70,6 +70,16 @@
         // 监听提交操作
         form.on('submit(data-add-btn)', function (data) {
             var index = layer.load();
+            var autoritiesCheckbox = $("input[name='authorities']");
+            var authorities = '';
+            for (var i = 0; i < autoritiesCheckbox.length; i++) {
+                if (autoritiesCheckbox[i].checked) {
+                    authorities += autoritiesCheckbox[i].value + ',';
+                }
+            }
+            if (authorities.length>0){
+                authorities = authorities.substring(0, authorities.length-1);
+            }
             $.ajax({
                 url: 'doAdd',
                 method: 'post',

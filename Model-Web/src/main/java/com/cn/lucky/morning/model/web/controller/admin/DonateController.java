@@ -47,7 +47,7 @@ public class DonateController {
     }
 
     @RequestMapping("/add")
-    @RequiresPermissions(value = {"DONATE_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"DONATE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add() {
         return "admin/donate/add";
     }
@@ -85,7 +85,7 @@ public class DonateController {
     }
 
     @RequestMapping("/edit")
-    @RequiresPermissions(value = {"DONATE_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"DONATE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
         Donate data = donateService.getById(id);
         model.addAttribute("data", data);

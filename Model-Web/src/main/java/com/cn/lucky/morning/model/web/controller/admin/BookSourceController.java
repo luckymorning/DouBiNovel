@@ -50,7 +50,7 @@ public class BookSourceController {
     }
 
     @RequestMapping("/add")
-    @RequiresPermissions(value = {"BOOK_SOURCE_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"BOOK_SOURCE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add() {
         return "admin/bookSource/add";
     }
@@ -103,7 +103,7 @@ public class BookSourceController {
     }
 
     @RequestMapping("/edit")
-    @RequiresPermissions(value = {"BOOK_SOURCE_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"BOOK_SOURCE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
         model.addAttribute("data", bookSourceService.getById(id));
         return "admin/bookSource/edit";

@@ -4,12 +4,8 @@ import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
-import com.cn.lucky.morning.model.domain.Authority;
-import com.cn.lucky.morning.model.domain.AuthorityGroup;
 import com.cn.lucky.morning.model.domain.Role;
 import com.cn.lucky.morning.model.domain.User;
-import com.cn.lucky.morning.model.domain.customer.RoleEx;
-import com.cn.lucky.morning.model.service.AuthorityService;
 import com.cn.lucky.morning.model.service.RoleService;
 import com.cn.lucky.morning.model.service.UserService;
 import com.cn.lucky.morning.model.web.tools.CodeUtils;
@@ -64,7 +60,7 @@ public class UserController {
     }
 
     @RequestMapping("/add")
-    @RequiresPermissions(value = {"USER_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"USER_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add(Model model) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Role role = roleService.getById(user.getRoleId());
@@ -95,7 +91,7 @@ public class UserController {
                 result.setSuccess(false);
                 result.setMessage("添加失败：用户账号已存在");
             }else {
-                user.setPassword(CodeUtils.MD5Pwd(user.getName(),user.getPassword()));
+                user.setPassword(CodeUtils.MD5Pwd(user.getCode(),user.getPassword()));
                 boolean success = userService.add(user);
                 if (!success) {
                     result.setSuccess(false);
@@ -110,7 +106,7 @@ public class UserController {
     }
 
     @RequestMapping("/edit")
-    @RequiresPermissions(value = {"USER_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"USER_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         Role role = roleService.getById(user.getRoleId());

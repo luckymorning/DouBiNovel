@@ -53,7 +53,7 @@ public class UpdateLogController {
     }
 
     @RequestMapping("/add")
-    @RequiresPermissions(value = {"UPDATE_LOG_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"UPDATE_LOG_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add() {
         return "admin/updateLog/add";
     }
@@ -82,7 +82,7 @@ public class UpdateLogController {
     }
 
     @RequestMapping("/edit")
-    @RequiresPermissions(value = {"UPDATE_LOG_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"UPDATE_LOG_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
         model.addAttribute("data", updateLogService.getById(id));
         return "admin/updateLog/edit";

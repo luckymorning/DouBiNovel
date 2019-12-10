@@ -45,7 +45,7 @@ public class AuthorityGroupController {
     }
 
     @RequestMapping("/add")
-    @RequiresPermissions(value = {"AUTHORITY_GROUP_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"AUTHORITY_GROUP_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add() {
         return "admin/authorityGroup/add";
     }
@@ -69,7 +69,7 @@ public class AuthorityGroupController {
     }
 
     @RequestMapping("/edit")
-    @RequiresPermissions(value = {"AUTHORITY_GROUP_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"AUTHORITY_GROUP_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
         model.addAttribute("data", authorityGroupService.getById(id));
         return "admin/authorityGroup/edit";

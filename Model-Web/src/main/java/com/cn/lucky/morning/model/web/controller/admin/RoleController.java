@@ -8,7 +8,6 @@ import com.cn.lucky.morning.model.domain.Authority;
 import com.cn.lucky.morning.model.domain.AuthorityGroup;
 import com.cn.lucky.morning.model.domain.Role;
 import com.cn.lucky.morning.model.domain.User;
-import com.cn.lucky.morning.model.domain.customer.RoleEx;
 import com.cn.lucky.morning.model.service.AuthorityService;
 import com.cn.lucky.morning.model.service.RoleService;
 import com.google.common.base.Objects;
@@ -58,7 +57,7 @@ public class RoleController {
     }
 
     @RequestMapping("/add")
-    @RequiresPermissions(value = {"ROLE_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"ROLE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add(Model model) {
         Map<AuthorityGroup, List<Authority>> authorities = authorityService.getAuthority();
         model.addAttribute("authorities", authorities);
@@ -68,7 +67,7 @@ public class RoleController {
     @RequestMapping(method = RequestMethod.POST, value = "/doAdd")
     @ResponseBody
     @RequiresPermissions(value = {"ROLE_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
-    public MvcResult doAdd(RoleEx role) {
+    public MvcResult doAdd(Role role) {
         MvcResult result = MvcResult.create();
         try {
             if (StringUtils.isEmpty(role.getName())) {
@@ -80,7 +79,7 @@ public class RoleController {
                 if (!Objects.equal(userRole.getIsSuper(), Const.role.IS_SUPER)) {
                     role.setIsSuper(Const.role.NOT_SUPER);
                 }
-                role.setAuthority(StringUtils.join(role.getAuthoritys(), ','));
+                role.setCreatorId(user.getId());
                 boolean success = roleService.add(role);
                 if (!success) {
                     result.setSuccess(false);
@@ -95,7 +94,7 @@ public class RoleController {
     }
 
     @RequestMapping("/edit")
-    @RequiresPermissions(value = {"ROLE_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"ROLE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
         Map<AuthorityGroup, List<Authority>> authorities = authorityService.getAuthority();
         model.addAttribute("authorities", authorities);
@@ -110,7 +109,7 @@ public class RoleController {
     @RequestMapping(method = RequestMethod.POST, value = "/doEdit")
     @ResponseBody
     @RequiresPermissions(value = {"ROLE_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
-    public MvcResult doEdit(RoleEx role) {
+    public MvcResult doEdit(Role role) {
         MvcResult result = MvcResult.create();
         try {
             if (StringUtils.isEmpty(role.getName())) {
@@ -121,9 +120,6 @@ public class RoleController {
                 Role userRole = roleService.getById(user.getRoleId());
                 if (!Objects.equal(userRole.getIsSuper(), Const.role.IS_SUPER)) {
                     role.setIsSuper(Const.role.NOT_SUPER);
-                }
-                if (!Objects.equal(role.getIsSuper(), Const.role.IS_SUPER)) {
-                    role.setAuthority(StringUtils.join(role.getAuthoritys(), ','));
                 }
                 boolean success = roleService.edit(role);
                 if (!success) {
