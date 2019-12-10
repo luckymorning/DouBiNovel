@@ -62,10 +62,10 @@ JDK1.8  + Spring Boot 2.x
 * **OKHttp3：** 用于网络请求
 * **JSoup：** 用于html页面解析提取
 ## Donate
-### 感谢各位的捐赠
 如果觉得**逗逼阅读**对您有帮助，那么您可以给开发者一些支持：
-* 开源
+* **start** 或者 **follow**
 * 服务器的基本开销
+* 请我喝杯咖啡啦
 * 为用户提供更好的阅读环境
 ### 感谢以下捐赠者
 * 详情见[捐赠名单](http://novel.luckymorning.cn/donate/list)
