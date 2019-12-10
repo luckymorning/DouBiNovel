@@ -8,4 +8,6 @@ SpringBoot + MyBatis + Redis
 
 #### 参与贡献
 
-1.  Star 本仓库
+1. 捐赠
+<img src="./donate_alipay.png" width="30%">
+<img src="./donate_wechat.png" width="30%" style="margin-left:20px;">
