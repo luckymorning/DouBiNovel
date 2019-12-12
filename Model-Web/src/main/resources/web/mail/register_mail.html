@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说"/>
+    <meta name="description" content="做最简洁，最干净的小说聚合网站"/>
+    <title>邮箱注册模板</title>
+    <style>
+        @media screen and (min-width: 768px) {
+            .layui-container {
+                width: 750px
+            }
+        }
+
+        @media screen and (min-width: 1200px) {
+            .layui-container {
+                width: 1170px
+            }
+        }
+
+        @media screen and (min-width: 992px) {
+            .layui-container {
+                width: 970px
+            }
+        }
+
+        .layui-container {
+            position: relative;
+            margin: 0 auto;
+            padding: 0 15px;
+            box-sizing: border-box
+        }
+    </style>
+</head>
+<body>
+
+<div class="layui-container">
+
+    <h1>亲爱的 <span th:text="${siteName}">逗比联盟-逗逼阅读</span> 用户：</h1>
+    <h3>这是一封注册确认邮件，你的验证码是：</h3>
+    <h2 th:text="${code}">15465</h2>
+    <h3>如果您沒有索取此验证码，那可能是他人正在尝试使用 <a href="mailto:lucky_morning@163.com" th:href="'mailto:'+${mail}" th:text="${mail}">lucky_morning@163.com</a> 进行注册。请勿将次验证码转寄或给予他人</h3>
+    <h3>祝事事順利！</h3>
+    <h3><span th:text="${siteName}">逗比联盟-逗逼阅读</span>团队敬上</h3>
+</div>
+
+</body>
+</html>

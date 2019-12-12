@@ -8,6 +8,8 @@ public class Const {
 
         public static final String VERIFICATION_CODE = "verificationCode";
 
+        public static final String REGISTER_CODE = "register.code";
+
     }
 
     public static class role {
