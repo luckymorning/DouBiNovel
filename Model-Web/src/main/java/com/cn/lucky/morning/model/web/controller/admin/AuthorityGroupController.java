@@ -18,6 +18,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin/authorityGroup")
+@RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
 public class AuthorityGroupController {
     @Resource
     private AuthorityGroupService authorityGroupService;

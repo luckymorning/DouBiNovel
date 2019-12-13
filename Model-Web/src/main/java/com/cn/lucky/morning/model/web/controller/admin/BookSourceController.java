@@ -21,6 +21,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin/bookSource")
+@RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
 public class BookSourceController {
     @Resource
     private BookSourceService bookSourceService;

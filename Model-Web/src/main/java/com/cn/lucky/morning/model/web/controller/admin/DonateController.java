@@ -20,6 +20,7 @@ import java.util.Arrays;
 
 @Controller
 @RequestMapping("/admin/donate")
+@RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
 public class DonateController {
     @Resource
     private DonateService donateService;

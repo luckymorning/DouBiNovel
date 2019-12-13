@@ -26,6 +26,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin/updateLog")
+@RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
 public class UpdateLogController {
     @Resource
     private UpdateLogService updateLogService;

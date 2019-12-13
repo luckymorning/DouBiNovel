@@ -24,6 +24,7 @@ import java.util.Objects;
 
 @Controller
 @RequestMapping("/admin/authority")
+@RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
 public class AuthorityController {
     @Resource
     private AuthorityService authorityService;

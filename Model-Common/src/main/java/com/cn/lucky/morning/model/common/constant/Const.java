@@ -4,11 +4,15 @@ public class Const {
 
     public static class session {
 
+        public static final String LOGIN_USER = "login_user";
+
         public static final String LOGIN_ADMIN = "login_admin";
 
         public static final String VERIFICATION_CODE = "verificationCode";
 
         public static final String REGISTER_CODE = "register.code";
+
+        public static final String REGISTER_EMAIL = "register.email";
 
     }
 

@@ -28,6 +28,7 @@ import java.util.Map;
 
 @Controller
 @RequestMapping("/admin/role")
+@RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
 public class RoleController {
     @Resource
     private RoleService roleService;

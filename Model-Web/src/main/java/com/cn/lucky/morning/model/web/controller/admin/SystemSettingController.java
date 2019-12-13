@@ -16,6 +16,7 @@ import javax.annotation.Resource;
 
 @Controller
 @RequestMapping("/admin/setting")
+@RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
 public class SystemSettingController {
     @Resource
     private SystemSettingService systemSettingService;

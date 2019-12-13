@@ -8,6 +8,8 @@ import com.cn.lucky.morning.model.web.tools.CaptchaUtils;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
+import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -32,10 +34,10 @@ public class AdminIndexController {
     @RequestMapping(value = {"", "/", "/index"})
     public String index(Model model) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
-        if (user == null){
+        if (user == null) {
             return "redirect:/admin/logout";
         }
-        model.addAttribute("user",user);
+        model.addAttribute("user", user);
         return "admin/index";
     }
 
@@ -87,8 +89,14 @@ public class AdminIndexController {
             try {
                 subject.login(token);
                 if (subject.isAuthenticated()) {
+                    try {
+                        subject.checkPermission(Const.role.ROLE_SUPER);
+                    } catch (Exception e) {
+                        subject.checkPermission("ADMIN_VIEW");
+                    }
                     result.setSuccess(true);
                     result.setMessage("登录成功");
+                    session.setAttribute(Const.session.LOGIN_ADMIN,subject.getPrincipal());
                 } else {
                     result.setSuccess(false);
                     result.setMessage("登录失败");
@@ -104,6 +112,13 @@ public class AdminIndexController {
                 result.setMessage("用户名或密码错误次数过多");
             } catch (AuthenticationException ae) {
                 result.setMessage("用户名或密码不正确");
+            } catch (UnauthorizedException e) {
+                result.setMessage("该账号无后台登录权限");
+            } finally {
+                if (!result.isSuccess()) {
+                    token.clear();
+                    subject.logout();
+                }
             }
         }
         return result;
@@ -118,23 +133,23 @@ public class AdminIndexController {
 
     @RequestMapping("/clearCache")
     @ResponseBody
-    public Map<String,Object> clearCache(){
-        Map<String,Object> map = Maps.newHashMap();
+    public Map<String, Object> clearCache() {
+        Map<String, Object> map = Maps.newHashMap();
         try {
             boolean isSuccess = cacheService.flushAll();
-            if (isSuccess){
-                map.put("code",1);
-                map.put("msg","清除成功");
-            }else {
-                map.put("code",2);
-                map.put("msg","清除失败,redis清空失败");
+            if (isSuccess) {
+                map.put("code", 1);
+                map.put("msg", "清除成功");
+            } else {
+                map.put("code", 2);
+                map.put("msg", "清除失败,redis清空失败");
             }
-        }catch (Exception e){
-            map.put("code",2);
-            if (StringUtils.isEmpty(e.getMessage())){
-                map.put("msg","未知异常");
-            }else {
-                map.put("msg",e.getMessage());
+        } catch (Exception e) {
+            map.put("code", 2);
+            if (StringUtils.isEmpty(e.getMessage())) {
+                map.put("msg", "未知异常");
+            } else {
+                map.put("msg", e.getMessage());
             }
         }
         return map;

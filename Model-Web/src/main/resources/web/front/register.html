@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说" th:content="${systemInfo.metaKeywords}" />
+    <meta name="description" content="做最简洁，最干净的小说聚合网站" th:content="${systemInfo.metaDescription}" />
+    <title th:text="${systemInfo.sitename}+'-账号注册'">逗逼阅读-账号注册</title>
+    <style>
+        .content {
+            padding-top: 10%;
+        }
+
+        .title-logo {
+            height: 60px;
+        }
+
+        .title-item {
+            font-size: 30px;
+            font-weight: bolder;
+            line-height: 50px;
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .ps {
+            text-align: center;
+            padding: 20px;
+            margin-bottom: 60px;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../static/css/custom_theme.css">
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../static/lib/layui/css/layui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+</head>
+<body class="theme-0">
+<script th:src="@{/js/home.js}" src="../../static/js/home.js"></script>
+
+<div class="layui-container">
+
+
+    <div class="layui-row">
+        <div class="title-item layui-col-md7">
+            <img src="../../static/imgs/icon/logo.png" th:src="@{/imgs/icon/logo.png}" class="title-logo">
+            <span th:text="${systemInfo.sitename}">逗逼联盟-逗逼阅读</span><span style="font-size: 20px;font-weight: normal;line-height: 50px;"> |账号注册</span>
+        </div>
+    </div>
+
+    <hr style="margin-top: 80px">
+
+<div class="layui-row">
+
+    <form class="layui-form layui-col-md-offset3" action="/register/doRegister" method="post" lay-filter="register" style="margin-top: 20px">
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>昵称：
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="name" lay-verify="required" lay-reqtext="昵称不能为空" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>邮箱：
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="email" lay-verify="required|email" lay-reqtext="邮箱不能为空" autocomplete="off" class="layui-input">
+                </div>
+                <button type="button" class="layui-btn layui-btn-normal" id="sendRegisterBtn">获取验证码</button>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>验证码：
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="registerCode" lay-verify="required" lay-reqtext="请输入验证码" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>密码：
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="password" lay-verify="required|password" lay-reqtext="密码不能为空" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item">
+            <div class="layui-inline">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>确认密码：
+                </label>
+                <div class="layui-input-inline">
+                    <input type="text" name="rePassword" lay-verify="required|rePassword" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-form-item" style="margin-top: 50px">
+            <button class="layui-btn layui-btn-danger layui-col-md6" lay-submit lay-filter="register">注  册</button>
+        </div>
+
+    </form>
+
+</div>
+
+
+</div>
+
+<!-- 底部 -->
+<div th:replace="public/bottom::footer" style="position: fixed">
+
+</div>
+<script th:src="@{/lib/layui/layui.all.js}" src="../../static/lib/layui/layui.all.js"></script>
+<script type="text/javascript">
+    layui.use(['form'], function () {
+        var form = layui.form,
+            layer = layui.layer;
+
+        form.verify({
+            password: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ],
+            rePassword: function (value) {
+                var password = form.val('register').password;
+                if (password!=value){
+                    return '密码不一致';
+                }
+            }
+        });
+
+
+        var isCanSendRegister = true;
+        var t;
+        var count;
+        // 进行发送注册验证码操作
+        $('#sendRegisterBtn').click(function () {
+            if (!isCanSendRegister){
+                return ;
+            }
+            var data = form.val('register');
+            var pattern = /\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/g;
+            if(!pattern.test(data.email)){
+                layer.msg('请填写正确邮箱',{icon:5,anim:6});
+                return;
+            }
+            isCanSendRegister = false;
+            var index = layer.load();
+            $.ajax({
+                url: '/register/sendRegisterMail',
+                method: 'post',
+                data: {
+                    email:data.email
+                },
+                dataType: 'json',
+                success: function (result) {
+                    layer.close(index);
+                    var message = result.message;
+                    if (result.success) {
+                        $('#sendRegisterBtn').addClass('layui-btn-disabled');
+                        count = 60;
+                        $('#sendRegisterBtn').text(count+'秒后可再次发送');
+                        t = setInterval(function () {
+                            if (count<=0){
+                                $('#sendRegisterBtn').removeClass('layui-btn-disabled');
+                                isCanSendRegister = true;
+                                clearInterval(t1);
+                            }
+                            count--;
+                            $('#sendRegisterBtn').text(count+'秒后可再次发送');
+                        },1000);
+                        return;
+                    }
+                    isCanSendRegister = true;
+                    if (message == null || message == '' || message == undefined){
+                        message = '发送验证码失败：未知错误';
+                    }
+                    layer.msg(message,{icon:5,anim:6});
+                },
+                error: function () {
+                    layer.close(index);
+                    layer.msg('发送验证码失败：网络异常，请稍后再试',{icon:5,anim:6});
+                    isCanSendRegister = true;
+                }
+            });
+        });
+
+
+        // 进行注册操作
+        form.on('submit(register)', function (data) {
+            var index = layer.load();
+            $.ajax({
+                url: '/register/doRegister',
+                method: 'post',
+                data: data.field,
+                dataType: 'json',
+                success: function (result) {
+                    layer.close(index);
+                    var message = result.message;
+                    if (result.success) {
+                        layer.msg('注册成功',function () {
+                            window.location = '/index';
+                        });
+                        return;
+                    }
+                    if (message == null || message == '' || message == undefined){
+                        message = '注册失败：未知错误';
+                    }
+                    layer.msg(message,{icon:5,anim:6});
+                },
+                error: function () {
+                    layer.close(index);
+                    layer.msg('注册失败：网络异常，请稍后再试',{icon:5,anim:6});
+                }
+            });
+            return false;
+        });
+</script>
+</body>
+</html>

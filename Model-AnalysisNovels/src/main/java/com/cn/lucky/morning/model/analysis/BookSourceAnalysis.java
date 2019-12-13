@@ -308,11 +308,16 @@ public class BookSourceAnalysis {
                     Element contentElem = html.selectFirst(bookSource.getBookContentSelector());
                     if (contentElem != null) {
                         String content = contentElem.html();
+                        content = content.replaceAll("\n","");
                         if (StringUtils.isNotBlank(bookSource.getContentRegex())) {
                             content = content.replaceAll("&nbsp;", "##");
                             content = content.replaceAll(bookSource.getContentRegex(), "");
                             content = content.replaceAll("##", "&nbsp;");
                         }
+                        while (content.contains("<br><br>")){
+                            content = content.replaceAll("<br><br>","<br>");
+                        }
+
                         map.put("content", content);
                     }
                 }
