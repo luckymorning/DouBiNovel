@@ -33,23 +33,17 @@
             </div>
 
             <div th:if="${user == null}" class="layui-col-md3 header-search layui-hide-xs">
-                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm ">登录</button>
-                <a target="_blank" href="/register/index" class="layui-btn layui-btn-primary layui-btn-sm ">注册</a>
+                <button type="button" class="layui-btn layui-btn-normal layui-btn-sm " onclick="showLoginDialog()">登录</button>
+                <a target="_blank" href="/register" class="layui-btn layui-btn-primary layui-btn-sm ">注册</a>
             </div>
 
             <div th:if="${user != null}" class="layui-col-md3 header-search layui-hide-xs">
                 <ul class="layui-nav layui-layout-right" style="background-color: rgba(237,231,218,0.7)">
                     <li class="layui-nav-item layuimini-setting">
-                        <a href="javascript:;" th:text="${user.name}" style="color: rgba(0,0,0,0.7)">admin</a>
+                        <a href="javascript:;" th:text="${user.name}" style="color: rgba(0,0,0,0.7);overflow: hidden;white-space: nowrap;text-overflow: ellipsis">admin</a>
                         <dl class="layui-nav-child">
                             <dd>
-                                <a href="javascript:;" data-iframe-tab="page/user-setting.html" data-title="书架" data-icon="fa fa-gears">基本资料</a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;" data-iframe-tab="page/user-password.html" data-title="个人信息" data-icon="fa fa-gears">修改密码</a>
-                            </dd>
-                            <dd>
-                                <a href="javascript:;" class="login-out">退出登录</a>
+                                <a href="/logout" class="login-out">退出登录</a>
                             </dd>
                         </dl>
                     </li>

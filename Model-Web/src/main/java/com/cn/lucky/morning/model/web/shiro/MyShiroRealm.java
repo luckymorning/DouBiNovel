@@ -38,7 +38,7 @@ public class MyShiroRealm extends AuthorizingRealm {
 //        System.out.println("权限配置-->com.cn.lucky.morning.model.web.shiro.MyShiroRealm.doGetAuthorizationInfo()");
         SimpleAuthorizationInfo authorizationInfo = new SimpleAuthorizationInfo();
         User user  = (User) principals.getPrimaryPrincipal();
-        Role role = roleService.getById(user.getId());
+        Role role = roleService.getById(user.getRoleId());
         if (role == null){
             return null;
         }
