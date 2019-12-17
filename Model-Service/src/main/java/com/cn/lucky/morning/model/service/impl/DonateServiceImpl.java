@@ -89,6 +89,7 @@ public class DonateServiceImpl implements DonateService {
         List<Donate> list = (List<Donate>) cacheService.get(Const.cache.DONATE_ID + "all");
         if (list == null) {
             DonateExample example = new DonateExample();
+            example.setOrderByClause("id desc");
             list = mapper.selectByExample(example);
             cacheService.set(Const.cache.DONATE_ID + "all", list, Const.cache.DONATE_ID_TTL);
         }
