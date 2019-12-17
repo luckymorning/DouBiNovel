@@ -3,15 +3,15 @@
 
  Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 50721
+ Source Server Version : 100137
  Source Host           : localhost:3306
  Source Schema         : novel
 
  Target Server Type    : MySQL
- Target Server Version : 50721
+ Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 15/12/2019 22:49:26
+ Date: 17/12/2019 16:29:44
 */
 
 SET NAMES utf8mb4;
@@ -172,12 +172,15 @@ CREATE TABLE `m_donate`  (
   `donate_source` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `donate_time` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 2 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 6 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of m_donate
 -- ----------------------------
-INSERT INTO `m_donate` VALUES (1, '*晨', '随便瞅瞅', '1RMB', '支付宝', '2019-12-09 17:46:11');
+INSERT INTO `m_donate` VALUES (2, '*黍', '黄蜀黍（52破解）', '1RMB', '微信', '2019-12-17 14:42:26');
+INSERT INTO `m_donate` VALUES (3, '*黍', '黄蜀黍（52破解）', '2RMB', '微信', '2019-12-17 14:42:35');
+INSERT INTO `m_donate` VALUES (4, '*黍', '黄蜀黍（52破解）', '1RMB', '微信', '2019-12-17 14:42:47');
+INSERT INTO `m_donate` VALUES (5, '*黍', '黄蜀黍（52破解）', '1RMB', '微信', '2019-12-17 15:52:43');
 
 -- ----------------------------
 -- Table structure for m_role
