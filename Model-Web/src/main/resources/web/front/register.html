@@ -185,8 +185,9 @@
                             if (count <= 0) {
                                 $('#sendRegisterBtn').removeClass('layui-btn-disabled');
                                 isCanSendRegister = true;
-                                clearInterval(t1);
+                                clearInterval(t);
                                 $('#sendRegisterBtn').text('获取验证码');
+                                return;
                             }
                             count--;
                             $('#sendRegisterBtn').text(count + '秒后可再次发送');
