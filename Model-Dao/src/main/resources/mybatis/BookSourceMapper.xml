@@ -36,6 +36,7 @@
     <result column="book_content_pre_catalog_selector" jdbcType="VARCHAR" property="bookContentPreCatalogSelector" />
     <result column="book_content_catalog_list_selector" jdbcType="VARCHAR" property="bookContentCatalogListSelector" />
     <result column="book_content_next_catalog_selector" jdbcType="VARCHAR" property="bookContentNextCatalogSelector" />
+    <result column="book_content_ads" jdbcType="VARCHAR" property="bookContentAds" />
     <result column="created" jdbcType="TIMESTAMP" property="created" />
     <result column="updated" jdbcType="TIMESTAMP" property="updated" />
   </resultMap>
@@ -118,7 +119,7 @@
     book_detail_book_image_url_selector, book_detail_catalog_list_selector, book_detail_catalog_item_name_selector, 
     book_detail_catalog_item_link_selector, book_content_catalog_name_selector, book_content_name_selector, 
     book_content_selector, content_regex, book_content_pre_catalog_selector, book_content_catalog_list_selector, 
-    book_content_next_catalog_selector, created, updated
+    book_content_next_catalog_selector, book_content_ads, created, updated
   </sql>
   <select id="selectByExample" parameterType="com.cn.lucky.morning.model.domain.BookSourceExample" resultMap="BaseResultMap">
     <!--
@@ -190,7 +191,8 @@
       book_content_catalog_name_selector, book_content_name_selector, 
       book_content_selector, content_regex, book_content_pre_catalog_selector, 
       book_content_catalog_list_selector, book_content_next_catalog_selector, 
-      created, updated)
+      book_content_ads, created, updated
+      )
     values (#{name,jdbcType=VARCHAR}, #{baseUrl,jdbcType=VARCHAR}, #{imageError,jdbcType=VARCHAR}, 
       #{searchUrl,jdbcType=VARCHAR}, #{searchResultSelector,jdbcType=VARCHAR}, #{resultItemBookNameSelector,jdbcType=VARCHAR}, 
       #{resultItemBookUrlSelector,jdbcType=VARCHAR}, #{resultItemBookImageUrlSelector,jdbcType=VARCHAR}, 
@@ -204,7 +206,8 @@
       #{bookContentCatalogNameSelector,jdbcType=VARCHAR}, #{bookContentNameSelector,jdbcType=VARCHAR}, 
       #{bookContentSelector,jdbcType=VARCHAR}, #{contentRegex,jdbcType=VARCHAR}, #{bookContentPreCatalogSelector,jdbcType=VARCHAR}, 
       #{bookContentCatalogListSelector,jdbcType=VARCHAR}, #{bookContentNextCatalogSelector,jdbcType=VARCHAR}, 
-      #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP})
+      #{bookContentAds,jdbcType=VARCHAR}, #{created,jdbcType=TIMESTAMP}, #{updated,jdbcType=TIMESTAMP}
+      )
   </insert>
   <insert id="insertSelective" parameterType="com.cn.lucky.morning.model.domain.BookSource">
     <!--
@@ -303,6 +306,9 @@
       <if test="bookContentNextCatalogSelector != null">
         book_content_next_catalog_selector,
       </if>
+      <if test="bookContentAds != null">
+        book_content_ads,
+      </if>
       <if test="created != null">
         created,
       </if>
@@ -397,6 +403,9 @@
       </if>
       <if test="bookContentNextCatalogSelector != null">
         #{bookContentNextCatalogSelector,jdbcType=VARCHAR},
+      </if>
+      <if test="bookContentAds != null">
+        #{bookContentAds,jdbcType=VARCHAR},
       </if>
       <if test="created != null">
         #{created,jdbcType=TIMESTAMP},
@@ -513,6 +522,9 @@
       <if test="record.bookContentNextCatalogSelector != null">
         book_content_next_catalog_selector = #{record.bookContentNextCatalogSelector,jdbcType=VARCHAR},
       </if>
+      <if test="record.bookContentAds != null">
+        book_content_ads = #{record.bookContentAds,jdbcType=VARCHAR},
+      </if>
       <if test="record.created != null">
         created = #{record.created,jdbcType=TIMESTAMP},
       </if>
@@ -560,6 +572,7 @@
       book_content_pre_catalog_selector = #{record.bookContentPreCatalogSelector,jdbcType=VARCHAR},
       book_content_catalog_list_selector = #{record.bookContentCatalogListSelector,jdbcType=VARCHAR},
       book_content_next_catalog_selector = #{record.bookContentNextCatalogSelector,jdbcType=VARCHAR},
+      book_content_ads = #{record.bookContentAds,jdbcType=VARCHAR},
       created = #{record.created,jdbcType=TIMESTAMP},
       updated = #{record.updated,jdbcType=TIMESTAMP}
     <if test="_parameter != null">
@@ -660,6 +673,9 @@
       <if test="bookContentNextCatalogSelector != null">
         book_content_next_catalog_selector = #{bookContentNextCatalogSelector,jdbcType=VARCHAR},
       </if>
+      <if test="bookContentAds != null">
+        book_content_ads = #{bookContentAds,jdbcType=VARCHAR},
+      </if>
       <if test="created != null">
         created = #{created,jdbcType=TIMESTAMP},
       </if>
@@ -704,6 +720,7 @@
       book_content_pre_catalog_selector = #{bookContentPreCatalogSelector,jdbcType=VARCHAR},
       book_content_catalog_list_selector = #{bookContentCatalogListSelector,jdbcType=VARCHAR},
       book_content_next_catalog_selector = #{bookContentNextCatalogSelector,jdbcType=VARCHAR},
+      book_content_ads = #{bookContentAds,jdbcType=VARCHAR},
       created = #{created,jdbcType=TIMESTAMP},
       updated = #{updated,jdbcType=TIMESTAMP}
     where id = #{id,jdbcType=BIGINT}

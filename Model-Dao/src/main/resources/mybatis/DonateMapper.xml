@@ -103,7 +103,7 @@
     <if test="orderByClause != null">
       order by ${orderByClause}
     </if>
-    <if test="limitStart > -1">
+    <if test="limitStart &gt; -1">
       limit ${limitStart} , ${limitEnd}
     </if>
   </select>

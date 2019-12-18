@@ -303,6 +303,15 @@
 
             <div class="layui-form-item">
                 <label class="layui-form-label">
+                    广告文字过滤:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="bookContentAds" autocomplete="off" class="layui-input" placeholder="多组用‘##’间隔，例如：广告1##广告2" th:value="${data.bookContentAds}">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
                     <span class="we-red">*</span>上一章:
                 </label>
                 <div class="layui-input-block">

@@ -318,6 +318,13 @@ public class BookSourceAnalysis {
                             content = content.replaceAll("<br><br>","<br>");
                         }
 
+                        if (StringUtils.isNotBlank(bookSource.getBookContentAds())){
+                            String [] ads = bookSource.getBookContentAds().split("##");
+                            for (String ad : ads){
+                                content = content.replaceAll(ad,"");
+                            }
+                        }
+
                         map.put("content", content);
                     }
                 }

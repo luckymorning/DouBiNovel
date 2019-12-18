@@ -62,10 +62,10 @@ $(document).ready(function () {
     var width = $('.layui-container').width();
     if (width<600){
         $('.reader-setting-md').width(width-40);
-        $('.reader-content').css('margin','10px');
+        $('.reader-content').css('margin','0 10px 10px 10px');
     }else {
         $('.reader-setting-md').width(width / 5 * 2);
-        $('.reader-content').css('margin','50px');
+        $('.reader-content').css('margin','0 50px 30px 50px');
     }
 
     //设置按钮

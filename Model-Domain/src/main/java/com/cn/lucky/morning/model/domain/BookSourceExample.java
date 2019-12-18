@@ -2351,6 +2351,76 @@ public class BookSourceExample {
             return (Criteria) this;
         }
 
+        public Criteria andBookContentAdsIsNull() {
+            addCriterion("book_content_ads is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsIsNotNull() {
+            addCriterion("book_content_ads is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsEqualTo(String value) {
+            addCriterion("book_content_ads =", value, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsNotEqualTo(String value) {
+            addCriterion("book_content_ads <>", value, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsGreaterThan(String value) {
+            addCriterion("book_content_ads >", value, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsGreaterThanOrEqualTo(String value) {
+            addCriterion("book_content_ads >=", value, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsLessThan(String value) {
+            addCriterion("book_content_ads <", value, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsLessThanOrEqualTo(String value) {
+            addCriterion("book_content_ads <=", value, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsLike(String value) {
+            addCriterion("book_content_ads like", value, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsNotLike(String value) {
+            addCriterion("book_content_ads not like", value, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsIn(List<String> values) {
+            addCriterion("book_content_ads in", values, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsNotIn(List<String> values) {
+            addCriterion("book_content_ads not in", values, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsBetween(String value1, String value2) {
+            addCriterion("book_content_ads between", value1, value2, "bookContentAds");
+            return (Criteria) this;
+        }
+
+        public Criteria andBookContentAdsNotBetween(String value1, String value2) {
+            addCriterion("book_content_ads not between", value1, value2, "bookContentAds");
+            return (Criteria) this;
+        }
+
         public Criteria andCreatedIsNull() {
             addCriterion("created is null");
             return (Criteria) this;
