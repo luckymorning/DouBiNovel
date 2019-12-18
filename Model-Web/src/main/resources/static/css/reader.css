@@ -179,6 +179,44 @@
     transition: 500ms;
 }
 
+.md-setting-line-height-btn {
+    font-weight: bolder;
+    border: 1px solid #d8d8d8;
+    height: 35px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    line-height: 35px;
+}
+
+.md-setting-line-height-btn:hover {
+    color: #ed4259;
+    transition: 500ms;
+}
+
+.md-setting-line-height-view {
+    border: 1px solid #d8d8d8;
+    text-align: center;
+    line-height: 35px;
+    height: 35px;
+    cursor: pointer;
+}
+
+.md-setting-page-size-btn {
+    font-weight: bolder;
+    border: 1px solid #d8d8d8;
+    height: 35px;
+    cursor: pointer;
+    font-size: 20px;
+    text-align: center;
+    line-height: 35px;
+}
+
+.md-setting-page-size-btn:hover {
+    color: #ed4259;
+    transition: 500ms;
+}
+
 .md-setting-page-size-view {
     border: 1px solid #d8d8d8;
     text-align: center;

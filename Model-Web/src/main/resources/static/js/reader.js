@@ -19,6 +19,17 @@ if (fontSize == null || fontSize == undefined || fontSize == ''){
 fontSize = parseInt(fontSize);
 $('.md-setting-font-size-view').text(fontSize);
 $('.reader-content').css('font-size',fontSize+'px');
+
+//加载行间距
+var lineHeight = localStorage.getItem("lineHeight");
+if (lineHeight == null || lineHeight == undefined || lineHeight == ''){
+    lineHeight = 1.8;
+}
+lineHeight = parseFloat(lineHeight);
+lineHeight = lineHeight.toPrecision(2);
+$('.md-setting-line-height-view').text(lineHeight);
+$('.reader-content').css('line-height',lineHeight);
+
 //加载字体
 var fontFamily = localStorage.getItem('fontFamily');
 if (fontFamily == null || fontFamily == undefined || fontFamily == ''){
@@ -46,7 +57,7 @@ $(document).ready(function () {
         checkLayout();
     });
 
-    checkLayout()
+    checkLayout();
 
     var width = $('.layui-container').width();
     if (width<600){
@@ -100,9 +111,11 @@ $(document).ready(function () {
 
     bindingThemeBtn();
 
-    bindingFontFamilyBtn()
+    bindingFontFamilyBtn();
 
     bindingFontSizeBtn();
+
+    bindingLineHeightBtn();
 
     bindingPageSizeBtn()
 });
@@ -243,6 +256,36 @@ function bindingFontSizeBtn() {
             $('.reader-content').css('font-size',size+'px');
         }
 
+    });
+}
+
+function bindingLineHeightBtn() {
+    $('.md-setting-line-height-smaller').click(function () {
+        var lineHeight = localStorage.getItem("lineHeight");
+        if (lineHeight == null || lineHeight == undefined || lineHeight == ''){
+            lineHeight = 1.8;
+        }
+        lineHeight = parseFloat(lineHeight);
+        if (lineHeight>0){
+            lineHeight = lineHeight-0.1;
+            lineHeight = lineHeight.toPrecision(2);
+            $('.md-setting-line-height-view').text(lineHeight);
+            localStorage.setItem('lineHeight',lineHeight);
+            $('.reader-content').css('line-height',lineHeight);
+        }
+
+    });
+    $('.md-setting-line-height-bigger').click(function () {
+        var lineHeight = localStorage.getItem("lineHeight");
+        if (lineHeight == null || lineHeight == undefined || lineHeight == ''){
+            lineHeight = 1.8;
+        }
+        lineHeight = parseFloat(lineHeight);
+        lineHeight = lineHeight+0.1;
+        lineHeight = lineHeight.toPrecision(2);
+        $('.md-setting-line-height-view').text(lineHeight);
+        localStorage.setItem('lineHeight',lineHeight);
+        $('.reader-content').css('line-height',lineHeight);
     });
 }
 
