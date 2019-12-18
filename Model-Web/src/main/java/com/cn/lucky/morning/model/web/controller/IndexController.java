@@ -63,6 +63,7 @@ public class IndexController {
             return "public/error";
         }
         model.addAllAttributes(result.getValues());
+        model.addAttribute("currentUrl",url);
         return "front/book/reader";
     }
 

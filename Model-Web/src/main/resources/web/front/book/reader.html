@@ -23,7 +23,7 @@
 <!--阅读正文-->
 <div class="layui-container" id="container">
     <div class="content content-wrap">
-        <h2 class="catalog-name" th:text="${catalogName}">章节标题</h2>
+        <h2 class="catalog-name" th:text="${catalogName}" id="catalogName">章节标题</h2>
 
         <div class="reader-content" th:utext="${content}">
             &nbsp;&nbsp;&nbsp;&nbsp;“池瑶，我待你如挚爱，你为何要杀我？”<br>&nbsp;&nbsp;&nbsp;&nbsp;张若尘大吼一声，想前一扑，压得鎏金铸造的床榻“咯吱”一声，猛然坐了起来。<br>&nbsp;&nbsp;&nbsp;&nbsp
@@ -160,6 +160,7 @@
         </li>
     </ul>
 </div>
+<input type="hidden" th:value="${currentUrl}" id="currentUrl">
 <script th:src="@{/js/reader.js}" src="../../../static/js/reader.js"></script>
 <script th:src="@{/lib/layui/layui.all.js}" src="../../../static/lib/layui/layui.all.js"></script>
 </body>

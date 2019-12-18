@@ -49,6 +49,12 @@ $('.content').css('width',pageSize+'%');
 
 $(document).ready(function () {
 
+    var currentUrl = $('#currentUrl').val();
+    var bookUrl = currentUrl.toString().substring(0,currentUrl.toString().lastIndexOf('/'));
+    var catalogName = $('#catalogName').text();
+    localStorage.setItem(bookUrl+'.url',currentUrl);
+    localStorage.setItem(bookUrl+'.name',catalogName);
+
     $(".layui-fixbar-top").click(function () {
         $('html, body').animate({scrollTop: 0}, 'slow');
     });
