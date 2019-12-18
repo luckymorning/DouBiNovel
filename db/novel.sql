@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 17/12/2019 16:29:44
+ Date: 18/12/2019 17:21:29
 */
 
 SET NAMES utf8mb4;
@@ -79,7 +79,7 @@ CREATE TABLE `m_authority_group`  (
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1009 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1010 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_authority_group
@@ -93,6 +93,7 @@ INSERT INTO `m_authority_group` VALUES (1005, '更新日志管理', '2019-12-05 
 INSERT INTO `m_authority_group` VALUES (1006, '书源管理', '2019-12-05 17:59:25', '2019-12-05 17:59:25', '书源管理权限');
 INSERT INTO `m_authority_group` VALUES (1007, '捐赠管理', '2019-12-09 17:53:36', '2019-12-09 17:53:36', '捐赠管理权限');
 INSERT INTO `m_authority_group` VALUES (1008, '平台权限', '2019-12-13 22:35:40', '2019-12-13 22:35:40', '');
+INSERT INTO `m_authority_group` VALUES (1009, '日志管理', '2019-12-18 17:00:36', '2019-12-18 17:00:36', '日志管理权限');
 
 -- ----------------------------
 -- Table structure for m_book_info
@@ -149,6 +150,7 @@ CREATE TABLE `m_book_source`  (
   `book_content_pre_catalog_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `book_content_catalog_list_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `book_content_next_catalog_selector` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `book_content_ads` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
@@ -157,8 +159,8 @@ CREATE TABLE `m_book_source`  (
 -- ----------------------------
 -- Records of m_book_source
 -- ----------------------------
-INSERT INTO `m_book_source` VALUES (1, '新笔趣阁', 'https://www.xsbiquge.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/search.php?keyword=%s', 'div.result-game-item', '.result-game-item-title-link', '.result-game-item-title-link', '.result-game-item-pic-link-img', '.result-game-item-desc', '.result-game-item-info-tag:eq(0) > span:eq(1)', '.result-game-item-info-tag:eq(1) > span:eq(1)', '.result-game-item-info-tag:eq(2) > span:eq(1)', '.result-game-item-info-tag:eq(3) > a', '#info > h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '.con_top > a:eq(3)', '#content', '[&]\\d*\\w*[;]*\\d*\\w*[;]', '.bottem2 > a:eq(0)', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '2019-12-05 17:25:06', '2019-12-06 15:02:31');
-INSERT INTO `m_book_source` VALUES (2, '顶点小说', 'https://www.dingdiann.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/searchbook.php?keyword=%s', '.novelslist2 li:gt(1)', '.s2 a', '.s2 a', '', '', '.s4', '.s1', '.s6', '.s3 a', '#info h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '.con_top > a:eq(2)', '#content', '', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '.bottem2 > a:eq(3)', '2019-12-06 15:49:45', '2019-12-09 12:12:40');
+INSERT INTO `m_book_source` VALUES (1, '新笔趣阁', 'https://www.xsbiquge.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/search.php?keyword=%s', 'div.result-game-item', '.result-game-item-title-link', '.result-game-item-title-link', '.result-game-item-pic-link-img', '.result-game-item-desc', '.result-game-item-info-tag:eq(0) > span:eq(1)', '.result-game-item-info-tag:eq(1) > span:eq(1)', '.result-game-item-info-tag:eq(2) > span:eq(1)', '.result-game-item-info-tag:eq(3) > a', '#info > h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '.con_top > a:eq(3)', '#content', '[&]\\d*\\w*[;]*\\d*\\w*[;]', '.bottem2 > a:eq(0)', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '一秒记住，精彩小说无弹窗免费阅读！<br>', '2019-12-05 17:25:06', '2019-12-18 16:10:47');
+INSERT INTO `m_book_source` VALUES (2, '顶点小说', 'https://www.dingdiann.com', '$(this).attr(\'src\', \'/imgs/nocover.jpg\')', '/searchbook.php?keyword=%s', '.novelslist2 li:gt(1)', '.s2 a', '.s2 a', '', '', '.s4', '.s1', '.s6', '.s3 a', '#info h1', '#info > p:eq(1)', '#info > p:eq(3)', '#info > p:eq(4) > a', '#intro', '#fmimg > img', '#list dd', 'a', 'a', '.bookname > h1', '.con_top > a:eq(2)', '#content', '', '.bottem2 > a:eq(1)', '.bottem2 > a:eq(2)', '.bottem2 > a:eq(3)', NULL, '2019-12-06 15:49:45', '2019-12-09 12:12:40');
 
 -- ----------------------------
 -- Table structure for m_donate
@@ -183,6 +185,20 @@ INSERT INTO `m_donate` VALUES (4, '*黍', '黄蜀黍（52破解）', '1RMB', '�
 INSERT INTO `m_donate` VALUES (5, '*黍', '黄蜀黍（52破解）', '1RMB', '微信', '2019-12-17 15:52:43');
 
 -- ----------------------------
+-- Table structure for m_login_log
+-- ----------------------------
+DROP TABLE IF EXISTS `m_login_log`;
+CREATE TABLE `m_login_log`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `user_id` bigint(20) NULL DEFAULT NULL,
+  `login_ip` varchar(32) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `login_type` int(11) NOT NULL DEFAULT 0,
+  `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
 -- Table structure for m_role
 -- ----------------------------
 DROP TABLE IF EXISTS `m_role`;
@@ -203,7 +219,7 @@ CREATE TABLE `m_role`  (
 -- ----------------------------
 INSERT INTO `m_role` VALUES (1000, '超级管理员', '超级管理员', 1, '1000', '2019-11-25 19:52:48', '2019-11-25 19:53:22', 1);
 INSERT INTO `m_role` VALUES (1001, '前端普通角色', '', 0, '', '2019-12-10 19:03:55', '2019-12-13 22:07:25', NULL);
-INSERT INTO `m_role` VALUES (1002, '后台访客', '', 0, '1000,1004,1008,1012,1016,1018,1022,1026,1030', '2019-12-13 22:36:42', '2019-12-13 22:38:05', 1000);
+INSERT INTO `m_role` VALUES (1002, '后台访客', '', 0, '1004,1008,1012,1016,1018,1022,1026,1030', '2019-12-13 22:36:42', '2019-12-18 15:47:13', 1000);
 
 -- ----------------------------
 -- Table structure for m_system_setting

@@ -66,5 +66,10 @@
             <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
             <columnOverride column="donate_time" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
         </table>
+
+        <table domainObjectName="LoginLog" tableName="m_login_log">
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
+            <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+        </table>
     </context>
 </generatorConfiguration>

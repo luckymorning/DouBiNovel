@@ -3,7 +3,10 @@ package com.cn.lucky.morning.model.web.controller.admin;
 import com.cn.lucky.morning.model.common.cache.CacheService;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
+import com.cn.lucky.morning.model.common.tool.IpUtil;
+import com.cn.lucky.morning.model.domain.LoginLog;
 import com.cn.lucky.morning.model.domain.User;
+import com.cn.lucky.morning.model.service.LoginLogService;
 import com.cn.lucky.morning.model.web.tools.CaptchaUtils;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
@@ -19,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -30,6 +34,8 @@ import java.util.Objects;
 public class AdminIndexController {
     @Resource
     private CacheService cacheService;
+    @Resource
+    private LoginLogService loginLogService;
 
     @RequestMapping(value = {"", "/", "/index"})
     public String index(Model model) {
@@ -75,7 +81,7 @@ public class AdminIndexController {
 
     @RequestMapping(method = RequestMethod.POST, value = "/doLogin")
     @ResponseBody
-    public MvcResult doLogin(String username, String password, String captcha, boolean rememberMe, HttpSession session) {
+    public MvcResult doLogin(String username, String password, String captcha, boolean rememberMe, HttpSession session, HttpServletRequest request) {
         MvcResult result = MvcResult.create(false);
         if (captcha == null || !Objects.equals(captcha, session.getAttribute(Const.session.VERIFICATION_CODE).toString())) {
             result.setMessage("验证码错误");
@@ -96,7 +102,15 @@ public class AdminIndexController {
                     }
                     result.setSuccess(true);
                     result.setMessage("登录成功");
-                    session.setAttribute(Const.session.LOGIN_ADMIN,subject.getPrincipal());
+                    User user = (User) subject.getPrincipal();
+                    session.setAttribute(Const.session.LOGIN_ADMIN,user);
+                    LoginLog loginLog = new LoginLog();
+                    loginLog.setUserId(user.getId());
+                    loginLog.setName(user.getName());
+                    loginLog.setLoginType(0);
+                    String ip = IpUtil.getIpAddr(request);
+                    loginLog.setLoginIp(ip);
+                    loginLogService.add(loginLog);
                 } else {
                     result.setSuccess(false);
                     result.setMessage("登录失败");

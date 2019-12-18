@@ -74,6 +74,20 @@
           "href": "/admin/donate/list",
           "icon": "fa fa-money",
           "target": "_self"
+        },
+        {
+          "title": "日志管理",
+          "href": "",
+          "icon": "fa fa-calendar",
+          "target": "_self",
+          "child": [
+            {
+              "title": "登录日志",
+              "href": "/admin/loginLog/list",
+              "icon": "fa fa-newspaper-o",
+              "target": "_self"
+            }
+          ]
         }
       ]
     },
