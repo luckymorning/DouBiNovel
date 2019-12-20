@@ -219,7 +219,7 @@ public class BookSourceAnalysis {
 
                 bookInfo.setBookImgError(bookSource.getImageError());
                 bookInfo.setBookUrl(url);
-                bookInfo.setBookSourceLink(bookSource.getBaseUrl());
+                bookInfo.setBookSourceLink(url);
                 bookInfo.setBookSourceName(bookSource.getName());
 
 
