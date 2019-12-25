@@ -63,6 +63,18 @@
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">
+                       密码：
+                    </label>
+                    <div class="layui-input-inline">
+                        <input type="password" name="password" lay-verify="required|password" lay-reqtext="密码不能为空"
+                               autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-inline">
+                    <label class="layui-form-label">
                         验证码：
                     </label>
                     <div class="layui-input-inline">
@@ -76,11 +88,9 @@
             <div class="layui-form-item">
                 <div class="layui-inline">
                     <label class="layui-form-label">
-                       密码：
                     </label>
                     <div class="layui-input-inline">
-                        <input type="password" name="password" lay-verify="required|password" lay-reqtext="密码不能为空"
-                               autocomplete="off" class="layui-input">
+                        <input type="checkbox" name="rememberMe" value="true" lay-skin="primary" title="记住我">
                     </div>
                 </div>
             </div>
@@ -135,7 +145,7 @@
                     });
                 },
                 error: function () {
-                    changeImg()
+                    changeImg();
                     layer.close(index);
                     layer.msg('登录失败：网络异常，请稍后再试', {icon: 5, anim: 6},function () {
                         changeImg();

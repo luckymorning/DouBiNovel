@@ -20,5 +20,5 @@ public interface UpdateLogService {
 
     boolean deleteList(List<Long> ids);
 
-    List<UpdateLog> findLatest2Log();
+    List<UpdateLog> findListLog();
 }

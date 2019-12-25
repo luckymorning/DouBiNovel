@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 18/12/2019 17:21:29
+ Date: 25/12/2019 17:16:33
 */
 
 SET NAMES utf8mb4;
@@ -196,7 +196,18 @@ CREATE TABLE `m_login_log`  (
   `login_type` int(11) NOT NULL DEFAULT 0,
   `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+
+-- ----------------------------
+-- Records of m_login_log
+-- ----------------------------
+INSERT INTO `m_login_log` VALUES (1, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-18 17:35:36');
+INSERT INTO `m_login_log` VALUES (2, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-25 16:58:01');
+INSERT INTO `m_login_log` VALUES (3, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-25 16:59:01');
+INSERT INTO `m_login_log` VALUES (4, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-25 17:01:36');
+INSERT INTO `m_login_log` VALUES (5, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-25 17:02:54');
+INSERT INTO `m_login_log` VALUES (6, '超级管理员', 1000, '127.0.1.1', 1, '2019-12-25 17:03:24');
+INSERT INTO `m_login_log` VALUES (7, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-25 17:05:20');
 
 -- ----------------------------
 -- Table structure for m_role
@@ -251,13 +262,14 @@ CREATE TABLE `m_update_log`  (
   `created` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated` datetime(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 4 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of m_update_log
 -- ----------------------------
 INSERT INTO `m_update_log` VALUES (1, '<p><span>完成初版网站，并上线，开启公测</span></p><p>目前数据源为：</p><p>1. <a target=\"_blank\" href=\"https://www.xbiquge6.com/\">新笔趣阁</a>、<a target=\"_blank\" href=\"https://www.xsbiquge.com/\">新笔趣阁</a></p><p>2. <a target=\"_blank\" href=\"https://www.dingdiann.com/\">顶点小说</a></p>', '2019-12-05 12:13:16', '2019-12-05 12:24:45');
 INSERT INTO `m_update_log` VALUES (2, '<p>1.修改书源为动态书源</p><p>2.增加捐赠入口和捐赠列表</p><p><b>希望喜欢本网站的朋友能捐赠一下支持网站的基本运营</b></p>', '2019-12-09 17:58:04', '2019-12-09 17:58:04');
+INSERT INTO `m_update_log` VALUES (3, '<p>1.新增本地缓存，书籍目录页面可点击<b>继续阅读</b>进入上次阅读界面</p><p>2.增加登录状态记录功能</p><p><br></p>', '2019-12-25 17:09:07', '2019-12-25 17:09:07');
 
 -- ----------------------------
 -- Table structure for m_user

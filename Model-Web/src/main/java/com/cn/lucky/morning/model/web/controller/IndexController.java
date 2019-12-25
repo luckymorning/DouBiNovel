@@ -27,7 +27,7 @@ public class IndexController {
 
     @RequestMapping({"/","/index"})
     public String index(Model model){
-        List<UpdateLog> list = updateLogService.findLatest2Log();
+        List<UpdateLog> list = updateLogService.findListLog();
         model.addAttribute("list",list);
         return "front/index";
     }

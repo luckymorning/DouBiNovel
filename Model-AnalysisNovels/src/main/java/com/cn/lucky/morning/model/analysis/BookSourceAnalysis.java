@@ -63,68 +63,68 @@ public class BookSourceAnalysis {
                 for (Element resultItem : resultListElements) {
                     BookInfo info = new BookInfo();
 
-                    if (StringUtils.isNotBlank(bookSource.getResultItemBookNameSelector())){
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookNameSelector())) {
                         Element nameElem = resultItem.selectFirst(bookSource.getResultItemBookNameSelector());
                         if (nameElem != null) {
                             info.setName(nameElem.text());
                         }
                     }
 
-                    if (StringUtils.isNotBlank(bookSource.getResultItemBookUrlSelector())){
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookUrlSelector())) {
                         Element bookUrlElem = resultItem.selectFirst(bookSource.getResultItemBookUrlSelector());
                         if (bookUrlElem != null) {
                             info.setBookUrl(bookUrlElem.attr("href"));
-                            if (StringUtils.isBlank(info.getBookUrl())){
+                            if (StringUtils.isBlank(info.getBookUrl())) {
                                 continue;
-                            }else if (!info.getBookUrl().contains(bookSource.getBaseUrl())){
-                                info.setBookUrl(bookSource.getBaseUrl()+info.getBookUrl());
+                            } else if (!info.getBookUrl().contains(bookSource.getBaseUrl())) {
+                                info.setBookUrl(bookSource.getBaseUrl() + info.getBookUrl());
                             }
                         }
                     }
 
-                    if (StringUtils.isNotBlank(bookSource.getResultItemBookImageUrlSelector())){
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookImageUrlSelector())) {
                         Element bookImgElem = resultItem.selectFirst(bookSource.getResultItemBookImageUrlSelector());
                         if (bookImgElem != null) {
                             info.setBookImg(bookImgElem.attr("src"));
-                            if (StringUtils.isBlank(info.getBookImg())){
+                            if (StringUtils.isBlank(info.getBookImg())) {
                                 continue;
-                            }else if (!info.getBookImg().contains(bookSource.getBaseUrl())){
-                                info.setBookImg(bookSource.getBaseUrl()+info.getBookImg());
+                            } else if (!info.getBookImg().contains(bookSource.getBaseUrl())) {
+                                info.setBookImg(bookSource.getBaseUrl() + info.getBookImg());
                             }
                         }
                     }
 
                     info.setBookImgError(bookSource.getImageError());
 
-                    if (StringUtils.isNotBlank(bookSource.getResultItemBookDesSelector())){
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookDesSelector())) {
                         Element bookDesElem = resultItem.selectFirst(bookSource.getResultItemBookDesSelector());
                         if (bookDesElem != null) {
                             info.setNovelDes(bookDesElem.text());
                         }
                     }
 
-                    if (StringUtils.isNotBlank(bookSource.getResultItemBookAuthorSelector())){
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookAuthorSelector())) {
                         Element authorElem = resultItem.selectFirst(bookSource.getResultItemBookAuthorSelector());
                         if (authorElem != null) {
                             info.setAuthor(authorElem.text());
                         }
                     }
 
-                    if (StringUtils.isNotBlank(bookSource.getResultItemBookTypeSelector())){
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookTypeSelector())) {
                         Element novelTypeElem = resultItem.selectFirst(bookSource.getResultItemBookTypeSelector());
                         if (novelTypeElem != null) {
                             info.setNovelType(novelTypeElem.text());
                         }
                     }
 
-                    if (StringUtils.isNotBlank(bookSource.getResultItemBookLastUpdateSelector())){
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookLastUpdateSelector())) {
                         Element updateElem = resultItem.selectFirst(bookSource.getResultItemBookLastUpdateSelector());
                         if (updateElem != null) {
                             info.setLastUpdate(updateElem.text());
                         }
                     }
 
-                    if (StringUtils.isNotBlank(bookSource.getResultItemBookLastNewSelector())){
+                    if (StringUtils.isNotBlank(bookSource.getResultItemBookLastNewSelector())) {
                         Element lastNewElem = resultItem.selectFirst(bookSource.getResultItemBookLastNewSelector());
                         if (lastNewElem != null) {
                             info.setLastNew(lastNewElem.text());
@@ -170,14 +170,14 @@ public class BookSourceAnalysis {
                 //加载书籍详情
                 BookInfo bookInfo = new BookInfo();
 
-                if (StringUtils.isNotBlank(bookSource.getBookDetailBookNameSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookNameSelector())) {
                     Element nameElem = html.selectFirst(bookSource.getBookDetailBookNameSelector());
                     if (nameElem != null) {
                         bookInfo.setName(nameElem.text());
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookDetailBookAuthorSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookAuthorSelector())) {
                     Element authorElem = html.selectFirst(bookSource.getBookDetailBookAuthorSelector());
                     if (authorElem != null) {
                         String author = authorElem.text();
@@ -185,7 +185,7 @@ public class BookSourceAnalysis {
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookDetailBookLastUpdateSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookLastUpdateSelector())) {
                     Element updateElem = html.selectFirst(bookSource.getBookDetailBookLastUpdateSelector());
                     if (updateElem != null) {
                         String lastUpdate = updateElem.text();
@@ -193,26 +193,26 @@ public class BookSourceAnalysis {
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookDetailBookLastNewSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookLastNewSelector())) {
                     Element lastNewElem = html.selectFirst(bookSource.getBookDetailBookLastNewSelector());
                     if (lastNewElem != null) {
                         bookInfo.setLastNew(lastNewElem.text());
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookDetailBookDesSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookDesSelector())) {
                     Element desElem = html.selectFirst(bookSource.getBookDetailBookDesSelector());
                     if (desElem != null) {
                         bookInfo.setNovelDes(desElem.html());
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookDetailBookImageUrlSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookDetailBookImageUrlSelector())) {
                     Element bookImgElem = html.selectFirst(bookSource.getBookDetailBookImageUrlSelector());
                     if (bookImgElem != null) {
                         bookInfo.setBookImg(bookImgElem.attr("src"));
-                        if (StringUtils.isNotBlank(bookInfo.getBookImg()) && !bookInfo.getBookImg().contains(bookSource.getBaseUrl())){
-                            bookInfo.setBookImg(bookSource.getBaseUrl()+bookInfo.getBookImg());
+                        if (StringUtils.isNotBlank(bookInfo.getBookImg()) && !bookInfo.getBookImg().contains(bookSource.getBaseUrl())) {
+                            bookInfo.setBookImg(bookSource.getBaseUrl() + bookInfo.getBookImg());
                         }
                     }
                 }
@@ -290,38 +290,38 @@ public class BookSourceAnalysis {
                 Response response = NetWorkUtil.get(url, headers, true);
                 Document html = Jsoup.parse(response.body().string());
 
-                if (StringUtils.isNotBlank(bookSource.getBookContentNameSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookContentNameSelector())) {
                     Element bookNameElem = html.selectFirst(bookSource.getBookContentNameSelector());
                     if (bookNameElem != null) {
                         map.put("bookName", bookNameElem.text());
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookContentCatalogNameSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookContentCatalogNameSelector())) {
                     Element catalogNameElem = html.selectFirst(bookSource.getBookContentCatalogNameSelector());
                     if (catalogNameElem != null) {
                         map.put("catalogName", catalogNameElem.text());
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookContentSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookContentSelector())) {
                     Element contentElem = html.selectFirst(bookSource.getBookContentSelector());
                     if (contentElem != null) {
                         String content = contentElem.html();
-                        content = content.replaceAll("\n","");
+                        content = content.replaceAll("\n", "");
                         if (StringUtils.isNotBlank(bookSource.getContentRegex())) {
                             content = content.replaceAll("&nbsp;", "##");
                             content = content.replaceAll(bookSource.getContentRegex(), "");
                             content = content.replaceAll("##", "&nbsp;");
                         }
-                        while (content.contains("<br><br>")){
-                            content = content.replaceAll("<br><br>","<br>");
+                        while (content.contains("<br><br>")) {
+                            content = content.replaceAll("<br><br>", "<br>");
                         }
 
-                        if (StringUtils.isNotBlank(bookSource.getBookContentAds())){
-                            String [] ads = bookSource.getBookContentAds().split("##");
-                            for (String ad : ads){
-                                content = content.replaceAll(ad,"");
+                        if (StringUtils.isNotBlank(bookSource.getBookContentAds())) {
+                            String[] ads = bookSource.getBookContentAds().split("##");
+                            for (String ad : ads) {
+                                content = content.replaceAll(ad, "");
                             }
                         }
 
@@ -329,7 +329,7 @@ public class BookSourceAnalysis {
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookContentPreCatalogSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookContentPreCatalogSelector())) {
                     Element preCatalogElem = html.selectFirst(bookSource.getBookContentPreCatalogSelector());
                     if (preCatalogElem != null) {
                         String preCatalog = preCatalogElem.attr("href");
@@ -339,7 +339,7 @@ public class BookSourceAnalysis {
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookContentCatalogListSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookContentCatalogListSelector())) {
                     Element catalogsElem = html.selectFirst(bookSource.getBookContentCatalogListSelector());
                     if (catalogsElem != null) {
                         String catalogs = catalogsElem.attr("href");
@@ -349,7 +349,7 @@ public class BookSourceAnalysis {
                     }
                 }
 
-                if (StringUtils.isNotBlank(bookSource.getBookContentNextCatalogSelector())){
+                if (StringUtils.isNotBlank(bookSource.getBookContentNextCatalogSelector())) {
                     Element nextCatalogElem = html.selectFirst(bookSource.getBookContentNextCatalogSelector());
                     if (nextCatalogElem != null) {
                         String nextCatalog = nextCatalogElem.attr("href");
@@ -384,7 +384,7 @@ public class BookSourceAnalysis {
     @Async
     public void loadNextContent(String url, BookSource bookSource) {
         try {
-            Future<MvcResult> future = loadContent(url,bookSource);
+            Future<MvcResult> future = loadContent(url, bookSource);
             MvcResult result = future.get();
         } catch (Exception e) {
             logger.error("获取书籍章节内容出错", e);

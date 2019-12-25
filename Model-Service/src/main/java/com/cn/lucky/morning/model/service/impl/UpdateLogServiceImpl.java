@@ -40,7 +40,7 @@ public class UpdateLogServiceImpl implements UpdateLogService {
 
     @Override
     public boolean add(UpdateLog updateLog) {
-        cacheService.del(Const.cache.UPDATE_LOG_ID+"latest2");
+        cacheService.del(Const.cache.UPDATE_LOG_ID+"list");
         return mapper.insertSelective(updateLog) > 0;
     }
 
@@ -50,7 +50,7 @@ public class UpdateLogServiceImpl implements UpdateLogService {
         if (log == null) {
             return true;
         }
-        cacheService.del(Const.cache.UPDATE_LOG_ID+"latest2");
+        cacheService.del(Const.cache.UPDATE_LOG_ID+"list");
         cacheService.del(Const.cache.UPDATE_LOG_ID + id);
         return mapper.deleteByPrimaryKey(id) > 0;
     }
@@ -67,7 +67,7 @@ public class UpdateLogServiceImpl implements UpdateLogService {
 
     @Override
     public boolean edit(UpdateLog updateLog) {
-        cacheService.del(Const.cache.UPDATE_LOG_ID+"latest2");
+        cacheService.del(Const.cache.UPDATE_LOG_ID+"list");
         cacheService.del(Const.cache.UPDATE_LOG_ID + updateLog.getId());
         return mapper.updateByPrimaryKeySelective(updateLog) > 0;
     }
@@ -86,14 +86,13 @@ public class UpdateLogServiceImpl implements UpdateLogService {
     }
 
     @Override
-    public List<UpdateLog> findLatest2Log() {
-        List<UpdateLog> list = (List<UpdateLog>) cacheService.get(Const.cache.UPDATE_LOG_ID+"latest2");
+    public List<UpdateLog> findListLog() {
+        List<UpdateLog> list = (List<UpdateLog>) cacheService.get(Const.cache.UPDATE_LOG_ID+"list");
         if (list == null){
             UpdateLogExample example = new UpdateLogExample();
             example.setOrderByClause("id desc");
-            example.setPage(0,2);
             list = mapper.selectByExample(example);
-            cacheService.set(Const.cache.UPDATE_LOG_ID+"latest2",list,Const.cache.UPDATE_LOG_ID_TTL);
+            cacheService.set(Const.cache.UPDATE_LOG_ID+"list",list,Const.cache.UPDATE_LOG_ID_TTL);
         }
         return list;
     }
