@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
     <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说" th:content="${bookName+';'+catalogName}" />
     <meta name="description" content="做最简洁，最干净的小说聚合网站" th:content="${systemInfo.metaDescription}" />
-    <title th:text="${'《'+bookName==null?'未知名称':bookName+'》-'+catalogName}">逗逼阅读-阅读器</title>
+    <title th:text="${'《'+(bookName==null?'未知名称':bookName)+'》-'+catalogName}">逗逼阅读-阅读器</title>
     <link rel="stylesheet" th:href="@{/css/home.css}" href="../../../static/css/home.css">
     <link rel="stylesheet" th:href="@{/css/reader.css}" href="../../../static/css/reader.css">
     <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../../static/css/custom_theme.css">
