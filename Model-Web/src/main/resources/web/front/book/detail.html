@@ -60,7 +60,7 @@
             if (currentUrl == null || currentUrl == '' || currentUrl == undefined){
                 $('#last-read-p').hide();
             }else {
-                $('#last-read').attr('href',currentUrl);
+                $('#last-read').attr('href','/book/reader?url='+currentUrl);
                 $('#last-read').text(catalogName);
             }
         </script>
