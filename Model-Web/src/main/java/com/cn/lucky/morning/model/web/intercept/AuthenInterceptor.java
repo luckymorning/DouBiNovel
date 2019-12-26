@@ -36,6 +36,9 @@ public class AuthenInterceptor extends HandlerInterceptorAdapter {
                 user = (User) session.getAttribute(Const.session.LOGIN_ADMIN);
             } else {
                 user = (User) session.getAttribute(Const.session.LOGIN_USER);
+                if (user == null && (url.lastIndexOf("bookshelf")>=0 || url.lastIndexOf("user")>=0)){
+                    response.sendRedirect("/index");
+                }
             }
             if (user != null) {
                 modelAndView.addObject("user", user);

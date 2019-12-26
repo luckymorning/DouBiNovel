@@ -33,7 +33,11 @@ window.WeAdminShow = function(title, url, w, h) {
 };
 
 
-/*删除数据*/
+/**
+ * 删除数据
+ * @param obj
+ * @param id
+ */
 window.data_del = function (obj, id) {
     layer.confirm('确认要删除吗？', function (index) {
         //发异步删除数据

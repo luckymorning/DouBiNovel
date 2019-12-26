@@ -1,0 +1,107 @@
+package com.cn.lucky.morning.model.service.impl;
+
+import com.cn.lucky.morning.model.common.base.BaseQuery;
+import com.cn.lucky.morning.model.common.base.PageTemplate;
+import com.cn.lucky.morning.model.common.cache.CacheService;
+import com.cn.lucky.morning.model.common.constant.Const;
+import com.cn.lucky.morning.model.dao.BookInfoMapper;
+import com.cn.lucky.morning.model.domain.BookInfo;
+import com.cn.lucky.morning.model.domain.BookInfoExample;
+import com.cn.lucky.morning.model.domain.User;
+import com.cn.lucky.morning.model.service.BookInfoService;
+import org.springframework.stereotype.Service;
+
+import javax.annotation.Resource;
+import java.util.List;
+
+@Service
+public class BookInfoServiceImpl implements BookInfoService {
+    @Resource
+    private CacheService cacheService;
+    @Resource
+    private BookInfoMapper mapper;
+
+    @Override
+    public PageTemplate<BookInfo> getByQuery(BaseQuery query) {
+        BookInfoExample example = new BookInfoExample();
+        BookInfoExample.Criteria criteria = example.createCriteria();
+        if (query.isNotEmpty("creatorId")){
+            criteria.andCreatorIdEqualTo(query.getLong("creatorId"));
+        }
+        if (query.isNotEmpty("bookSourceLink")){
+            criteria.andBookSourceLinkEqualTo(query.getString("bookSourceLink"));
+        }
+        if (query.isNotEmpty("bookUrl")){
+            criteria.andBookUrlEqualTo(query.getString("bookUrl"));
+        }
+        if (query.isNotEmpty("name")){
+            criteria.andNameLike("%"+query.getString("name")+"%");
+        }
+        if (query.isNotEmpty("author")){
+            criteria.andAuthorLike("%"+query.getString("author")+"%");
+        }
+        example.setPage(query.getCurrent(),query.getSize());
+        example.setOrderByClause("id desc");
+        return PageTemplate.create(example,mapper,query);
+    }
+
+    @Override
+    public boolean add(BookInfo bookInfo) {
+        cacheService.del(Const.cache.BOOK_INFO_ID+"creatorId."+bookInfo.getCreatorId());
+        return mapper.insertSelective(bookInfo) > 0;
+    }
+
+    @Override
+    public boolean delete(Long id) {
+        BookInfo bookInfo = getById(id);
+        if (bookInfo == null){
+            return true;
+        }
+
+        cacheService.del(Const.cache.BOOK_INFO_ID+"creatorId."+bookInfo.getCreatorId());
+        cacheService.del(Const.cache.BOOK_INFO_ID+bookInfo.getId());
+        return mapper.deleteByPrimaryKey(id) > 0;
+    }
+
+    @Override
+    public BookInfo getById(Long id) {
+        BookInfo bookInfo = (BookInfo) cacheService.get(Const.cache.BOOK_INFO_ID+id);
+        if (bookInfo == null){
+            bookInfo = mapper.selectByPrimaryKey(id);
+            cacheService.set(Const.cache.BOOK_INFO_ID+id,bookInfo,Const.cache.BOOK_INFO_ID_TTL);
+        }
+        return bookInfo;
+    }
+
+    @Override
+    public boolean edit(BookInfo bookInfo) {
+        cacheService.del(Const.cache.BOOK_INFO_ID+"creatorId."+bookInfo.getCreatorId());
+        cacheService.del(Const.cache.BOOK_INFO_ID+bookInfo.getId());
+        return mapper.updateByPrimaryKeySelective(bookInfo) > 0;
+    }
+
+    @Override
+    public boolean deleteList(List<Long> ids) {
+        if (ids == null || ids.size() ==0){
+            return true;
+        }
+        for (Long id : ids){
+            if (!delete(id)){
+                return false;
+            }
+        }
+        return true;
+    }
+
+    @Override
+    public List<BookInfo> getBookInfoByUser(User user) {
+        List<BookInfo> list = (List<BookInfo>) cacheService.get(Const.cache.BOOK_INFO_ID+"creatorId."+user.getId());
+        if (list == null){
+            BookInfoExample example = new BookInfoExample();
+            example.createCriteria().andCreatorIdEqualTo(user.getId());
+            list = mapper.selectByExample(example);
+            cacheService.set(Const.cache.BOOK_INFO_ID+"creatorId."+user.getId(),list,Const.cache.BOOK_INFO_ID_TTL);
+        }
+        return list;
+    }
+}

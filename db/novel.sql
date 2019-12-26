@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 25/12/2019 17:16:33
+ Date: 26/12/2019 19:04:53
 */
 
 SET NAMES utf8mb4;
@@ -100,7 +100,7 @@ INSERT INTO `m_authority_group` VALUES (1009, '日志管理', '2019-12-18 17:00:
 -- ----------------------------
 DROP TABLE IF EXISTS `m_book_info`;
 CREATE TABLE `m_book_info`  (
-  `id` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `id` bigint(255) NOT NULL AUTO_INCREMENT,
   `book_url` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `book_source_link` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `book_source_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -112,8 +112,9 @@ CREATE TABLE `m_book_info`  (
   `novel_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_update` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_new` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `creator_id` bigint(20) NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for m_book_source
@@ -196,7 +197,7 @@ CREATE TABLE `m_login_log`  (
   `login_type` int(11) NOT NULL DEFAULT 0,
   `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 8 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of m_login_log
@@ -208,6 +209,9 @@ INSERT INTO `m_login_log` VALUES (4, '超级管理员', 1000, '127.0.1.1', 0, '2
 INSERT INTO `m_login_log` VALUES (5, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-25 17:02:54');
 INSERT INTO `m_login_log` VALUES (6, '超级管理员', 1000, '127.0.1.1', 1, '2019-12-25 17:03:24');
 INSERT INTO `m_login_log` VALUES (7, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-25 17:05:20');
+INSERT INTO `m_login_log` VALUES (8, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-26 17:21:17');
+INSERT INTO `m_login_log` VALUES (9, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-26 17:37:20');
+INSERT INTO `m_login_log` VALUES (10, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-26 17:40:29');
 
 -- ----------------------------
 -- Table structure for m_role

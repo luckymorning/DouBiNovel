@@ -18,7 +18,7 @@
             font-size: 18px;
             font-weight: bold;
         }
-        .layui-row a{
+        .catalogs a{
             margin-top: 20px;
             font-size: 16px;
         }
@@ -42,13 +42,20 @@
             <img th:src="${info.bookImg}" onerror="$(this).attr('src', '/imgs/nocover.jpg')" src="https://www.xbiquge6.com/cover/84/84291/84291s.jpg">
         </div>
         <div class="layui-col-xs6 layui-col-md10">
+            <input th:value="${info.bookUrl}" type="hidden" id="bookUrl">
             <p class="book-name" th:text="${info.name}">九星毒奶</p>
             <p class="book-author" th:text="'作者：'+${info.author==null?'作者：未知':info.author}">作者： 育</p>
             <p class="layui-hide-xs" th:utext="${info.novelDes==null?'无描述':info.novelDes}">这是一个充满了星力的平行世界。<br>星图、星技、星宠、觉醒者大行其道。<br>魂穿而来的江晓，体内蕴含着一张奇特的内视星图，成为一名稀有的医疗系觉醒者。<br>他本想成为一只快乐的大奶，但却被众人冠上了毒奶之名。<br>这一切的故事，<br>从高中入学的前一周开始。<br>要从......那一巴掌开始说起......<br>**沉重的故事写累了，写点轻松搞笑的。**<br>**已完结4本小说，500余万字，量大管饱，点击作者名观看，欢迎品读。**</p>
             <p class="book-update" th:text="'更新时间：'+${info.lastUpdate==null?'更新时间：未知':info.lastUpdate}">更新时间： 2019-11-09</p>
             <p class="book-new" th:text="'最新章节：'+${info.lastNew==null?'最新章节： 未知':info.lastNew}">最新章节： 835 惊心动魄</p>
             <p class="book-source">来源： <a id="book-detail-url" th:href="${info.bookSourceLink}" th:text="${info.bookSourceName}" href="https://www.xbiquge6.com/" target="_blank">新笔趣阁</a></p>
-            <p class="book-source" id="last-read-p">最近阅读： <a  href="https://www.xbiquge6.com/" target="_blank" id="last-read">第一章</a></p>
+            <p class="book-source" id="last-read-p">上次阅读： <a  href="https://www.xbiquge6.com/" target="_blank" id="last-read">第一章</a></p>
+            <div class="layui-row">
+                <br>
+                <button href="#" class="layui-btn layui-btn-danger layui-btn-sm btn-start-read layui-hide ">开始阅读</button>
+                <button href="#" class="layui-btn layui-btn-danger layui-btn-sm btn-restart-read layui-hide ">继续阅读</button>
+                <button class="layui-btn layui-btn-normal layui-btn-sm btn-add-bookshelf ">加入书架</button>
+            </div>
         </div>
         <script>
             var bookUrl = $('#book-detail-url').attr('href');
@@ -59,15 +66,17 @@
             var catalogName = localStorage.getItem(bookUrl+'.name',);
             if (currentUrl == null || currentUrl == '' || currentUrl == undefined){
                 $('#last-read-p').hide();
+                $('.btn-start-read').removeClass('layui-hide');
             }else {
                 $('#last-read').attr('href','/book/reader?url='+currentUrl);
                 $('#last-read').text(catalogName);
+                $('.btn-restart-read').removeClass('layui-hide');
             }
         </script>
     </div>
     <hr class="layui-bg-gray">
     <h1>目录列表</h1>
-    <div class="layui-row" style="margin-bottom: 30px;min-height: 1000px;">
+    <div class="layui-row catalogs" style="margin-bottom: 30px;min-height: 1000px;">
         <a th:each="data:${catalogs}" class="layui-col-xs6 layui-col-md4" href="https://www.xbiquge6.com/84_84291/35306.html" th:href="@{/book/reader(url=${data.value})}" th:text="${data.name}">001 划重点？</a>
     </div>
 </div>
@@ -87,5 +96,34 @@
     });
 </script>
 <script th:src="@{/lib/layui/layui.all.js}" src="../../../static/lib/layui/layui.all.js"></script>
+<script>
+    $('.btn-add-bookshelf').click(function () {
+        $.ajax({
+            url: '/bookshelf/doAdd?bookUrl=' + $('#bookUrl').val(),
+            method: 'post',
+            dataType: 'json',
+            success: function (rst) {
+                if (rst.success) {
+                    layer.msg('添加成功', {
+                        icon: 1
+                    });
+                } else {
+                    if (rst.message != null && rst.message != "" && rst.message != undefined) {
+                        layer.msg(rst.message, {icon: 5, time: 1000});
+                    } else {
+                        layer.msg('添加失败，请稍后再试!', {icon: 5, time: 1000});
+                    }
+                }
+            },
+            error: function (err) {
+                layer.alert('网络异常，请稍后再试');
+            }
+        })
+    });
+    $('.btn-start-read').click(function () {
+        var a = $('.catalogs').children()[0];
+        window.location.href = $(a).attr('href');
+    });
+</script>
 </body>
 </html>

@@ -43,7 +43,7 @@
         </table>
 
         <table domainObjectName="BookInfo" tableName="m_book_info">
-            <generatedKey column="id" sqlStatement="MySql" />
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
         </table>
 
         <table domainObjectName="UpdateLog" tableName="m_update_log">

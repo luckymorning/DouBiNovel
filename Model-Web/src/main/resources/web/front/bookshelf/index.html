@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=0">
+    <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说" th:content="${systemInfo.metaKeywords}"/>
+    <meta name="description" content="做最简洁，最干净的小说聚合网站" th:content="${systemInfo.metaDescription}"/>
+    <title th:text="${systemInfo.sitename}+'-我的书架'">逗逼阅读-我的书架</title>
+    <style>
+        .left-content {
+            background-color: #e6e6e6;
+        }
+
+        .left-item {
+            text-align: center;
+            padding: 10px;
+            cursor: pointer;
+        }
+
+        .active {
+            font-weight: bold;
+            background-color: #d2d2d2;
+        }
+
+        .right-content {
+            background-color: white;
+            min-height: 400px;
+            padding: 20px;
+        }
+    </style>
+    <link rel="stylesheet" th:href="@{/css/home.css}" href="../../../static//css/home.css">
+    <link rel="stylesheet" th:href="@{/css/custom_theme.css}" href="../../../static/css/custom_theme.css">
+    <link rel="stylesheet" th:href="@{/lib/layui/css/layui.css}" href="../../../static/lib/layui/css/layui.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>
+</head>
+<body class="theme-0">
+<script th:src="@{/js/home.js}" src="../../../static/js/home.js"></script>
+
+<!-- 导航栏 -->
+<div th:replace="public/top::header">
+
+</div>
+
+<div class="layui-container" style="margin-top: 20px;">
+    <div class="layui-row">
+        <div class="layui-col-md4 left-content">
+            <div class="layui-row left-item active">
+                <a href="#">我的书架 >></a>
+            </div>
+            <div class="layui-row left-item">
+                <a href="#">个人中心 >></a>
+            </div>
+        </div>
+
+        <div class="layui-col-md8 right-content">
+            <fieldset class="layui-elem-field layui-field-title">
+                <legend>我的书架</legend>
+            </fieldset>
+
+            <table class="layui-hide" id="books" lay-filter="books"></table>
+
+            <script type="text/html" id="toolbarDemo">
+                <div class="layui-btn-container">
+                    <button class="layui-btn layui-btn-sm layui-btn-danger" lay-event="delAll">批量删除</button>
+                </div>
+            </script>
+
+            <script type="text/html" id="barDemo">
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">阅读</a>
+                <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+            </script>
+
+        </div>
+    </div>
+</div>
+
+
+<!-- 底部 -->
+<div th:replace="public/bottom::footer">
+
+</div>
+
+<script th:src="@{/lib/layui/layui.all.js}" src="../../../static/lib/layui/layui.all.js"></script>
+<script>
+    layui.use('table', function () {
+        var table = layui.table;
+        var cols = [
+            {type: 'checkbox', fixed: 'left'}
+            , {field: 'id', title: 'ID', hide: true}
+            , {
+                field: 'name', title: '书籍名称', templet: function (res) {
+                    return '<a target="_blank" href="/book/detail?url=' + res.bookUrl + '">' + res.name + '</a>'
+                }
+            }
+            , {field: 'lastNew', title: '最新章节'}
+            , {field: 'author', title: '作者'}
+            , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 120}
+        ];
+        table.render({
+            elem: '#books'
+            , url: './books'
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , defaultToolbar: ['filter', 'exports', 'print']
+            , title: '我的书架'
+            , cols: [cols]
+            , parseData: function (res) { //res 即为原始返回的数据
+                var count = 0;
+                var data = null;
+                if (res.data) {
+                    count = res.data.totalSize;
+                    data = res.data.list;
+                }
+                return {
+                    "code": res.code, //解析接口状态
+                    "msg": res.message, //解析提示文本
+                    "count": count, //解析数据长度
+                    "data": data //解析数据列表
+                };
+            },
+            request: {
+                pageName: 'current',
+                limitName: 'size'
+            },
+            response: {
+                statusCode: 200 //规定成功的状态码，默认：0
+            },
+            limits: [10, 15, 20, 25, 50, 100],
+            limit: 15,
+            page: true
+        });
+
+        //头工具栏事件
+        table.on('toolbar(books)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id);
+            switch (obj.event) {
+                case 'delAll':
+                    var data = checkStatus.data;
+                    if (data.length == 0) {
+                        layer.msg('请选择要删除的书籍', {icon: 5, anim: 6});
+                    } else {
+                        data_delAll(data, 'id', 'name',table);
+                    }
+                    break;
+            };
+        });
+
+        //监听行工具事件
+        table.on('tool(books)', function (obj) {
+            var data = obj.data;
+            //console.log(obj)
+            if (obj.event === 'del') {
+                data_del(obj, data.id);
+            }else if (obj.event === 'read') {
+                window.location.href='/book/detail?url='+data.bookUrl;
+            }
+        });
+
+        window.reloadTable = function(){
+            table.reload('books',{},'data');
+        }
+    });
+</script>
+</body>
+</html>

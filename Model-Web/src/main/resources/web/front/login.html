@@ -122,14 +122,14 @@
             layer = layui.layer;
         // 进行登录操作
         form.on('submit(login)', function (data) {
-            var index = layer.load();
+            var index = parent.layer.load();
             $.ajax({
                 url: '/doLogin',
                 method: 'post',
                 data: data.field,
                 dataType: 'json',
                 success: function (result) {
-                    layer.close(index);
+                    parent.layer.close(index);
                     var message = result.message;
                     if (result.success) {
                         parent.layer.alert('登录成功', function () {
