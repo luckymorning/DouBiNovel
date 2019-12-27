@@ -3,6 +3,7 @@ package com.cn.lucky.morning.model.web.intercept;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.domain.User;
 import com.cn.lucky.morning.model.service.SystemSettingService;
+import org.apache.shiro.SecurityUtils;
 import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
@@ -28,14 +29,14 @@ public class AuthenInterceptor extends HandlerInterceptorAdapter {
         }
         if (response.getStatus() == 200) {
             modelAndView.addObject("systemInfo", systemSettingService.getSetting());
-            User user = null;
+            User user = (User) SecurityUtils.getSubject().getPrincipal();
 
             HttpSession session = request.getSession();
             String url = request.getRequestURI();
             if (url != null && url.lastIndexOf("admin") >= 0) {
-                user = (User) session.getAttribute(Const.session.LOGIN_ADMIN);
+//                user = (User) session.getAttribute(Const.session.LOGIN_ADMIN);
             } else {
-                user = (User) session.getAttribute(Const.session.LOGIN_USER);
+//                user = (User) session.getAttribute(Const.session.LOGIN_USER);
                 if (user == null && (url.lastIndexOf("bookshelf")>=0 || url.lastIndexOf("user")>=0)){
                     response.sendRedirect("/index");
                 }

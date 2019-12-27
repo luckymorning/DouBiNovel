@@ -72,6 +72,9 @@
                 $('#last-read').text(catalogName);
                 $('.btn-restart-read').removeClass('layui-hide');
             }
+            $('.btn-restart-read').click(function () {
+                window.location.href = '/book/reader?url='+currentUrl;
+            });
         </script>
     </div>
     <hr class="layui-bg-gray">

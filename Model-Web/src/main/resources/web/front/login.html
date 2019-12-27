@@ -118,8 +118,7 @@
 
 <script type="text/javascript">
     layui.use(['form'], function () {
-        var form = layui.form,
-            layer = layui.layer;
+        var form = layui.form;
         // 进行登录操作
         form.on('submit(login)', function (data) {
             var index = parent.layer.load();
@@ -140,14 +139,14 @@
                     if (message == null || message == '' || message == undefined) {
                         message = '登录失败：未知错误';
                     }
-                    layer.msg(message, {icon: 5, anim: 6},function () {
+                    parent.layer.msg(message, {icon: 5, anim: 6},function () {
                         changeImg();
                     });
                 },
                 error: function () {
                     changeImg();
-                    layer.close(index);
-                    layer.msg('登录失败：网络异常，请稍后再试', {icon: 5, anim: 6},function () {
+                    parent.layer.close(index);
+                    parent.layer.msg('登录失败：网络异常，请稍后再试', {icon: 5, anim: 6},function () {
                         changeImg();
                     });
                 }

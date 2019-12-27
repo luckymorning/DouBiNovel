@@ -12,6 +12,7 @@ import com.cn.lucky.morning.model.service.BookSourceService;
 import com.google.common.base.Objects;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -60,8 +61,12 @@ public class BookShelfController {
     @ResponseBody
     public MvcResult doAdd(String bookUrl) {
         MvcResult result = MvcResult.create();
+        User user = (User) SecurityUtils.getSubject().getPrincipal();
         try {
-            if (StringUtils.isBlank(bookUrl)){
+            if (user == null){
+                result.setSuccess(false);
+                result.setMessage("请先登录");
+            }else if (StringUtils.isBlank(bookUrl)){
                 result.setSuccess(false);
                 result.setMessage("链接不能为空");
             }else {
@@ -79,7 +84,6 @@ public class BookShelfController {
                     result.setSuccess(false);
                     result.setMessage("书源库中不包含此链接，无法加入书架中");
                 }else {
-                    User user = (User) SecurityUtils.getSubject().getPrincipal();
                     BaseQuery query = new BaseQuery();
                     query.set("creatorId",user.getId());
                     query.set("bookUrl",bookUrl);
@@ -121,7 +125,10 @@ public class BookShelfController {
         try {
             User user = (User) SecurityUtils.getSubject().getPrincipal();
            BookInfo bookInfo = bookInfoService.getById(id);
-           if (bookInfo==null){
+            if (user == null){
+                result.setSuccess(false);
+                result.setMessage("请先登录");
+            }else if (bookInfo==null){
                result.setSuccess(false);
                result.setMessage("书籍不存在");
            }else if (!Objects.equal(bookInfo.getCreatorId(), user.getId())) {
@@ -147,16 +154,21 @@ public class BookShelfController {
         MvcResult result = MvcResult.create();
         try {
             User user = (User) SecurityUtils.getSubject().getPrincipal();
-            for (Long id : ids) {
-                BookInfo bookInfo = bookInfoService.getById(id);
-                if (bookInfo==null){
-                    result.setSuccess(false);
-                    result.setMessage("书籍不存在");
-                    break;
-                }else if (!Objects.equal(bookInfo.getCreatorId(), user.getId())) {
-                    result.setSuccess(false);
-                    result.setMessage("只能删除自己的书籍");
-                    break;
+            if (user == null){
+                result.setSuccess(false);
+                result.setMessage("请先登录");
+            }else{
+                for (Long id : ids) {
+                    BookInfo bookInfo = bookInfoService.getById(id);
+                    if (bookInfo==null){
+                        result.setSuccess(false);
+                        result.setMessage("书籍不存在");
+                        break;
+                    }else if (!Objects.equal(bookInfo.getCreatorId(), user.getId())) {
+                        result.setSuccess(false);
+                        result.setMessage("只能删除自己的书籍");
+                        break;
+                    }
                 }
             }
             if (result.isSuccess()) {

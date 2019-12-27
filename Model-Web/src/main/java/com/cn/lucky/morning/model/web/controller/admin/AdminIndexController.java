@@ -12,6 +12,7 @@ import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.*;
 import org.apache.shiro.authz.UnauthorizedException;
+import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.subject.Subject;
 import org.springframework.stereotype.Controller;
@@ -38,6 +39,7 @@ public class AdminIndexController {
     private LoginLogService loginLogService;
 
     @RequestMapping(value = {"", "/", "/index"})
+    @RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String index(Model model) {
         User user = (User) SecurityUtils.getSubject().getPrincipal();
         if (user == null) {
@@ -48,6 +50,7 @@ public class AdminIndexController {
     }
 
     @RequestMapping("/welcome")
+    @RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String welcome() {
         return "admin/welcome";
     }
@@ -147,6 +150,7 @@ public class AdminIndexController {
 
     @RequestMapping("/clearCache")
     @ResponseBody
+    @RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public Map<String, Object> clearCache() {
         Map<String, Object> map = Maps.newHashMap();
         try {
