@@ -11,7 +11,7 @@
  Target Server Version : 100137
  File Encoding         : 65001
 
- Date: 26/12/2019 19:04:53
+ Date: 31/12/2019 17:45:26
 */
 
 SET NAMES utf8mb4;
@@ -113,6 +113,9 @@ CREATE TABLE `m_book_info`  (
   `last_update` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_new` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `creator_id` bigint(20) NULL DEFAULT NULL,
+  `last_read_catalog_name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `last_read_catalog_link` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
 ) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
@@ -197,7 +200,7 @@ CREATE TABLE `m_login_log`  (
   `login_type` int(11) NOT NULL DEFAULT 0,
   `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 11 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of m_login_log
@@ -212,6 +215,16 @@ INSERT INTO `m_login_log` VALUES (7, '超级管理员', 1000, '127.0.1.1', 0, '2
 INSERT INTO `m_login_log` VALUES (8, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-26 17:21:17');
 INSERT INTO `m_login_log` VALUES (9, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-26 17:37:20');
 INSERT INTO `m_login_log` VALUES (10, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-26 17:40:29');
+INSERT INTO `m_login_log` VALUES (11, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-27 09:36:35');
+INSERT INTO `m_login_log` VALUES (12, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-27 09:42:14');
+INSERT INTO `m_login_log` VALUES (13, '超级管理员', 1000, '127.0.1.1', 0, '2019-12-27 09:44:04');
+INSERT INTO `m_login_log` VALUES (14, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-27 09:47:23');
+INSERT INTO `m_login_log` VALUES (15, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 16:54:34');
+INSERT INTO `m_login_log` VALUES (16, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 17:00:23');
+INSERT INTO `m_login_log` VALUES (17, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 17:06:10');
+INSERT INTO `m_login_log` VALUES (18, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 17:11:10');
+INSERT INTO `m_login_log` VALUES (19, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 17:31:13');
+INSERT INTO `m_login_log` VALUES (20, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 17:32:36');
 
 -- ----------------------------
 -- Table structure for m_role
