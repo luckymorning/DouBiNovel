@@ -22,4 +22,6 @@ public interface BookInfoService {
     boolean deleteList(List<Long> ids);
 
     List<BookInfo> getBookInfoByUser(User user);
+
+    BookInfo getBookInfoByBookUrlAndUser(String bookUrl,User user);
 }

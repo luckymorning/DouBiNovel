@@ -49,7 +49,11 @@
             <p class="book-update" th:text="'更新时间：'+${info.lastUpdate==null?'更新时间：未知':info.lastUpdate}">更新时间： 2019-11-09</p>
             <p class="book-new" th:text="'最新章节：'+${info.lastNew==null?'最新章节： 未知':info.lastNew}">最新章节： 835 惊心动魄</p>
             <p class="book-source">来源： <a id="book-detail-url" th:href="${info.bookSourceLink}" th:text="${info.bookSourceName}" href="https://www.xbiquge6.com/" target="_blank">新笔趣阁</a></p>
-            <p class="book-source" id="last-read-p">上次阅读： <a  href="https://www.xbiquge6.com/" target="_blank" id="last-read">第一章</a></p>
+            <p class="book-source" id="last-read-p">
+                上次阅读：
+                <a th:if="${lastReadCatalogLink!=null}" href="https://www.xbiquge6.com/" th:href="'/book/reader?url='+${lastReadCatalogLink}" th:text="${lastReadCatalogName}" target="_blank" id="last-read">第一章</a>
+                <a th:unless="${lastReadCatalogLink!=null}" href="" target="_blank" id="last-read">第一章</a>
+            </p>
             <div class="layui-row">
                 <br>
                 <button href="#" class="layui-btn layui-btn-danger layui-btn-sm btn-start-read layui-hide ">开始阅读</button>
@@ -68,12 +72,15 @@
                 $('#last-read-p').hide();
                 $('.btn-start-read').removeClass('layui-hide');
             }else {
-                $('#last-read').attr('href','/book/reader?url='+currentUrl);
-                $('#last-read').text(catalogName);
+                var href = $('#last-read').attr('href');
+                if (href ==null || href== undefined || href==''){
+                    $('#last-read').attr('href','/book/reader?url='+currentUrl);
+                    $('#last-read').text(catalogName);
+                }
                 $('.btn-restart-read').removeClass('layui-hide');
             }
             $('.btn-restart-read').click(function () {
-                window.location.href = '/book/reader?url='+currentUrl;
+                window.location.href = $('#last-read').attr('href');
             });
         </script>
     </div>

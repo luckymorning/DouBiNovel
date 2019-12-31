@@ -50,7 +50,7 @@ $(document).ready(function () {
 var showLoginDialog = function () {
     layui.layer.open({
         type: 2,
-        area: ['460px', '550px'],
+        area: ['500px', '550px'],
         fix: false, //不固定
         maxmin: false,
         shadeClose: true,

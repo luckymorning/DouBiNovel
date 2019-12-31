@@ -131,8 +131,8 @@
                     parent.layer.close(index);
                     var message = result.message;
                     if (result.success) {
-                        parent.layer.alert('登录成功', function () {
-                            parent.window.location = '/index';
+                        parent.layer.msg('登录成功',{icon:1}, function () {
+                            parent.window.location.reload();
                         });
                         return;
                     }

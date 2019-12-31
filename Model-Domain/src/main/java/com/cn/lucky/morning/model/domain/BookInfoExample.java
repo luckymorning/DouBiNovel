@@ -1,5 +1,6 @@
 package com.cn.lucky.morning.model.domain;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -1147,6 +1148,206 @@ public class BookInfoExample {
 
         public Criteria andCreatorIdNotBetween(Long value1, Long value2) {
             addCriterion("creator_id not between", value1, value2, "creatorId");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameIsNull() {
+            addCriterion("last_read_catalog_name is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameIsNotNull() {
+            addCriterion("last_read_catalog_name is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameEqualTo(String value) {
+            addCriterion("last_read_catalog_name =", value, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameNotEqualTo(String value) {
+            addCriterion("last_read_catalog_name <>", value, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameGreaterThan(String value) {
+            addCriterion("last_read_catalog_name >", value, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameGreaterThanOrEqualTo(String value) {
+            addCriterion("last_read_catalog_name >=", value, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameLessThan(String value) {
+            addCriterion("last_read_catalog_name <", value, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameLessThanOrEqualTo(String value) {
+            addCriterion("last_read_catalog_name <=", value, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameLike(String value) {
+            addCriterion("last_read_catalog_name like", value, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameNotLike(String value) {
+            addCriterion("last_read_catalog_name not like", value, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameIn(List<String> values) {
+            addCriterion("last_read_catalog_name in", values, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameNotIn(List<String> values) {
+            addCriterion("last_read_catalog_name not in", values, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameBetween(String value1, String value2) {
+            addCriterion("last_read_catalog_name between", value1, value2, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogNameNotBetween(String value1, String value2) {
+            addCriterion("last_read_catalog_name not between", value1, value2, "lastReadCatalogName");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkIsNull() {
+            addCriterion("last_read_catalog_link is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkIsNotNull() {
+            addCriterion("last_read_catalog_link is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkEqualTo(String value) {
+            addCriterion("last_read_catalog_link =", value, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkNotEqualTo(String value) {
+            addCriterion("last_read_catalog_link <>", value, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkGreaterThan(String value) {
+            addCriterion("last_read_catalog_link >", value, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkGreaterThanOrEqualTo(String value) {
+            addCriterion("last_read_catalog_link >=", value, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkLessThan(String value) {
+            addCriterion("last_read_catalog_link <", value, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkLessThanOrEqualTo(String value) {
+            addCriterion("last_read_catalog_link <=", value, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkLike(String value) {
+            addCriterion("last_read_catalog_link like", value, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkNotLike(String value) {
+            addCriterion("last_read_catalog_link not like", value, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkIn(List<String> values) {
+            addCriterion("last_read_catalog_link in", values, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkNotIn(List<String> values) {
+            addCriterion("last_read_catalog_link not in", values, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkBetween(String value1, String value2) {
+            addCriterion("last_read_catalog_link between", value1, value2, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andLastReadCatalogLinkNotBetween(String value1, String value2) {
+            addCriterion("last_read_catalog_link not between", value1, value2, "lastReadCatalogLink");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIsNull() {
+            addCriterion("updated is null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIsNotNull() {
+            addCriterion("updated is not null");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedEqualTo(Timestamp value) {
+            addCriterion("updated =", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotEqualTo(Timestamp value) {
+            addCriterion("updated <>", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedGreaterThan(Timestamp value) {
+            addCriterion("updated >", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedGreaterThanOrEqualTo(Timestamp value) {
+            addCriterion("updated >=", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedLessThan(Timestamp value) {
+            addCriterion("updated <", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedLessThanOrEqualTo(Timestamp value) {
+            addCriterion("updated <=", value, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedIn(List<Timestamp> values) {
+            addCriterion("updated in", values, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotIn(List<Timestamp> values) {
+            addCriterion("updated not in", values, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedBetween(Timestamp value1, Timestamp value2) {
+            addCriterion("updated between", value1, value2, "updated");
+            return (Criteria) this;
+        }
+
+        public Criteria andUpdatedNotBetween(Timestamp value1, Timestamp value2) {
+            addCriterion("updated not between", value1, value2, "updated");
             return (Criteria) this;
         }
     }

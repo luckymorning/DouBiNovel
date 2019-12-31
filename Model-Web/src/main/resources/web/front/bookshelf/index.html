@@ -43,7 +43,7 @@
 
 <div class="layui-container" style="margin-top: 20px;">
     <div class="layui-row">
-        <div class="layui-col-md4 left-content">
+        <div class="layui-hide-xs layui-col-md4 left-content">
             <div class="layui-row left-item active">
                 <a href="#">我的书架 >></a>
             </div>
@@ -52,7 +52,7 @@
             </div>
         </div>
 
-        <div class="layui-col-md8 right-content">
+        <div class="layui-col-xs12 layui-col-md8 right-content">
             <fieldset class="layui-elem-field layui-field-title">
                 <legend>我的书架</legend>
             </fieldset>
@@ -66,7 +66,7 @@
             </script>
 
             <script type="text/html" id="barDemo">
-                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">阅读</a>
+                <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="read">目录</a>
                 <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
             </script>
 
@@ -89,10 +89,17 @@
             , {field: 'id', title: 'ID', hide: true}
             , {
                 field: 'name', title: '书籍名称', templet: function (res) {
-                    return '<a target="_blank" href="/book/detail?url=' + res.bookUrl + '">' + res.name + '</a>'
+                    return '<a target="_blank" href="/book/detail?url=' + res.bookUrl + '">' + res.name + '</a>';
+                }
+            } ,
+            {
+                field: 'lastReadCatalogLink', title: '上次阅读',templet:function (res) {
+                    if (res.lastReadCatalogLink == null || res.lastReadCatalogLink == undefined || res.lastReadCatalogLink==''){
+                        return '暂无阅读记录';
+                    }
+                    return '<a target="_blank" href="/book/detail?url=' + res.lastReadCatalogLink + '">' + res.lastReadCatalogName + '</a>';
                 }
             }
-            , {field: 'lastNew', title: '最新章节'}
             , {field: 'author', title: '作者'}
             , {fixed: 'right', title: '操作', toolbar: '#barDemo', width: 120}
         ];

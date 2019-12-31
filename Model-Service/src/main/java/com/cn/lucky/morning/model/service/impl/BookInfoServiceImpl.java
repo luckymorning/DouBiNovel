@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
 import java.util.List;
+import java.util.Objects;
 
 @Service
 public class BookInfoServiceImpl implements BookInfoService {
@@ -103,5 +104,18 @@ public class BookInfoServiceImpl implements BookInfoService {
             cacheService.set(Const.cache.BOOK_INFO_ID+"creatorId."+user.getId(),list,Const.cache.BOOK_INFO_ID_TTL);
         }
         return list;
+    }
+
+    @Override
+    public BookInfo getBookInfoByBookUrlAndUser(String bookUrl, User user) {
+        List<BookInfo> list = getBookInfoByUser(user);
+        if (list!=null && list.size() > 0){
+            for (BookInfo bookInfo : list){
+                if (Objects.equals(bookUrl,bookInfo.getBookUrl())){
+                    return bookInfo;
+                }
+            }
+        }
+        return null;
     }
 }

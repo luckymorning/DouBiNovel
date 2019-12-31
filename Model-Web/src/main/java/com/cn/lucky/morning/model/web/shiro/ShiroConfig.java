@@ -119,8 +119,8 @@ public class ShiroConfig {
         //setcookie()的第七个参数
         //设为true后，只能通过http访问，javascript无法访问
         //防止xss读取cookie
-        simpleCookie.setHttpOnly(true);
-        simpleCookie.setPath("/");
+//        simpleCookie.setHttpOnly(true);
+//        simpleCookie.setPath("/");
         //<!-- 记住我cookie生效时间30天 ,单位秒;-->
         simpleCookie.setMaxAge(2592000);
         return simpleCookie;
