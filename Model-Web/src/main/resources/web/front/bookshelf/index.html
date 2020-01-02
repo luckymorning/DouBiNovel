@@ -98,7 +98,7 @@
                     if (res.lastReadCatalogLink == null || res.lastReadCatalogLink == undefined || res.lastReadCatalogLink==''){
                         return '暂无阅读记录';
                     }
-                    return '<a target="_blank" href="/book/detail?url=' + res.lastReadCatalogLink + '">' + res.lastReadCatalogName + '</a>';
+                    return '<a target="_blank" href="/book/reader?url=' + res.lastReadCatalogLink + '">' + res.lastReadCatalogName + '</a>';
                 }
             }
             , {field: 'author', title: '作者'}

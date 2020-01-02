@@ -417,7 +417,7 @@ function loadCatalogs() {
                 var html = '';
                 for (var index = 0; index < length; index++){
                     var isActive = list[index].value == currentUrl?' active':'';
-                    html += '<a href="/book/reader?url='+list[index].value+'" class="layui-col-xs6 layui-col-md6'+isActive+'">'+list[index].name+'</a>';
+                    html += '<a href="/book/reader?url='+list[index].value+'" class="layui-col-xs5 layui-col-md5 layui-col-md-offset1 layui-col-xs-offset1'+isActive+'">'+list[index].name+'</a>';
                 }
                 $('#catalogTips').hide();
                 $('.catalog-list').append(html);
