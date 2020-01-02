@@ -20,6 +20,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
 import java.util.List;
@@ -114,5 +115,12 @@ public class IndexController {
             model.addAttribute("list",list);
         }
         return "front/donate/list";
+    }
+
+    @RequestMapping("/book/loadCatalogs")
+    @ResponseBody
+    public MvcResult loadCatalogs(String url) {
+        MvcResult result = bookAnalysisService.loadBookDetail(url);
+        return result;
     }
 }

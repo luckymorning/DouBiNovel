@@ -35,7 +35,7 @@
         <span th:if="${preCatalog==null}" class="layui-col-xs4 layui-col-md4 layui-disabled">上一章</span>
         <a th:href="@{/book/reader(url=${preCatalog})}" th:if="${preCatalog!=null}" href="#"
            class="layui-col-xs4 layui-col-md4">上一章</a>
-        <a th:href="@{/book/detail(url=${catalogs})}" href="#" class="layui-col-xs4 layui-col-md4">目录</a>
+        <a target="_blank" th:href="@{/book/detail(url=${catalogs})}" href="#" class="layui-col-xs4 layui-col-md4 book-detail-catalogs">目录</a>
         <span th:if="${nextCatalog==null}" class="layui-col-xs4 layui-col-md4 layui-disabled">下一章</span>
         <a th:href="@{/book/reader(url=${nextCatalog})}" th:if="${nextCatalog!=null}" href="#"
            class="layui-col-xs4 layui-col-md4">下一章</a>
@@ -45,14 +45,34 @@
 <!--    <div class="layui-fixset layui-hide-xs">-->
     <div class="layui-fixset">
         <ul>
+            <li class="layui-icon md-catalogs-open content-wrap"><i class="layui-icon">&#xe647;</i><br>目录</li>
             <li class="layui-icon md-setting-open content-wrap"><i class="layui-icon">&#xe614;</i><br>设置</li>
+            <li class="layui-icon md-go-detail content-wrap"><i class="layui-icon">&#xe60a;</i><br>书页</li>
         </ul>
+
+        <div class="reader-catalogs-md panel-wrap" style="display: none">
+            <div class="layui-row">
+                <i class="layui-col-xs-offset10 layui-col-xs2 layui-col-md-offset11 layui-col-md1 layui-icon md-catalogs-close">&#x1006;</i>
+            </div>
+            <div class="layui-row">
+                <h3 class="layui-col-md12 reader-setting-top-title active">目录</h3>
+            </div>
+            <div class="layui-row">
+                <hr class="layui-col-md1 layui-col-xs2">
+            </div>
+
+            <div class="layui-row catalog-list">
+                <span class="active layui-col-md12 layui-col-xs12" id="catalogTips" style="text-align: center">正在加载中......</span>
+            </div>
+
+        </div>
+
         <div class="reader-setting-md panel-wrap" style="display: none">
             <div class="layui-row">
                 <i class="layui-col-xs-offset10 layui-col-xs2 layui-col-md-offset11 layui-col-md1 layui-icon md-setting-close">&#x1006;</i>
             </div>
             <div class="layui-row">
-                <h3 class="layui-col-md12">设置</h3>
+                <h3 class="layui-col-md12 reader-setting-top-title">设置</h3>
             </div>
             <br>
             <br>
@@ -152,6 +172,7 @@
             </div>
 
         </div>
+
     </div>
 
     <!--  滚动到顶部 -->

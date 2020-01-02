@@ -3,7 +3,7 @@
     margin: auto;
 }
 
-#container{
+#container {
     margin-top: 20px;
 }
 
@@ -66,6 +66,43 @@
 .layui-fixbar-top {
     background-color: rgba(0, 0, 0, 0);
     color: #1a1a1a;
+}
+
+.reader-setting-top-title {
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.reader-catalogs-md {
+    float: left;
+    min-height: 100px;
+    padding: 20px 20px 20px 20px;
+}
+
+.md-catalogs-close {
+    cursor: pointer;
+    text-align: center;
+    font-size: 20px;
+}
+
+.catalog-list{
+    max-height: 70vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+}
+
+.catalog-list a {
+    font-size: 16px;
+    margin-bottom: 10px;
+}
+
+.reader-catalogs-md .active {
+    color: #ed4259;
+}
+
+.catalog-list a:hover {
+    color: #ed4259;
+    transition: 500ms;
 }
 
 .reader-setting-md {
@@ -132,12 +169,12 @@
     transition: 500ms;
 }
 
-.md-setting-font-family .act{
+.md-setting-font-family .act {
     border: 1px #ed4259 solid;
     background-color: #fff0f2;;
 }
 
-.md-setting-font-family .default{
+.md-setting-font-family .default {
     border: 1px solid #d8d8d8;
 }
 

@@ -67,15 +67,18 @@ $(document).ready(function () {
 
     var width = $('.layui-container').width();
     if (width<600){
-        $('.reader-setting-md').width(width-40);
+        $('.reader-setting-md').width(width-100);
+        $('.reader-catalogs-md').width(width-100);
         $('.reader-content').css('margin','0 10px 10px 10px');
     }else {
         $('.reader-setting-md').width(width / 5 * 2);
+        $('.reader-catalogs-md').width(width / 5 * 3);
         $('.reader-content').css('margin','0 50px 30px 50px');
     }
 
     //设置按钮
     $('.md-setting-open').click(function () {
+        $('.md-catalogs-close').click();
         if ($(this).hasClass('panel-wrap')){
             $('.md-setting-close').click();
         }else {
@@ -113,6 +116,32 @@ $(document).ready(function () {
         $('.reader-setting-md').hide(100);
         $('.md-setting-open').addClass('content-wrap');
         $('.md-setting-open').removeClass('panel-wrap');
+    });
+
+    //打开目录
+    $('.md-catalogs-open').click(function () {
+        $('.md-setting-close').click();
+        if ($(this).hasClass('panel-wrap')){
+            $('.md-catalogs-close').click();
+        }else {
+            $('.reader-catalogs-md').show(100,function () {
+                loadCatalogs();
+            });
+            $('.md-catalogs-open').addClass('panel-wrap');
+            $('.md-catalogs-open').removeClass('content-wrap');
+        }
+    });
+
+    //关闭目录
+    $('.md-catalogs-close').click(function () {
+        $('.reader-catalogs-md').hide(100);
+        $('.md-catalogs-open').addClass('content-wrap');
+        $('.md-catalogs-open').removeClass('panel-wrap');
+    });
+
+    //返回书架详情
+    $('.md-go-detail').click(function () {
+        $('.book-detail-catalogs')[0].click();
     });
 
     bindingThemeBtn();
@@ -205,7 +234,7 @@ function bindingFontFamilyBtn() {
     $('.md-setting-font-family-yahei').click(function () {
         if (!$(this).hasClass('act')){
             $('.md-setting-font-family .act').addClass('default').removeClass('act');
-            $(this).addClass('act');
+            $(this).removeClass('default').addClass('act');
             var fontFamily = "'Microsoft YaHei', PingFangSC-Regular, HelveticaNeue-Light, 'Helvetica Neue Light', sans-serif";
             $('.reader-content').css('font-family',fontFamily);
             localStorage.setItem('fontFamily',fontFamily);
@@ -215,7 +244,7 @@ function bindingFontFamilyBtn() {
     $('.md-setting-font-family-song').click(function () {
         if (!$(this).hasClass('act')){
             $('.md-setting-font-family .act').addClass('default').removeClass('act');
-            $(this).addClass('act');
+            $(this).removeClass('default').addClass('act');
             var fontFamily = "PingFangSC-Regular,'-apple-system',Simsun";
             $('.reader-content').css('font-family',fontFamily);
             localStorage.setItem('fontFamily',fontFamily);
@@ -225,7 +254,7 @@ function bindingFontFamilyBtn() {
     $('.md-setting-font-family-kai').click(function () {
         if (!$(this).hasClass('act')){
             $('.md-setting-font-family .act').addClass('default').removeClass('act');
-            $(this).addClass('act');
+            $(this).removeClass('default').addClass('act');
             var fontFamily = "Kaiti";
             $('.reader-content').css('font-family',fontFamily);
             localStorage.setItem('fontFamily',fontFamily);
@@ -356,4 +385,50 @@ function checkLayout() {
         $('.layui-fixbar').css('left', left + 'px');
     }
     // console.info(scrollTop);
+}
+
+var isLoad = false;
+function loadCatalogs() {
+    if (!isLoad){
+        isLoad = true;
+        $('#catalogTips').text('正在加载中。。。');
+        var currentUrl = $('#currentUrl').val();
+        var bookUrl = currentUrl.toString().substring(0,currentUrl.toString().lastIndexOf('/'));
+        $.ajax({
+            url: '/book/loadCatalogs',
+            method: 'post',
+            data: {
+                url:bookUrl
+            },
+            dataType: 'json',
+            success: function (result) {
+                var message = result.message;
+                if (!result.success) {
+                    if (message == null || message == '' || message == undefined) {
+                        message = '查询失败，未知原因';
+                    }
+                    message+= '，<a href="javascript:loadCatalogs();">点此重试</a>';
+                    $('#catalogTips').html(message);
+                    isLoad = false;
+                    return;
+                }
+                var list = result.values.catalogs;
+                var length = list.length;
+                var html = '';
+                for (var index = 0; index < length; index++){
+                    var isActive = list[index].value == currentUrl?' active':'';
+                    html += '<a href="/book/reader?url='+list[index].value+'" class="layui-col-xs6 layui-col-md6'+isActive+'">'+list[index].name+'</a>';
+                }
+                $('#catalogTips').hide();
+                $('.catalog-list').append(html);
+                $('.catalog-list').scrollTop($('a.active:first').offset().top - $('.catalog-list').offset().top + $('.catalog-list').scrollTop());
+            },
+            error: function () {
+                isLoad = false;
+                $('#catalogTips').html('网络异常，请稍后再试，<a href="javascript:loadCatalogs();">点此重试</a>');
+            }
+        });
+    }else {
+        $('.catalog-list').scrollTop($('a.active:first').offset().top - $('.catalog-list').offset().top + $('.catalog-list').scrollTop());
+    }
 }
