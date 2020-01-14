@@ -231,4 +231,44 @@ public class UserController {
         }
         return result;
     }
+
+    @RequestMapping("/changePass")
+    public String changePass(){
+        return "admin/user/changePass";
+    };
+
+    @RequestMapping(method = RequestMethod.POST, value = "/doChangePass")
+    @ResponseBody
+    public MvcResult doChangePass(String password,String newPassword,String rePassword){
+        MvcResult result = MvcResult.create();
+        try {
+            User user = (User) SecurityUtils.getSubject().getPrincipal();
+            if (user == null){
+                result.setSuccess(false);
+                result.setMessage("用户未登录");
+            }else if (StringUtils.isBlank(newPassword)){
+                result.setSuccess(false);
+                result.setMessage("新密码不能为空");
+            }else if (!Objects.equal(newPassword,rePassword)){
+                result.setSuccess(false);
+                result.setMessage("新密码与重复密码不一致");
+            }else {
+                user = userService.getById(user.getId());
+                if(!Objects.equal(CodeUtils.MD5Pwd(user.getCode(),password),user.getPassword())){
+                    result.setSuccess(false);
+                    result.setMessage("旧密码错误");
+                } else{
+                    user.setPassword(CodeUtils.MD5Pwd(user.getCode(),newPassword));
+                    if (!userService.edit(user)){
+                        result.setSuccess(false);
+                        result.setMessage("未知错误");
+                    }
+                }
+            }
+        }catch (Exception e){
+            result.setSuccess(false);
+            result.setMessage("未知错误,"+e.getMessage());
+        }
+        return result;
+    }
 }

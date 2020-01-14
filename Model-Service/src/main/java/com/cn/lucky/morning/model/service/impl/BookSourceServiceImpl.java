@@ -94,4 +94,9 @@ public class BookSourceServiceImpl implements BookSourceService {
         }
         return list;
     }
+
+    @Override
+    public long countBookSource() {
+        return mapper.countByExample(new BookSourceExample());
+    }
 }

@@ -23,4 +23,6 @@ public interface UserService {
     boolean deleteList(List<Long> ids);
 
     boolean codeIsExist(String code, Long selfId);
+
+    long countUser();
 }

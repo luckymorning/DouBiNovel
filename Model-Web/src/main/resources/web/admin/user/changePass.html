@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="utf-8">
+    <title th:text="${systemInfo.sitename}+'-用户修改密码'">逗逼阅读 - 用户修改</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <meta name="keywords" content="逗逼联盟,逗逼阅读,无广告,小说" th:content="${systemInfo.metaKeywords}"/>
+    <meta name="description" content="做最简洁，最干净的小说聚合网站" th:content="${systemInfo.metaDescription}"/>
+    <link rel="stylesheet" th:href="@{/lib/layuimini/lib/layui-v2.5.4/css/layui.css}"
+          href="../../../../static/lib/layuimini/lib/layui-v2.5.4/css/layui.css" media="all">
+    <link rel="stylesheet" th:href="@{/lib/layuimini/css/public.css}"
+          href="../../../../static/lib/layuimini/css/public.css" media="all">
+</head>
+<body>
+<div class="layuimini-container">
+    <div class="layuimini-main">
+        <form class="layui-form" method="post" action="" lay-filter="example">
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>原密码:
+                </label>
+                <div class="layui-input-inline">
+                    <input type="password" name="password" lay-verify="required" placeholder="输入当前密码"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>新密码:
+                </label>
+                <div class="layui-input-inline">
+                    <input type="password" name="newPassword" lay-verify="required|newPassword|password"
+                           placeholder="输入新密码"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">
+                    <span class="we-red">*</span>重复密码:
+                </label>
+                <div class="layui-input-inline">
+                    <input type="password" name="rePassword" lay-verify="required|rePassword" placeholder="重复密码"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <div class="layui-input-inline">
+                    <button class="layui-btn" type="button" lay-submit lay-filter="data-add-btn">修改</button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+<script th:src="@{/lib/layuimini/lib/layui-v2.5.4/layui.js(v=1.0.4)}"
+        src="../../../../static/lib/layuimini/lib/layui-v2.5.4/layui.js?v=1.0.4" charset="utf-8"></script>
+<script th:src="@{/js/admin.js}" src="../../../../static/js/admin.js" charset="utf-8"></script>
+<script>
+    layui.use(['form','jquery'], function () {
+        var $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+
+        //自定义验证
+        form.verify({
+            password: [
+                /^[\S]{6,12}$/
+                , '密码必须6到12位，且不能出现空格'
+            ]
+        });
+
+        // 监听提交操作
+        form.on('submit(data-add-btn)', function (data) {
+            var index = layer.load();
+            $.ajax({
+                url: 'doChangePass',
+                method: 'post',
+                data: data.field,
+                dataType: 'json',
+                success: function (result) {
+                    var message = result.message;
+                    if (result.success) {
+                        if (message == null || message == '' || message == undefined) {
+                            message = '修改成功';
+                        }
+                        layer.close(index);
+                        layer.alert(message);
+                        return;
+                    }
+                    if (message == null || message == '' || message == undefined) {
+                        message = '修改失败:未知错误';
+                    }
+                    layer.close(index);
+                    layer.msg(message);
+                },
+                error: function () {
+                    layer.close(index);
+                    layer.msg('修改失败:网络异常，请稍后再试');
+                }
+            });
+            return false;
+        });
+    });
+</script>
+
+</body>
+</html>

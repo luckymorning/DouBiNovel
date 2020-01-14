@@ -95,4 +95,9 @@ public class DonateServiceImpl implements DonateService {
         }
         return list;
     }
+
+    @Override
+    public long countDonate() {
+        return mapper.countByExample(new DonateExample());
+    }
 }

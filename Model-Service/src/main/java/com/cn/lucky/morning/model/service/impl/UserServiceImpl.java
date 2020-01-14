@@ -129,4 +129,9 @@ public class UserServiceImpl implements UserService {
         }
         return userMapper.selectByExample(example).size() > 0;
     }
+
+    @Override
+    public long countUser() {
+        return userMapper.countByExample(new UserExample());
+    }
 }

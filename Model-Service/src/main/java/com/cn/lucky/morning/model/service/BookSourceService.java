@@ -21,4 +21,6 @@ public interface BookSourceService {
     boolean deleteList(List<Long> ids);
 
     List<BookSource> getAll();
+
+    long countBookSource();
 }

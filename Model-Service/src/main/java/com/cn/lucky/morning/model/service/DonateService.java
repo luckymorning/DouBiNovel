@@ -21,4 +21,6 @@ public interface DonateService {
     boolean deleteList(List<Long> ids);
 
     List<Donate> getAll();
+
+    long countDonate();
 }

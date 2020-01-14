@@ -6,7 +6,10 @@ import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.common.tool.IpUtil;
 import com.cn.lucky.morning.model.domain.LoginLog;
 import com.cn.lucky.morning.model.domain.User;
+import com.cn.lucky.morning.model.service.BookSourceService;
+import com.cn.lucky.morning.model.service.DonateService;
 import com.cn.lucky.morning.model.service.LoginLogService;
+import com.cn.lucky.morning.model.service.UserService;
 import com.cn.lucky.morning.model.web.tools.CaptchaUtils;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
@@ -27,6 +30,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 
@@ -37,6 +41,12 @@ public class AdminIndexController {
     private CacheService cacheService;
     @Resource
     private LoginLogService loginLogService;
+    @Resource
+    private UserService userService;
+    @Resource
+    private BookSourceService bookSourceService;
+    @Resource
+    private DonateService donateService;
 
     @RequestMapping(value = {"", "/", "/index"})
     @RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
@@ -51,7 +61,18 @@ public class AdminIndexController {
 
     @RequestMapping("/welcome")
     @RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
-    public String welcome() {
+    public String welcome(Model model) {
+        long userCount = userService.countUser();
+        model.addAttribute("userCount",userCount);
+
+        long bookSourceCount = bookSourceService.countBookSource();
+        model.addAttribute("bookSourceCount",bookSourceCount);
+
+        long donateCount = donateService.countDonate();
+        model.addAttribute("donateCount",donateCount);
+
+
+
         return "admin/welcome";
     }
 
