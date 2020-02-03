@@ -25,4 +25,6 @@ public interface UserService {
     boolean codeIsExist(String code, Long selfId);
 
     long countUser();
+
+    List<User> findAll();
 }

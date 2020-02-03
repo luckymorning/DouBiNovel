@@ -1,15 +1,13 @@
 package com.cn.lucky.morning.model.web.controller.admin;
 
+import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.cache.CacheService;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.common.tool.IpUtil;
 import com.cn.lucky.morning.model.domain.LoginLog;
 import com.cn.lucky.morning.model.domain.User;
-import com.cn.lucky.morning.model.service.BookSourceService;
-import com.cn.lucky.morning.model.service.DonateService;
-import com.cn.lucky.morning.model.service.LoginLogService;
-import com.cn.lucky.morning.model.service.UserService;
+import com.cn.lucky.morning.model.service.*;
 import com.cn.lucky.morning.model.web.tools.CaptchaUtils;
 import com.google.common.collect.Maps;
 import org.apache.shiro.SecurityUtils;
@@ -47,6 +45,10 @@ public class AdminIndexController {
     private BookSourceService bookSourceService;
     @Resource
     private DonateService donateService;
+    @Resource
+    private UpdateLogService updateLogService;
+    @Resource
+    private SystemNotificationService systemNotificationService;
 
     @RequestMapping(value = {"", "/", "/index"})
     @RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
@@ -71,7 +73,13 @@ public class AdminIndexController {
         long donateCount = donateService.countDonate();
         model.addAttribute("donateCount",donateCount);
 
+        long updateLogCount = updateLogService.countUpdateLogs();
+        model.addAttribute("updateLogCount",updateLogCount);
 
+        BaseQuery notificationQuery = new BaseQuery();
+        notificationQuery.set("order","id desc");
+        notificationQuery.setSize(6);
+        model.addAttribute("notifications",systemNotificationService.getByQuery(notificationQuery).getList());
 
         return "admin/welcome";
     }

@@ -12,7 +12,7 @@
     <artifactId>Model-Web</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>Model-Web</name>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
     <description>Model-Web for Spring Boot</description>
 
     <properties>

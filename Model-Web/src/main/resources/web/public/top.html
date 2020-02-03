@@ -67,6 +67,53 @@
 
         </form>
     </div>
+
+    <script>
+        $.ajax({
+            url: 'findNotification',
+            method: 'get',
+            dataType: 'json',
+            success: function (rst) {
+                if (rst.success) {
+                    var data = rst.data;
+                    var isShow = false;
+                    var lastReadId = localStorage.getItem('lastReadId');
+                    if (lastReadId == null || lastReadId == '' || lastReadId == undefined){
+                        isShow = true;
+                    }else {
+                        lastReadId = parseInt(lastReadId);
+                        if (lastReadId < data.id){
+                            isShow = true;
+                        }
+                    }
+                    if (isShow){
+                        var html =
+                            '<div style="padding:15px 20px; text-align:justify; line-height: 22px;border-bottom:1px solid #e2e2e2;background-color: #2f4056;color: #ffffff">\n' +
+                            '<div style="text-align: center;margin-bottom: 20px;font-weight: bold;border-bottom:1px solid #718fb5;padding-bottom: 5px"><h4 class="text-danger">' + data.title + '</h4></div>\n' +
+                            '<div style="font-size: 12px">' + data.content + '</div>\n' +
+                            '</div>\n';
+                        parent.layer.open({
+                            type: 1,
+                            title: '系统公告'+'<span style="float: right;right: 1px;font-size: 12px;color: #b1b3b9;margin-top: 1px">'+data.created+'</span>',
+                            area: '300px;',
+                            shade: 0.8,
+                            id: 'layuimini-notice',
+                            btn: ['确定'],
+                            btnAlign: 'c',
+                            moveType: 1,
+                            content:html,
+                            success: function (layero) {
+                                localStorage.setItem('lastReadId',data.id);
+                            }
+                        });
+                    }
+                }
+            },
+            error: function (err) {
+                layer.alert('网络异常，请稍后再试');
+            }
+        })
+    </script>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.js"></script>

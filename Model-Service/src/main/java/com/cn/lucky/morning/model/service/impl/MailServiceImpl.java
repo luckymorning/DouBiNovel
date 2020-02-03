@@ -1,5 +1,6 @@
 package com.cn.lucky.morning.model.service.impl;
 
+import com.alibaba.fastjson.JSON;
 import com.cn.lucky.morning.model.common.log.Logs;
 import com.cn.lucky.morning.model.common.network.Col;
 import com.cn.lucky.morning.model.service.MailService;
@@ -10,9 +11,11 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -58,5 +61,36 @@ public class MailServiceImpl implements MailService {
         } catch (MessagingException e) {
             logger.error("发送html邮件时发生异常！", e);
         }
+    }
+
+    @Override
+    public List<String> sendAllHtmlMail(List<String> tos, String subject, String content) {
+        MimeMessage message = mailSender.createMimeMessage();
+        List<String> errorList = new ArrayList<>();
+        for (String to : tos) {
+            if (StringUtils.isEmpty(to)){
+                continue;
+            }
+            try {
+                //true表示需要创建一个multipart message
+                MimeMessageHelper helper = new MimeMessageHelper(message, true);
+                helper.setFrom(from);
+                helper.setTo(to);
+                helper.setSubject(subject);
+                helper.setText(content, true);
+
+                mailSender.send(message);
+            } catch (MessagingException e) {
+                logger.error("发送html邮件时发生异常！", e);
+                errorList.add(to);
+            }
+
+        }
+        if (errorList.size() > 0){
+            logger.info("html邮件群发完毕，成功列表："+JSON.toJSONString(tos.removeAll(errorList))+",失败列表："+ JSON.toJSONString(errorList));
+        }else {
+            logger.info("html邮件群发成功："+ JSON.toJSONString(tos));
+        }
+        return errorList;
     }
 }

@@ -84,7 +84,7 @@ public class Const {
         /**
          * 保存系统设置
          */
-        public static final String SYSTEM_SETTING = "system.setting";
+        public static final String SYSTEM_SETTING = "system.setting.id.";
 
         /**
          * 保存系统设置过期时间
@@ -130,6 +130,16 @@ public class Const {
          * 根据ID保存书籍信息过期权限
          */
         public static final int BOOK_INFO_ID_TTL = 60 * 60 * 24;
+
+        /**
+         * 保存系统公告
+         */
+        public static final String SYSTEM_NOTIFICATION = "system.notification.id.";
+
+        /**
+         * 保存系统公告过期时间
+         */
+        public static final int SYSTEM_NOTIFICATION_TTL = 60 * 60 * 24;
 
     }
 

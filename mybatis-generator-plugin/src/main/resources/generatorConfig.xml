@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration>
-    <classPathEntry location="/media/plant/编程软件/jars/mysql-connector-java-5.1.47.jar" />
+    <classPathEntry location="D:\jars\mysql-connector-java-5.1.47.jar" />
     <context id="context1" targetRuntime="MyBatis3">
         <plugin type="com.cn.lucky.morning.mybaties.MybatisPageTools" />
         <commentGenerator>
@@ -11,12 +11,12 @@
         <javaTypeResolver>
             <property name="forceBigDecimals" value="false" />
         </javaTypeResolver>
-        <javaModelGenerator targetPackage="com.cn.lucky.morning.model.domain" targetProject="/media/plant/_dde_data/customer/codes/java/DouBiNovel/Model-Domain/src/main/java">
+        <javaModelGenerator targetPackage="com.cn.lucky.morning.model.domain" targetProject="D:\codes\customer\java\DouBi\DouBiNovel\Model-Domain\src\main\java">
             <property name="trimStrings" value="true" />
         </javaModelGenerator>
-        <sqlMapGenerator targetPackage="mybatis" targetProject="/media/plant/_dde_data/customer/codes/java/DouBiNovel/Model-Dao/src/main/resources" />
+        <sqlMapGenerator targetPackage="mybatis" targetProject="D:\codes\customer\java\DouBi\DouBiNovel\Model-Dao\src\main\resources" />
 
-        <javaClientGenerator targetPackage="com.cn.lucky.morning.model.dao" targetProject="/media/plant/_dde_data/customer/codes/java/DouBiNovel/Model-Dao/src/main/java" type="XMLMAPPER" />
+        <javaClientGenerator targetPackage="com.cn.lucky.morning.model.dao" targetProject="D:\codes\customer\java\DouBi\DouBiNovel\Model-Dao\src\main\java" type="XMLMAPPER" />
 
         <table domainObjectName="Authority" tableName="m_authority">
             <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
@@ -71,6 +71,12 @@
         <table domainObjectName="LoginLog" tableName="m_login_log">
             <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
             <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+        </table>
+
+        <table domainObjectName="SystemNotification" tableName="m_system_notification">
+            <generatedKey type="post" identity="true" column="id" sqlStatement="Mysql"/>
+            <columnOverride column="created" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
+            <columnOverride column="updated" javaType="java.sql.Timestamp" jdbcType="TIMESTAMP" />
         </table>
     </context>
 </generatorConfiguration>

@@ -96,4 +96,9 @@ public class UpdateLogServiceImpl implements UpdateLogService {
         }
         return list;
     }
+
+    @Override
+    public long countUpdateLogs() {
+        return mapper.countByExample(new UpdateLogExample());
+    }
 }

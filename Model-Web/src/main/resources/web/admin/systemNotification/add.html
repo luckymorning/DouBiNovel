@@ -2,7 +2,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="utf-8">
-    <title th:text="${systemInfo.sitename}+'-更新日志修改'">逗逼阅读 - 更新日志修改</title>
+    <title th:text="${systemInfo.sitename}+'-系统公告添加'">逗逼阅读 - 系统公告添加</title>
     <meta name="renderer" content="webkit">
     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
@@ -16,16 +16,23 @@
 <body>
 <div class="layuimini-container">
     <div class="layuimini-main">
-        <form class="layui-form" method="post" action="doEdit">
-            <input type="hidden" name="id" th:value="${data.id}">
+        <form class="layui-form" method="post" action="doAdd">
+            <div class="layui-form-item">
+                <label class="layui-form-label required">
+                    标题:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" required lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
 
             <div class="layui-form-item">
                 <label class="layui-form-label required">
                     内容:
                 </label>
                 <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" name="updateDes" class="layui-textarea" id="updateDes"
-                              th:text="${data.updateDes}"></textarea>
+                    <textarea placeholder="请输入内容" name="content" class="layui-textarea" id="content"></textarea>
                 </div>
             </div>
 
@@ -53,7 +60,7 @@
             form = layui.form,
             layedit = layui.layedit;
 
-        var layeditIndex = layedit.build('updateDes', {
+        var layeditIndex = layedit.build('content', {
             tool: [
                 'strong' //加粗
                 , 'italic' //斜体
@@ -66,47 +73,44 @@
                 , 'link' //超链接
                 , 'unlink' //清除链接
                 , 'face' //表情
-                // , 'image' //插入图片
+                , 'image' //插入图片
                 // , 'help' //帮助
             ]
         });
 
         // 监听提交操作
         form.on('submit(data-add-btn)', function (data) {
-            data.field.updateDes = layedit.getContent(layeditIndex);
+            data.field.content = layedit.getContent(layeditIndex);
             var index = layer.load();
             $.ajax({
-                url: 'doEdit',
+                url: 'doAdd',
                 method: 'post',
                 data: data.field,
                 dataType: 'json',
                 success: function (result) {
                     var message = result.message;
                     if (result.success) {
-                        if (message == null || message == '' || message == undefined) {
-                            message = '修改成功';
-                        }
                         layer.close(index);
-
                         index = parent.layer.getFrameIndex(window.name);
                         parent.layer.close(index);
                         parent.reloadTable();
                         return;
                     }
                     if (message == null || message == '' || message == undefined) {
-                        message = '修改失败:未知错误';
+                        message = '添加失败:未知错误';
                     }
                     layer.close(index);
                     layer.msg(message);
                 },
                 error: function () {
                     layer.close(index);
-                    layer.msg('修改失败:网络异常，请稍后再试');
+                    layer.msg('添加失败:网络异常，请稍后再试');
                 }
             });
             return false;
         });
     });
+
 </script>
 
 </body>

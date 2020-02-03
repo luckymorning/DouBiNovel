@@ -18,11 +18,18 @@
     <div class="layuimini-main">
         <form class="layui-form" method="post" action="doAdd">
             <div class="layui-form-item">
-                <label class="layui-form-label">
+                <label class="layui-form-label required">
                     内容:
                 </label>
                 <div class="layui-input-block">
                     <textarea placeholder="请输入描述" name="updateDes" class="layui-textarea" id="updateDes"></textarea>
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label">邮件群发</label>
+                <div class="layui-input-block">
+                    <input type="checkbox" checked name="isSendEmail" lay-skin="switch" lay-text="是|否">
                 </div>
             </div>
 

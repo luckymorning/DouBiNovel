@@ -21,4 +21,6 @@ public interface UpdateLogService {
     boolean deleteList(List<Long> ids);
 
     List<UpdateLog> findListLog();
+
+    long countUpdateLogs();
 }

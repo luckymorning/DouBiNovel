@@ -112,7 +112,7 @@ public class MybatisPageTools extends PluginAdapter {
         return true;
     }
     public static void generate() {
-        String config = "/media/plant/_dde_data/customer/codes/java/DouBiNovel/mybatis-generator-plugin/src/main/resources/generatorConfig.xml";
+        String config = "D:\\codes\\customer\\java\\DouBi\\DouBiNovel\\mybatis-generator-plugin\\src\\main\\resources\\generatorConfig.xml";
         String[] arg = { "-configfile", config, "-overwrite" };
         ShellRunner.main(arg);
     }

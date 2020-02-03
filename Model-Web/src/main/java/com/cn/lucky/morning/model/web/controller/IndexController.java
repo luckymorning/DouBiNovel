@@ -3,14 +3,8 @@ package com.cn.lucky.morning.model.web.controller;
 import com.alibaba.fastjson.JSON;
 import com.cn.lucky.morning.model.common.log.Logs;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
-import com.cn.lucky.morning.model.domain.BookInfo;
-import com.cn.lucky.morning.model.domain.Donate;
-import com.cn.lucky.morning.model.domain.UpdateLog;
-import com.cn.lucky.morning.model.domain.User;
-import com.cn.lucky.morning.model.service.BookAnalysisService;
-import com.cn.lucky.morning.model.service.BookInfoService;
-import com.cn.lucky.morning.model.service.DonateService;
-import com.cn.lucky.morning.model.service.UpdateLogService;
+import com.cn.lucky.morning.model.domain.*;
+import com.cn.lucky.morning.model.service.*;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -36,6 +30,8 @@ public class IndexController {
     private BookInfoService bookInfoService;
     @Resource
     private DonateService donateService;
+    @Resource
+    private SystemNotificationService systemNotificationService;
 
 
     @RequestMapping({"/","/index"})
@@ -43,6 +39,29 @@ public class IndexController {
         List<UpdateLog> list = updateLogService.findListLog();
         model.addAttribute("list",list);
         return "front/index";
+    }
+
+    @RequestMapping("/findNotification")
+    @ResponseBody
+    public MvcResult findNotification() {
+        MvcResult result = MvcResult.create();
+        try {
+            SystemNotification notification = systemNotificationService.findLastNotification();
+            if (notification==null){
+                result.setSuccess(false);
+                result.setMessage("无系统公告");
+            }else {
+                result.setData(notification);
+            }
+        }catch (Exception e){
+            result.setSuccess(false);
+            if (StringUtils.isNotEmpty(e.getMessage())){
+                result.setMessage(e.getMessage());
+            }else {
+                result.setMessage("未知错误");
+            }
+        }
+        return result;
     }
 
     @RequestMapping(method = RequestMethod.POST,value = "/search")

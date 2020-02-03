@@ -34,6 +34,12 @@
               "href": "/admin/updateLog/list",
               "icon": "fa fa-history",
               "target": "_self"
+            },
+            {
+              "title": "系统公告",
+              "href": "/admin/systemNotification/list",
+              "icon": "fa fa-bell",
+              "target": "_self"
             }
           ]
         },

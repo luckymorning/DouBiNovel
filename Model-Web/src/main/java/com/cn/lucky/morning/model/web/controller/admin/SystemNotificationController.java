@@ -4,8 +4,9 @@ import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
-import com.cn.lucky.morning.model.common.tool.Dates;
-import com.cn.lucky.morning.model.domain.*;
+import com.cn.lucky.morning.model.domain.SystemNotification;
+import com.cn.lucky.morning.model.domain.SystemSetting;
+import com.cn.lucky.morning.model.domain.User;
 import com.cn.lucky.morning.model.service.*;
 import org.apache.shiro.authz.annotation.Logical;
 import org.apache.shiro.authz.annotation.RequiresPermissions;
@@ -17,14 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.annotation.Resource;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 @Controller
-@RequestMapping("/admin/updateLog")
+@RequestMapping("/admin/systemNotification")
 @RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
-public class UpdateLogController {
+public class SystemNotificationController {
     @Resource
-    private UpdateLogService updateLogService;
+    private SystemNotificationService systemNotificationService;
     @Resource
     private MailService mailService;
     @Resource
@@ -33,18 +36,18 @@ public class UpdateLogController {
     private SystemSettingService systemSettingService;
 
     @RequestMapping("/list")
-    @RequiresPermissions(value = {"UPDATE_LOG_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"SYSTEM_NOTIFICATION_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String list() {
-        return "admin/updateLog/list";
+        return "admin/systemNotification/list";
     }
 
     @RequestMapping("/listJSON")
     @ResponseBody
-    @RequiresPermissions(value = {"UPDATE_LOG_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"SYSTEM_NOTIFICATION_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public MvcResult listJSON(BaseQuery query) {
         MvcResult result = MvcResult.create();
         try {
-            PageTemplate<UpdateLog> pageTemplate = updateLogService.getByQuery(query);
+            PageTemplate<SystemNotification> pageTemplate = systemNotificationService.getByQuery(query);
             result.setData(pageTemplate);
         } catch (Exception e) {
             result.setCode(-1);
@@ -55,22 +58,25 @@ public class UpdateLogController {
     }
 
     @RequestMapping("/add")
-    @RequiresPermissions(value = {"UPDATE_LOG_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"SYSTEM_NOTIFICATION_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String add() {
-        return "admin/updateLog/add";
+        return "admin/systemNotification/add";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/doAdd")
     @ResponseBody
-    @RequiresPermissions(value = {"UPDATE_LOG_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
-    public MvcResult doAdd(UpdateLog updateLog, boolean isSendEmail) {
+    @RequiresPermissions(value = {"SYSTEM_NOTIFICATION_ADD", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    public MvcResult doAdd(SystemNotification systemNotification, boolean isSendEmail) {
         MvcResult result = MvcResult.create();
         try {
-            if (StringUtils.isEmpty(updateLog.getUpdateDes())) {
+            if (StringUtils.isEmpty(systemNotification.getTitle())) {
+                result.setSuccess(false);
+                result.setMessage("添加失败：标题不能为空");
+            } else if (StringUtils.isEmpty(systemNotification.getContent())) {
                 result.setSuccess(false);
                 result.setMessage("添加失败：内容不能为空");
             } else {
-                boolean success = updateLogService.add(updateLog);
+                boolean success = systemNotificationService.add(systemNotification);
                 if (!success) {
                     result.setSuccess(false);
                     result.setMessage("添加失败：未知原因");
@@ -78,16 +84,16 @@ public class UpdateLogController {
                     if (isSendEmail) {
                         List<User> list = userService.findAll();
                         SystemSetting setting = systemSettingService.getSetting();
-                        String title = String.format("%s 网站版本更新 - " + Dates.format(new Date(), "yyyy-MM-dd"), setting.getSitename());
+                        String title = String.format("%s 系统公共 - %s", setting.getSitename(), systemNotification.getTitle());
                         List<String> tos = new ArrayList<>();
                         for (User user : list) {
                             if (!StringUtils.isEmpty(user.getEmail())) {
                                 tos.add(user.getEmail());
                             }
                         }
-                        List<String> errorList = mailService.sendAllHtmlMail(tos, title, updateLog.getUpdateDes());
-                        if (errorList.size() > 0){
-                            mailService.sendAllHtmlMail(errorList,title,updateLog.getUpdateDes());
+                        List<String> errorList = mailService.sendAllHtmlMail(tos, title, systemNotification.getContent());
+                        if (errorList.size() > 0) {
+                            mailService.sendAllHtmlMail(errorList, title, systemNotification.getContent());
                         }
                     }
                 }
@@ -100,41 +106,44 @@ public class UpdateLogController {
     }
 
     @RequestMapping("/edit")
-    @RequiresPermissions(value = {"UPDATE_LOG_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"SYSTEM_NOTIFICATION_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public String edit(Long id, Model model) {
-        model.addAttribute("data", updateLogService.getById(id));
-        return "admin/updateLog/edit";
+        model.addAttribute("data", systemNotificationService.getById(id));
+        return "admin/systemNotification/edit";
     }
 
     @RequestMapping(method = RequestMethod.POST, value = "/doEdit")
     @ResponseBody
-    @RequiresPermissions(value = {"UPDATE_LOG_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
-    public MvcResult doEdit(UpdateLog updateLog, boolean isSendEmail) {
+    @RequiresPermissions(value = {"SYSTEM_NOTIFICATION_UPDATE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    public MvcResult doEdit(SystemNotification systemNotification, boolean isSendEmail) {
         MvcResult result = MvcResult.create();
         try {
 
-            if (StringUtils.isEmpty(updateLog.getUpdateDes())) {
+            if (StringUtils.isEmpty(systemNotification.getTitle())) {
+                result.setSuccess(false);
+                result.setMessage("修改失败：标题不能为空");
+            } else if (StringUtils.isEmpty(systemNotification.getContent())) {
                 result.setSuccess(false);
                 result.setMessage("修改失败：内容不能为空");
             } else {
-                boolean success = updateLogService.edit(updateLog);
+                boolean success = systemNotificationService.edit(systemNotification);
                 if (!success) {
                     result.setSuccess(false);
                     result.setMessage("修改失败：未知原因");
-                }else {
+                } else {
                     if (isSendEmail) {
                         List<User> list = userService.findAll();
                         SystemSetting setting = systemSettingService.getSetting();
-                        String title = String.format("%s 网站版本更新 - " + Dates.format(new Date(), "yyyy-MM-dd"), setting.getSitename());
+                        String title = String.format("%s 系统公共 - %s", setting.getSitename(), systemNotification.getTitle());
                         List<String> tos = new ArrayList<>();
                         for (User user : list) {
                             if (!StringUtils.isEmpty(user.getEmail())) {
                                 tos.add(user.getEmail());
                             }
                         }
-                        List<String> errorList = mailService.sendAllHtmlMail(tos, title, updateLog.getUpdateDes());
-                        if (errorList.size() > 0){
-                            mailService.sendAllHtmlMail(errorList,title,updateLog.getUpdateDes());
+                        List<String> errorList = mailService.sendAllHtmlMail(tos, title, systemNotification.getContent());
+                        if (errorList.size() > 0) {
+                            mailService.sendAllHtmlMail(errorList, title, systemNotification.getContent());
                         }
                     }
                 }
@@ -148,11 +157,11 @@ public class UpdateLogController {
 
     @RequestMapping("/delete")
     @ResponseBody
-    @RequiresPermissions(value = {"UPDATE_LOG_DELETE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"SYSTEM_NOTIFICATION_DELETE", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public MvcResult delete(Long id) {
         MvcResult result = MvcResult.create();
         try {
-            boolean success = updateLogService.delete(id);
+            boolean success = systemNotificationService.delete(id);
             if (!success) {
                 result.setSuccess(false);
                 result.setMessage("删除失败：未知原因");
@@ -166,11 +175,11 @@ public class UpdateLogController {
 
     @RequestMapping("/deleteList")
     @ResponseBody
-    @RequiresPermissions(value = {"UPDATE_LOG_DELETE", Const.role.ROLE_SUPER}, logical = Logical.OR)
+    @RequiresPermissions(value = {"SYSTEM_NOTIFICATION_DELETE", Const.role.ROLE_SUPER}, logical = Logical.OR)
     public MvcResult deleteList(Long[] ids) {
         MvcResult result = MvcResult.create();
         try {
-            boolean success = updateLogService.deleteList(Arrays.asList(ids));
+            boolean success = systemNotificationService.deleteList(Arrays.asList(ids));
             if (!success) {
                 result.setSuccess(false);
                 result.setMessage("删除失败：未知原因");

@@ -3,15 +3,15 @@
 
  Source Server         : localhost_3306
  Source Server Type    : MySQL
- Source Server Version : 100137
+ Source Server Version : 50721
  Source Host           : localhost:3306
  Source Schema         : novel
 
  Target Server Type    : MySQL
- Target Server Version : 100137
+ Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 31/12/2019 17:45:26
+ Date: 03/02/2020 21:18:20
 */
 
 SET NAMES utf8mb4;
@@ -31,7 +31,7 @@ CREATE TABLE `m_authority`  (
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1031 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1035 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_authority
@@ -67,6 +67,10 @@ INSERT INTO `m_authority` VALUES (1027, '捐赠管理', 'DONATE_ADD', '添加', 
 INSERT INTO `m_authority` VALUES (1028, '捐赠管理', 'DONATE_DELETE', '删除', 1007, '2019-12-09 17:55:46', '2019-12-09 17:55:46', '捐赠删除权限');
 INSERT INTO `m_authority` VALUES (1029, '捐赠管理', 'DONATE_UPDATE', '修改', 1007, '2019-12-09 17:56:02', '2019-12-09 17:56:02', '捐赠修改权限');
 INSERT INTO `m_authority` VALUES (1030, '平台权限', 'ADMIN_VIEW', '后台进入权限', 1008, '2019-12-13 22:36:16', '2019-12-13 22:36:16', '后台页面访问权限');
+INSERT INTO `m_authority` VALUES (1031, '系统公告管理', 'SYSTEM_NOTIFICATION_Add', '增加', 1010, '2020-02-03 21:17:17', '2020-02-03 21:17:17', '');
+INSERT INTO `m_authority` VALUES (1032, '系统公告管理', 'SYSTEM_NOTIFICATION_DELETE', '删除', 1010, '2020-02-03 21:17:41', '2020-02-03 21:17:41', '');
+INSERT INTO `m_authority` VALUES (1033, '系统公告管理', 'SYSTEM_NOTIFICATION_UPDATE', '修改', 1010, '2020-02-03 21:17:56', '2020-02-03 21:17:56', '');
+INSERT INTO `m_authority` VALUES (1034, '系统公告管理', 'SYSTEM_NOTIFICATION_VIEW', '查看', 1010, '2020-02-03 21:18:06', '2020-02-03 21:18:06', '');
 
 -- ----------------------------
 -- Table structure for m_authority_group
@@ -79,7 +83,7 @@ CREATE TABLE `m_authority_group`  (
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   `description` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1010 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1011 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_authority_group
@@ -94,6 +98,7 @@ INSERT INTO `m_authority_group` VALUES (1006, '书源管理', '2019-12-05 17:59:
 INSERT INTO `m_authority_group` VALUES (1007, '捐赠管理', '2019-12-09 17:53:36', '2019-12-09 17:53:36', '捐赠管理权限');
 INSERT INTO `m_authority_group` VALUES (1008, '平台权限', '2019-12-13 22:35:40', '2019-12-13 22:35:40', '');
 INSERT INTO `m_authority_group` VALUES (1009, '日志管理', '2019-12-18 17:00:36', '2019-12-18 17:00:36', '日志管理权限');
+INSERT INTO `m_authority_group` VALUES (1010, '系统公告管理', '2020-02-03 21:16:35', '2020-02-03 21:16:35', '');
 
 -- ----------------------------
 -- Table structure for m_book_info
@@ -200,7 +205,7 @@ CREATE TABLE `m_login_log`  (
   `login_type` int(11) NOT NULL DEFAULT 0,
   `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 21 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
+) ENGINE = InnoDB AUTO_INCREMENT = 36 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Compact;
 
 -- ----------------------------
 -- Records of m_login_log
@@ -225,6 +230,21 @@ INSERT INTO `m_login_log` VALUES (17, '幸运小伙', 1002, '127.0.1.1', 1, '201
 INSERT INTO `m_login_log` VALUES (18, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 17:11:10');
 INSERT INTO `m_login_log` VALUES (19, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 17:31:13');
 INSERT INTO `m_login_log` VALUES (20, '幸运小伙', 1002, '127.0.1.1', 1, '2019-12-31 17:32:36');
+INSERT INTO `m_login_log` VALUES (21, '超级管理员', 1000, '192.168.0.108', 1, '2020-02-03 14:19:04');
+INSERT INTO `m_login_log` VALUES (22, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 14:46:32');
+INSERT INTO `m_login_log` VALUES (23, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 15:01:17');
+INSERT INTO `m_login_log` VALUES (24, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 15:08:35');
+INSERT INTO `m_login_log` VALUES (25, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 15:09:14');
+INSERT INTO `m_login_log` VALUES (26, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 18:48:09');
+INSERT INTO `m_login_log` VALUES (27, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 18:57:27');
+INSERT INTO `m_login_log` VALUES (28, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 20:47:53');
+INSERT INTO `m_login_log` VALUES (29, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 20:50:55');
+INSERT INTO `m_login_log` VALUES (30, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 21:00:04');
+INSERT INTO `m_login_log` VALUES (31, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 21:03:07');
+INSERT INTO `m_login_log` VALUES (32, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 21:08:55');
+INSERT INTO `m_login_log` VALUES (33, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 21:11:29');
+INSERT INTO `m_login_log` VALUES (34, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 21:13:09');
+INSERT INTO `m_login_log` VALUES (35, '超级管理员', 1000, '192.168.0.108', 0, '2020-02-03 21:15:06');
 
 -- ----------------------------
 -- Table structure for m_role
@@ -248,6 +268,19 @@ CREATE TABLE `m_role`  (
 INSERT INTO `m_role` VALUES (1000, '超级管理员', '超级管理员', 1, '1000', '2019-11-25 19:52:48', '2019-11-25 19:53:22', 1);
 INSERT INTO `m_role` VALUES (1001, '前端普通角色', '', 0, '', '2019-12-10 19:03:55', '2019-12-13 22:07:25', NULL);
 INSERT INTO `m_role` VALUES (1002, '后台访客', '', 0, '1004,1008,1012,1016,1018,1022,1026,1030', '2019-12-13 22:36:42', '2019-12-18 15:47:13', 1000);
+
+-- ----------------------------
+-- Table structure for m_system_notification
+-- ----------------------------
+DROP TABLE IF EXISTS `m_system_notification`;
+CREATE TABLE `m_system_notification`  (
+  `id` bigint(20) NOT NULL AUTO_INCREMENT,
+  `title` varchar(64) CHARACTER SET utf8 COLLATE utf8_general_ci NOT NULL,
+  `content` varchar(1024) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
+  `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
+  PRIMARY KEY (`id`) USING BTREE
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Table structure for m_system_setting
@@ -309,13 +342,12 @@ CREATE TABLE `m_user`  (
   `created` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0),
   `updated` datetime(0) NOT NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0),
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1003 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1002 CHARACTER SET = utf8 COLLATE = utf8_general_ci ROW_FORMAT = Dynamic;
 
 -- ----------------------------
 -- Records of m_user
 -- ----------------------------
 INSERT INTO `m_user` VALUES (1000, '6c0d9e0d5389fae0af02cc0b0311348d', 'admin', 'e44b960b8f5893ef8cd8f54229527840', '超级管理员', '18512345678', NULL, NULL, 'lucky_morning@163.com', '整个平台超级管理员', NULL, 1, 1000, '2019-11-25 19:51:44', '2019-12-13 22:51:23');
 INSERT INTO `m_user` VALUES (1001, '2159ee49373045fda115c748da17bf95', 'guest', 'e5be93e899d160f8c83692d222a3f367', '后台访客', '', NULL, NULL, '', '平台访客', NULL, 1, 1002, '2019-12-10 19:05:08', '2019-12-13 22:39:40');
-INSERT INTO `m_user` VALUES (1002, '968dca2d516b4fbfa159d72cc9d8cc3e', '4bd14c4ee44c4c2f9d33e57dac4d188d', '0dac6c479a4ff030cb5eac6ca5ac9e83', '幸运小伙', NULL, NULL, NULL, '495709295@qq.com', '平台前端普通用户', NULL, 1, 1001, '2019-12-13 22:08:20', '2019-12-13 22:08:20');
 
 SET FOREIGN_KEY_CHECKS = 1;

@@ -55,34 +55,34 @@ class ModelWebApplicationTests {
 
     @Autowired
     private TemplateEngine templateEngine;
-
-    @Test
-    void simpleMailSend(){
-        mailService.sendSimpleMail("lucky_morning@163.com","test simple mail"," hello this is simple mail");
-    }
-
-    @Test
-    void sendHtmlMail(){
-        String content="<html>\n" +
-                "<body>\n" +
-                "    <h3>hello world ! 这是一封Html邮件!</h3>\n" +
-                "</body>\n" +
-                "</html>";
-        mailService.sendHtmlMail("lucky_morning@163.com","test simple mail",content);
-    }
-
-    @Test
-    public void sendTemplateMail() {
-        String siteName = "逗逼联盟-逗逼阅读";
-        //创建邮件正文
-        Context context = new Context();
-        context.setVariable("siteName", siteName);
-        context.setVariable("mail","lucky_morning@163.com");
-        context.setVariable("code",String.format("%4d",new Random().nextInt(10000)));
-        String emailContent = templateEngine.process("mail/regist_mail", context);
-
-        mailService.sendHtmlMail("lucky_morning@163.com",String.format("欢迎注册 %s ",siteName),emailContent);
-    }
+//
+//    @Test
+//    void simpleMailSend(){
+//        mailService.sendSimpleMail("lucky_morning@163.com","test simple mail"," hello this is simple mail");
+//    }
+//
+//    @Test
+//    void sendHtmlMail(){
+//        String content="<html>\n" +
+//                "<body>\n" +
+//                "    <h3>hello world ! 这是一封Html邮件!</h3>\n" +
+//                "</body>\n" +
+//                "</html>";
+//        mailService.sendHtmlMail("lucky_morning@163.com","test simple mail",content);
+//    }
+//
+//    @Test
+//    public void sendTemplateMail() {
+//        String siteName = "逗逼联盟-逗逼阅读";
+//        //创建邮件正文
+//        Context context = new Context();
+//        context.setVariable("siteName", siteName);
+//        context.setVariable("mail","lucky_morning@163.com");
+//        context.setVariable("code",String.format("%4d",new Random().nextInt(10000)));
+//        String emailContent = templateEngine.process("mail/regist_mail", context);
+//
+//        mailService.sendHtmlMail("lucky_morning@163.com",String.format("欢迎注册 %s ",siteName),emailContent);
+//    }
 
 //
 //    @Test

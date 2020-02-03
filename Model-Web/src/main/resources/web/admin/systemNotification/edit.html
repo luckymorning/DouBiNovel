@@ -21,11 +21,20 @@
 
             <div class="layui-form-item">
                 <label class="layui-form-label required">
+                    标题:
+                </label>
+                <div class="layui-input-block">
+                    <input type="text" name="title" th:value="${data.title}" lay-verify="required" lay-reqtext="标题不能为空" placeholder="请输入标题"
+                           autocomplete="off" class="layui-input">
+                </div>
+            </div>
+
+            <div class="layui-form-item">
+                <label class="layui-form-label required">
                     内容:
                 </label>
                 <div class="layui-input-block">
-                    <textarea placeholder="请输入内容" name="updateDes" class="layui-textarea" id="updateDes"
-                              th:text="${data.updateDes}"></textarea>
+                    <textarea placeholder="请输入内容" th:text="${data.content}" name="content" class="layui-textarea" id="content"></textarea>
                 </div>
             </div>
 
@@ -53,7 +62,7 @@
             form = layui.form,
             layedit = layui.layedit;
 
-        var layeditIndex = layedit.build('updateDes', {
+        var layeditIndex = layedit.build('content', {
             tool: [
                 'strong' //加粗
                 , 'italic' //斜体
@@ -66,14 +75,14 @@
                 , 'link' //超链接
                 , 'unlink' //清除链接
                 , 'face' //表情
-                // , 'image' //插入图片
+                , 'image' //插入图片
                 // , 'help' //帮助
             ]
         });
 
         // 监听提交操作
         form.on('submit(data-add-btn)', function (data) {
-            data.field.updateDes = layedit.getContent(layeditIndex);
+            data.field.content = layedit.getContent(layeditIndex);
             var index = layer.load();
             $.ajax({
                 url: 'doEdit',
