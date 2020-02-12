@@ -11,7 +11,7 @@
  Target Server Version : 50721
  File Encoding         : 65001
 
- Date: 03/02/2020 21:18:20
+ Date: 12/02/2020 13:36:26
 */
 
 SET NAMES utf8mb4;
@@ -113,7 +113,7 @@ CREATE TABLE `m_book_info`  (
   `book_img_error` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `name` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `author` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
-  `novel_des` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
+  `novel_des` varchar(2048) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `novel_type` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_update` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
   `last_new` varchar(255) CHARACTER SET utf8 COLLATE utf8_general_ci NULL DEFAULT NULL,
@@ -267,7 +267,7 @@ CREATE TABLE `m_role`  (
 -- ----------------------------
 INSERT INTO `m_role` VALUES (1000, '超级管理员', '超级管理员', 1, '1000', '2019-11-25 19:52:48', '2019-11-25 19:53:22', 1);
 INSERT INTO `m_role` VALUES (1001, '前端普通角色', '', 0, '', '2019-12-10 19:03:55', '2019-12-13 22:07:25', NULL);
-INSERT INTO `m_role` VALUES (1002, '后台访客', '', 0, '1004,1008,1012,1016,1018,1022,1026,1030', '2019-12-13 22:36:42', '2019-12-18 15:47:13', 1000);
+INSERT INTO `m_role` VALUES (1002, '后台访客', '', 0, '1004,1008,1012,1016,1018,1022,1026,1030,1034', '2019-12-13 22:36:42', '2020-02-03 21:18:52', 1000);
 
 -- ----------------------------
 -- Table structure for m_system_notification
