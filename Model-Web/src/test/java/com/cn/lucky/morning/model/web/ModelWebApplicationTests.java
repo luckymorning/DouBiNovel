@@ -6,6 +6,7 @@ import com.cn.lucky.morning.model.common.cache.CacheService;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.common.network.Col;
 import com.cn.lucky.morning.model.common.network.NetWorkUtil;
+import com.cn.lucky.morning.model.common.tool.ByteUtils;
 import com.cn.lucky.morning.model.domain.BookInfo;
 import com.cn.lucky.morning.model.domain.BookSource;
 import com.cn.lucky.morning.model.service.BookAnalysisService;
@@ -16,6 +17,8 @@ import com.google.common.collect.Maps;
 import okhttp3.Cache;
 import okhttp3.Headers;
 import okhttp3.Response;
+import org.apache.commons.lang.CharSet;
+import org.apache.commons.lang.CharSetUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
@@ -27,7 +30,9 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.annotation.Resource;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -190,9 +195,13 @@ class ModelWebApplicationTests {
 //        String bookDetailCatalogItemLinkSelector = "a";
 //
 //
-//        String url = "https://www.xsbiquge.com/89_89694/";
+//        String url = "https://www.zwdu.com/book/31087/";
 //        Response response = NetWorkUtil.get(url, headers, true);
-//        Document html = Jsoup.parse(response.body().string());
+//        byte[] bytes = response.body().bytes();
+//        String charset = ByteUtils.getEncoding(bytes);
+//        String responseStr = new String(bytes,charset);
+//        Document html = Jsoup.parse(responseStr);
+//        System.out.println("charset:"+ charset);
 //
 //        //加载书籍详情
 //        BookInfo bookInfo = new BookInfo();
@@ -222,6 +231,7 @@ class ModelWebApplicationTests {
 //        Elements catalogList = html.select(bookDetailCatalogListSelector);
 //        for (Element catalogItem : catalogList) {
 //            String catalogName = catalogItem.selectFirst(bookDetailCatalogItemNameSelector).text();
+//
 //            String href = catalogItem.selectFirst(bookDetailCatalogItemLinkSelector).attr("href");
 //            if (!href.startsWith("http://") || !href.startsWith("https://")) {
 //                href = baseUrl + href;

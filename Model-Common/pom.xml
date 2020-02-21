@@ -50,6 +50,14 @@
             <version>1.12.1</version>
         </dependency>
 
+        <!-- https://mvnrepository.com/artifact/com.googlecode.juniversalchardet/juniversalchardet -->
+        <dependency>
+            <groupId>com.googlecode.juniversalchardet</groupId>
+            <artifactId>juniversalchardet</artifactId>
+            <version>1.0.3</version>
+        </dependency>
+
+
         <!-- Spring Boot Redis依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>

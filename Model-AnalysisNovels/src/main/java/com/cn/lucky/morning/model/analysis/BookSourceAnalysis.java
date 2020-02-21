@@ -6,6 +6,7 @@ import com.cn.lucky.morning.model.common.log.Logs;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.common.network.Col;
 import com.cn.lucky.morning.model.common.network.NetWorkUtil;
+import com.cn.lucky.morning.model.common.tool.ByteUtils;
 import com.cn.lucky.morning.model.domain.BookInfo;
 import com.cn.lucky.morning.model.domain.BookSource;
 import com.google.common.collect.Maps;
@@ -58,7 +59,10 @@ public class BookSourceAnalysis {
             if (list == null) {
                 list = new ArrayList<>();
                 Response response = NetWorkUtil.get(url, headers, true);
-                Document html = Jsoup.parse(response.body().string());
+                byte[] bytes = response.body().bytes();
+                String charset = ByteUtils.getEncoding(bytes);
+                String responseStr = new String(bytes,charset);
+                Document html = Jsoup.parse(responseStr);
                 Elements resultListElements = html.select(bookSource.getSearchResultSelector());
                 for (Element resultItem : resultListElements) {
                     BookInfo info = new BookInfo();
@@ -165,7 +169,10 @@ public class BookSourceAnalysis {
             if (map == null) {
                 map = Maps.newHashMap();
                 Response response = NetWorkUtil.get(url, headers, true);
-                Document html = Jsoup.parse(response.body().string());
+                byte[] bytes = response.body().bytes();
+                String charset = ByteUtils.getEncoding(bytes);
+                String responseStr = new String(bytes,charset);
+                Document html = Jsoup.parse(responseStr);
 
                 //加载书籍详情
                 BookInfo bookInfo = new BookInfo();
@@ -288,7 +295,10 @@ public class BookSourceAnalysis {
             if (map == null) {
                 map = Maps.newHashMap();
                 Response response = NetWorkUtil.get(url, headers, true);
-                Document html = Jsoup.parse(response.body().string());
+                byte[] bytes = response.body().bytes();
+                String charset = ByteUtils.getEncoding(bytes);
+                String responseStr = new String(bytes,charset);
+                Document html = Jsoup.parse(responseStr);
 
                 if (StringUtils.isNotBlank(bookSource.getBookContentNameSelector())) {
                     Element bookNameElem = html.selectFirst(bookSource.getBookContentNameSelector());
