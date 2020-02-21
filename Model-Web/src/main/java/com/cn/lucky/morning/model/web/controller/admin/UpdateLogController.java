@@ -85,10 +85,7 @@ public class UpdateLogController {
                                 tos.add(user.getEmail());
                             }
                         }
-                        List<String> errorList = mailService.sendAllHtmlMail(tos, title, updateLog.getUpdateDes());
-                        if (errorList.size() > 0){
-                            mailService.sendAllHtmlMail(errorList,title,updateLog.getUpdateDes());
-                        }
+                        mailService.sendAllHtmlMail(tos, title, updateLog.getUpdateDes());
                     }
                 }
             }
@@ -132,10 +129,7 @@ public class UpdateLogController {
                                 tos.add(user.getEmail());
                             }
                         }
-                        List<String> errorList = mailService.sendAllHtmlMail(tos, title, updateLog.getUpdateDes());
-                        if (errorList.size() > 0){
-                            mailService.sendAllHtmlMail(errorList,title,updateLog.getUpdateDes());
-                        }
+                        mailService.sendAllHtmlMail(tos, title, updateLog.getUpdateDes());
                     }
                 }
             }

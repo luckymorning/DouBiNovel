@@ -91,10 +91,7 @@ public class SystemNotificationController {
                                 tos.add(user.getEmail());
                             }
                         }
-                        List<String> errorList = mailService.sendAllHtmlMail(tos, title, systemNotification.getContent());
-                        if (errorList.size() > 0) {
-                            mailService.sendAllHtmlMail(errorList, title, systemNotification.getContent());
-                        }
+                        mailService.sendAllHtmlMail(tos, title, systemNotification.getContent());
                     }
                 }
             }
@@ -141,10 +138,7 @@ public class SystemNotificationController {
                                 tos.add(user.getEmail());
                             }
                         }
-                        List<String> errorList = mailService.sendAllHtmlMail(tos, title, systemNotification.getContent());
-                        if (errorList.size() > 0) {
-                            mailService.sendAllHtmlMail(errorList, title, systemNotification.getContent());
-                        }
+                        mailService.sendAllHtmlMail(tos, title, systemNotification.getContent());
                     }
                 }
             }
