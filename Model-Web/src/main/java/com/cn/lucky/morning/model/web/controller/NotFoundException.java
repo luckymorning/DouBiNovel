@@ -51,19 +51,6 @@ public class NotFoundException implements ErrorController {
                     response.getOutputStream().write(result.toString().getBytes("utf8"));
                 }
                 break;
-            case 500:
-                if (accept.contains("text/html")){
-                    String url = request.getAttribute("javax.servlet.forward.request_uri").toString();
-                    if (url.startsWith("/admin")){
-                        response.sendRedirect("/admin/logout");
-                    }else {
-                        response.sendRedirect("/msgError?msg="+ URLEncoder.encode("服务器内部异常","utf8"));
-                    }
-                }else {
-                    MvcResult result = MvcResult.createFail(500,"服务器内部异常");
-                    response.getOutputStream().write(result.toString().getBytes("utf8"));
-                }
-                break;
             default:
                 if (accept.contains("text/html")){
                     response.sendRedirect("/msgError?msg="+ URLEncoder.encode("未知异常","utf8"));

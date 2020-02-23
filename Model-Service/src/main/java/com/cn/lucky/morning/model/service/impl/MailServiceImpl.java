@@ -98,7 +98,8 @@ public class MailServiceImpl implements MailService {
                 }
                 if (tosTemp.size() > 0) {
                     errorCount++;
-                    logger.info("html邮件群发完毕，成功列表：" + JSON.toJSONString(tos.removeAll(tosTemp)) + ",失败列表：" + JSON.toJSONString(tosTemp) + ",第" + errorCount + "次重试");
+//                    tos.removeAll(tosTemp);
+//                    logger.info("html邮件群发完毕，成功列表：" + JSON.toJSONString(tos) + ",失败列表：" + JSON.toJSONString(tosTemp) + ",第" + errorCount + "次重试");
                     tos = tosTemp;
                 } else {
                     logger.info("html邮件群发成功：" + JSON.toJSONString(tos));
@@ -110,6 +111,7 @@ public class MailServiceImpl implements MailService {
                 result.setSuccess(false);
                 result.setMessage("html邮件群发完毕,失败列表：" + JSON.toJSONString(tos));
             } else {
+                result.setMessage("html邮件群发完毕,全部成功");
             }
 
         } catch (Exception e) {

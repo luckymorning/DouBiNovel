@@ -84,7 +84,7 @@ public class SystemNotificationController {
                     if (isSendEmail) {
                         List<User> list = userService.findAll();
                         SystemSetting setting = systemSettingService.getSetting();
-                        String title = String.format("%s 系统公共 - %s", setting.getSitename(), systemNotification.getTitle());
+                        String title = String.format("%s 系统公告 - %s", setting.getSitename(), systemNotification.getTitle());
                         List<String> tos = new ArrayList<>();
                         for (User user : list) {
                             if (!StringUtils.isEmpty(user.getEmail())) {
@@ -131,7 +131,7 @@ public class SystemNotificationController {
                     if (isSendEmail) {
                         List<User> list = userService.findAll();
                         SystemSetting setting = systemSettingService.getSetting();
-                        String title = String.format("%s 系统公共 - %s", setting.getSitename(), systemNotification.getTitle());
+                        String title = String.format("%s 系统公告 - %s", setting.getSitename(), systemNotification.getTitle());
                         List<String> tos = new ArrayList<>();
                         for (User user : list) {
                             if (!StringUtils.isEmpty(user.getEmail())) {
