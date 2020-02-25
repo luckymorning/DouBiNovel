@@ -30,7 +30,9 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
 import javax.annotation.Resource;
+import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
@@ -60,6 +62,67 @@ class ModelWebApplicationTests {
 
     @Autowired
     private TemplateEngine templateEngine;
+
+//    @Test
+//    void download() throws IOException {
+//        File file = new File("D://test.txt");
+//        if (!file.exists()){
+//            file.createNewFile();
+//        }
+//        FileOutputStream fos = new FileOutputStream(file,false);
+//        long start = System.currentTimeMillis();
+//        String url = "https://www.xsbiquge.com/77_77523/";
+//        MvcResult result = bookAnalysisService.loadBookDetail(url);
+//        if (result.isSuccess()){
+//            BookInfo info = result.getVal("info");
+//            List<Col> catalogs = result.getVal("catalogs");
+//
+////            StringBuilder builder = new StringBuilder();
+////            builder.append("******************\n");
+////            builder.append("书名："+info.getName()+"\n");
+////            builder.append("作者："+info.getAuthor()+"\n");
+////            builder.append("描述："+Jsoup.parse(info.getNovelDes()).text()+"\n");
+////            builder.append("更多小说请关注：http://novel.luckymorning.cn\n");
+////            builder.append("******************\n");
+//
+//            fos.write(("书名："+info.getName()+"\n").getBytes("utf8"));
+//            fos.write(("作者："+info.getAuthor()+"\n").getBytes("utf8"));
+//            fos.write(("描述："+Jsoup.parse(info.getNovelDes()).text()+"\n").getBytes("utf8"));
+//            fos.write(("更多小说请关注：novel.luckymorning.cn\n").getBytes("utf8"));
+//
+//            int index = 1;
+//            for (Col col:catalogs){
+//                if (!col.getName().startsWith("第")){
+//                    fos.write(("第"+index+"章.").getBytes("utf8"));
+//                }
+//                fos.write(col.getName().getBytes("utf8"));
+//                fos.write("\n".getBytes("utf8"));
+//                result = bookAnalysisService.loadBookContent(col.getValue().toString());
+//                if (result.isSuccess()){
+//                    String content = result.getVal("content");
+//                    content = content.replaceAll("<br>","\n").replaceAll("&nbsp;"," ");
+////                    builder.append(Jsoup.parse(result.getVal("catalogName")).text());
+////                    builder.append(Jsoup.parse(content).text());
+//                    fos.write(content.getBytes("utf8"));
+//                    fos.write("\n".getBytes("utf8"));
+//                }else {
+//                    System.out.println("加载章节《"+col.getName()+"》出错！"+result.getMessage());
+//                    return;
+//                }
+//                index++;
+//                if (index > 3){
+//                    break;
+//                }
+//            }
+////            System.out.println(JSON.toJSONString(builder.toString()));
+//        }else {
+//            System.out.println("加载出错！"+result.getMessage());
+//        }
+//        fos.flush();
+//        fos.close();
+//        System.out.println("完毕，总耗时："+(System.currentTimeMillis() - start));
+//    }
+
 //
 //    @Test
 //    void simpleMailSend(){

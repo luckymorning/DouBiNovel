@@ -9,8 +9,8 @@
     </parent>
 
     <groupId>Model-Web</groupId>
-    <artifactId>Model-Web</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <artifactId>DouBiNovel</artifactId>
+    <version>0.0.3-SNAPSHOT</version>
     <name>Model-Web</name>
     <packaging>war</packaging>
     <description>Model-Web for Spring Boot</description>

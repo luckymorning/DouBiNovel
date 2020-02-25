@@ -58,8 +58,10 @@
             <div class="layui-row">
                 <br>
                 <button href="#" class="layui-btn layui-btn-danger layui-btn-sm btn-start-read layui-hide ">开始阅读</button>
-                <button href="#" class="layui-btn layui-btn-danger layui-btn-sm btn-restart-read layui-hide ">继续阅读</button>
+                <button href="#" class="layui-btn layui-btn-danger layui-btn-sm btn-restart-read layui-hide " style="margin-left: 0;">继续阅读</button>
                 <button class="layui-btn layui-btn-normal layui-btn-sm btn-add-bookshelf ">加入书架</button>
+                <button class="layui-btn layui-btn-sm btn-download layui-hide-xs">TXT下载</button>
+                <button class="layui-btn layui-btn-sm btn-download layui-hide-md layui-hide-lg" style="margin-left: 0;margin-top: 10px;">TXT下载</button>
             </div>
         </div>
         <script>
@@ -80,8 +82,13 @@
                 }
                 $('.btn-restart-read').removeClass('layui-hide');
             }
+
             $('.btn-restart-read').click(function () {
                 window.location.href = $('#last-read').attr('href');
+            });
+
+            $('.btn-download').click(function () {
+                window.location.href = "/book/download?url=" + bookUrl;
             });
         </script>
     </div>
