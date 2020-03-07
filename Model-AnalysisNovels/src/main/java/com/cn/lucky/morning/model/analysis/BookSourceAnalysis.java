@@ -61,7 +61,7 @@ public class BookSourceAnalysis {
                 Response response = NetWorkUtil.get(url, headers, true);
                 byte[] bytes = response.body().bytes();
                 String charset = ByteUtils.getEncoding(bytes);
-                String responseStr = new String(bytes,charset);
+                String responseStr = new String(bytes, charset);
                 Document html = Jsoup.parse(responseStr);
                 Elements resultListElements = html.select(bookSource.getSearchResultSelector());
                 for (Element resultItem : resultListElements) {
@@ -171,7 +171,7 @@ public class BookSourceAnalysis {
                 Response response = NetWorkUtil.get(url, headers, true);
                 byte[] bytes = response.body().bytes();
                 String charset = ByteUtils.getEncoding(bytes);
-                String responseStr = new String(bytes,charset);
+                String responseStr = new String(bytes, charset);
                 Document html = Jsoup.parse(responseStr);
 
                 //加载书籍详情
@@ -297,7 +297,7 @@ public class BookSourceAnalysis {
                 Response response = NetWorkUtil.get(url, headers, true);
                 byte[] bytes = response.body().bytes();
                 String charset = ByteUtils.getEncoding(bytes);
-                String responseStr = new String(bytes,charset);
+                String responseStr = new String(bytes, charset);
                 Document html = Jsoup.parse(responseStr);
 
                 if (StringUtils.isNotBlank(bookSource.getBookContentNameSelector())) {
@@ -343,9 +343,10 @@ public class BookSourceAnalysis {
                     Element preCatalogElem = html.selectFirst(bookSource.getBookContentPreCatalogSelector());
                     if (preCatalogElem != null) {
                         String preCatalog = preCatalogElem.attr("href");
-                        if (!preCatalog.startsWith("http://") || !preCatalog.startsWith("https://")) {
-                            map.put("preCatalog", bookSource.getBaseUrl() + preCatalog);
+                        if (!preCatalog.contains(bookSource.getBaseUrl()) && !preCatalog.startsWith("//") && !preCatalog.startsWith("http") && !preCatalog.startsWith("https")) {
+                            preCatalog = bookSource.getBaseUrl() + preCatalog;
                         }
+                        map.put("preCatalog", preCatalog);
                     }
                 }
 
@@ -353,9 +354,10 @@ public class BookSourceAnalysis {
                     Element catalogsElem = html.selectFirst(bookSource.getBookContentCatalogListSelector());
                     if (catalogsElem != null) {
                         String catalogs = catalogsElem.attr("href");
-                        if (!catalogs.startsWith("http://") || !catalogs.startsWith("https://")) {
-                            map.put("catalogs", bookSource.getBaseUrl() + catalogs);
+                        if (!catalogs.contains(bookSource.getBaseUrl()) && !catalogs.startsWith("//") && !catalogs.startsWith("http") && !catalogs.startsWith("https")) {
+                            catalogs = bookSource.getBaseUrl() + catalogs;
                         }
+                        map.put("catalogs", catalogs);
                     }
                 }
 
@@ -363,9 +365,10 @@ public class BookSourceAnalysis {
                     Element nextCatalogElem = html.selectFirst(bookSource.getBookContentNextCatalogSelector());
                     if (nextCatalogElem != null) {
                         String nextCatalog = nextCatalogElem.attr("href");
-                        if (!nextCatalog.startsWith("http://") || !nextCatalog.startsWith("https://")) {
-                            map.put("nextCatalog", bookSource.getBaseUrl() + nextCatalog);
+                        if (!nextCatalog.contains(bookSource.getBaseUrl()) && !nextCatalog.startsWith("//") && !nextCatalog.startsWith("http") && !nextCatalog.startsWith("https")) {
+                            nextCatalog = bookSource.getBaseUrl() + nextCatalog;
                         }
+                        map.put("nextCatalog", nextCatalog);
                     }
                 }
                 cacheService.set(url, map, Const.cache.BOOK_CATALOG_CONTENT_TTL);

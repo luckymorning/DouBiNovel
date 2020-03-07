@@ -10,7 +10,7 @@
 
     <groupId>Model-Web</groupId>
     <artifactId>Model-Web</artifactId>
-    <version>0.0.3-SNAPSHOT</version>
+    <version>1.0.0-SNAPSHOT</version>
     <name>Model-Web</name>
     <packaging>war</packaging>
     <description>Model-Web for Spring Boot</description>
