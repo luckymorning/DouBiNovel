@@ -17,7 +17,6 @@ import okhttp3.Response;
 public class NetWorkUtil {
     private static final int CONNECT_TIMEOUT = 1;
     private static final TimeUnit timeUnit = TimeUnit.SECONDS;
-    public static OkHttpClient client;
 
 
     /**
@@ -35,24 +34,14 @@ public class NetWorkUtil {
             requestBuilder.headers(headers);
         }
         Request request = requestBuilder.build();
-        if(isUseStaticClient){
-            if(client == null){
-                OkHttpClient.Builder builder = new OkHttpClient.Builder();
-                builder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
-                client = builder.build();
-            }
-            Call call=client.newCall(request);
-            call.enqueue(callback);
-            return call;
-        }else{
 
-            OkHttpClient.Builder builder = new OkHttpClient.Builder();
-            builder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
-            OkHttpClient okHttpClient = builder.build();;
-            Call call=okHttpClient.newCall(request);
-            call.enqueue(callback);
-            return call;
-        }
+
+        OkHttpClient.Builder builder = new OkHttpClient.Builder();
+        builder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
+        OkHttpClient okHttpClient = builder.build();;
+        Call call=okHttpClient.newCall(request);
+        call.enqueue(callback);
+        return call;
     }
 
     /**
@@ -83,23 +72,12 @@ public class NetWorkUtil {
         requestBuilder.post(post);
         Request request = requestBuilder.build();
 
-        if(isUseStaticClient){
-            if(client == null){
-                OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
-                clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
-                client = clientbuilder.build();
-            }
-            Call call=client.newCall(request);
-            call.enqueue(callback);
-            return call;
-        }else{
-            OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
-            clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
-            OkHttpClient okHttpClient = clientbuilder.build();
-            Call call=okHttpClient.newCall(request);
-            call.enqueue(callback);
-            return call;
-        }
+        OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
+        clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
+        OkHttpClient okHttpClient = clientbuilder.build();
+        Call call=okHttpClient.newCall(request);
+        call.enqueue(callback);
+        return call;
     }
 
     /**
@@ -117,24 +95,12 @@ public class NetWorkUtil {
         }
         requestBuilder.url(url);
         Request request = requestBuilder.build();
-        if(isUseStaticClient){
-            if(client == null){
-                OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
-                clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
-                client = clientbuilder.build();
-            }
-            Call call=client.newCall(request);
-            Response response = call.execute();
-            return response;
-        }else{
-
-            OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
-            clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
-            OkHttpClient okHttpClient = clientbuilder.build();
-            Call call=okHttpClient.newCall(request);
-            Response response = call.execute();
-            return response;
-        }
+        OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
+        clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
+        OkHttpClient okHttpClient = clientbuilder.build();
+        Call call=okHttpClient.newCall(request);
+        Response response = call.execute();
+        return response;
     }
 
     /**
@@ -162,22 +128,11 @@ public class NetWorkUtil {
         requestBuilder.post(post);
         Request request = requestBuilder.build();
 
-        if(isUseStaticClient){
-            if(client == null){
-                OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
-                clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
-                client = clientbuilder.build();
-            }
-            Call call=client.newCall(request);
-            Response response = call.execute();
-            return response;
-        }else{
-            OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
-            clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
-            OkHttpClient okHttpClient  = clientbuilder.build();
-            Call call=okHttpClient.newCall(request);
-            Response response = call.execute();
-            return response;
-        }
+        OkHttpClient.Builder clientbuilder = new OkHttpClient.Builder();
+        clientbuilder.connectTimeout(CONNECT_TIMEOUT, timeUnit);
+        OkHttpClient okHttpClient  = clientbuilder.build();
+        Call call=okHttpClient.newCall(request);
+        Response response = call.execute();
+        return response;
     }
 }

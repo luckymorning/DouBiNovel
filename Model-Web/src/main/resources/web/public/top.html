@@ -34,14 +34,14 @@
 
   <div class="header-item layui-col-xs4 layui-col-md3 layui-row">
     <form th:action="@{/search}" action="/search" method="post" id="form">
-      <div class="layui-col-xs9 layui-col-md7 header-search">
+      <div class="layui-col-xs9 layui-col-md7 header-search layui-hide-xs">
         <input id="name" class="layui-input" type="text" name="name" required lay-verify="required" placeholder="请输入书名或作者名">
       </div>
-      <div class="layui-col-xs3 layui-col-md2 header-search">
+      <div class="layui-col-xs3 layui-col-md2 header-search layui-hide-xs">
         <i class="layui-icon" onclick="submit()">&#xe615;</i>
       </div>
 
-      <div th:if="${user == null}" class="layui-col-md3 header-search layui-hide-xs">
+      <div th:if="${user == null}" class="layui-col-md3 header-search">
         <button type="button" class="layui-btn layui-btn-normal layui-btn-sm " onclick="showLoginDialog()">登录</button>
         <a target="_blank" href="/register" class="layui-btn layui-btn-primary layui-btn-sm ">注册</a>
       </div>

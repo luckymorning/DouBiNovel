@@ -123,42 +123,44 @@ public class BookAnalysisServiceImpl implements BookAnalysisService {
 
     @Override
     public MvcResult loadBookContent(String url) {
-        MvcResult result = MvcResult.create();
-        if (StringUtils.isBlank(url)) {
-            result.setSuccess(false);
-            result.setMessage("解析地址不能为空");
-        } else {
-            try {
-                Future<MvcResult> future;
-                List<BookSource> bookSources = bookSourceService.getAll();
-                if (bookSources== null || bookSources.size() == 0){
-                    result.setSuccess(false);
-                    result.setMessage("请添加书源");
-                }else {
-                    boolean isNotFound = true;
-                    for (BookSource bookSource : bookSources){
-                        if (url.contains(bookSource.getBaseUrl())){
-                            isNotFound = false;
-                            future = bookSourceAnalysis.loadContent(url,bookSource);
-                            result = future.get();
-                            break;
+        synchronized (url){
+            MvcResult result = MvcResult.create();
+            if (StringUtils.isBlank(url)) {
+                result.setSuccess(false);
+                result.setMessage("解析地址不能为空");
+            } else {
+                try {
+                    Future<MvcResult> future;
+                    List<BookSource> bookSources = bookSourceService.getAll();
+                    if (bookSources== null || bookSources.size() == 0){
+                        result.setSuccess(false);
+                        result.setMessage("请添加书源");
+                    }else {
+                        boolean isNotFound = true;
+                        for (BookSource bookSource : bookSources){
+                            if (url.contains(bookSource.getBaseUrl())){
+                                isNotFound = false;
+                                future = bookSourceAnalysis.loadContent(url,bookSource);
+                                result = future.get();
+                                break;
+                            }
+                        }
+                        if (isNotFound){
+                            result.setSuccess(false);
+                            result.setMessage("未知解析源，请直接访问 【" + url + "】");
                         }
                     }
-                    if (isNotFound){
-                        result.setSuccess(false);
-                        result.setMessage("未知解析源，请直接访问 【" + url + "】");
-                    }
+                } catch (Exception e) {
+                    result.setSuccess(false);
+                    result.setMessage("解析章节内容出错（" + e.getMessage() + "），请刷新重试，或直接访问【" + url + "】");
+                    logger.error("解析章节内容【" + url + "】出错", e);
                 }
-            } catch (Exception e) {
-                result.setSuccess(false);
-                result.setMessage("解析章节内容出错（" + e.getMessage() + "），请刷新重试，或直接访问【" + url + "】");
-                logger.error("解析章节内容【" + url + "】出错", e);
             }
+            if (result.isSuccess()) {
+                loadNextCatalogContent(result.getVal("nextCatalog"));
+            }
+            return result;
         }
-        if (result.isSuccess()) {
-            loadNextCatalogContent(result.getVal("nextCatalog"));
-        }
-        return result;
     }
 
     @Override

@@ -9,7 +9,7 @@
     </parent>
 
     <groupId>Model-Web</groupId>
-    <artifactId>DouBiNovel</artifactId>
+    <artifactId>Model-Web</artifactId>
     <version>0.0.3-SNAPSHOT</version>
     <name>Model-Web</name>
     <packaging>war</packaging>

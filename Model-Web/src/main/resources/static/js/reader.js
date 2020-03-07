@@ -43,8 +43,10 @@ if (pageSize == null || pageSize == undefined || pageSize == '') {
     pageSize = 100;
 }
 pageSize = parseInt(pageSize);
+if (pageSize < 100) {
+    $('.content').css('width', pageSize + '%');
+}
 $('.md-setting-page-size-view').text(pageSize + '%');
-$('.content').css('width', pageSize + '%');
 
 
 $(document).ready(function () {
@@ -65,10 +67,15 @@ $(document).ready(function () {
 
     checkLayout();
 
+    if ($(window).width() <= 736) {
+        $('.layui-container').css('padding', '0');
+    }
+
     var width = $('.layui-container').width();
-    if (width < 600) {
-        $('.reader-setting-md').width(width - 100);
-        $('.reader-catalogs-md').width(width - 100);
+    if (width < 736) {
+        var ulWidth = $("#ui_setting").width();
+        $('.reader-setting-md').width(width - ulWidth - 42);
+        $('.reader-catalogs-md').width(width - ulWidth - 42);
         $('.reader-content').css('margin', '0 10px 10px 10px');
     } else {
         $('.reader-setting-md').width(width / 5 * 2);
@@ -159,6 +166,27 @@ $(document).ready(function () {
     bindingLineHeightBtn();
 
     bindingPageSizeBtn()
+
+
+    //设置设置的适配
+    if ($(window).width() > 736) {
+        $('#ui_setting').show(200);
+    } else {
+        $('.reader-content').click(function (e) {
+            if ($('#ui_setting').is(':hidden')) {
+                $('#ui_setting').show(200);
+            } else {
+                $('#ui_setting').hide(100);
+            }
+        })
+
+        //提示弹窗
+        var isShowTip = localStorage.getItem('isShowTip');
+        if (!isShowTip) {
+            layui.layer.alert("手机阅读模式下点击屏幕可切换工具栏显示和隐藏状态！");
+            localStorage.setItem('isShowTip', true);
+        }
+    }
 });
 
 function bindingThemeBtn() {

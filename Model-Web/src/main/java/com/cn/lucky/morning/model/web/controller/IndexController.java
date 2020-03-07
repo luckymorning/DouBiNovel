@@ -12,6 +12,7 @@ import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
 import org.jsoup.Jsoup;
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +26,9 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.net.URLEncoder;
 import java.util.List;
+import java.util.concurrent.LinkedBlockingDeque;
+import java.util.concurrent.ThreadPoolExecutor;
+import java.util.concurrent.TimeUnit;
 
 
 /**
@@ -45,10 +49,10 @@ public class IndexController {
     private SystemNotificationService systemNotificationService;
 
 
-    @RequestMapping({"/","/index"})
-    public String index(Model model){
+    @RequestMapping({"/", "/index"})
+    public String index(Model model) {
         List<UpdateLog> list = updateLogService.findListLog();
-        model.addAttribute("list",list);
+        model.addAttribute("list", list);
         return "front/index";
     }
 
@@ -58,40 +62,40 @@ public class IndexController {
         MvcResult result = MvcResult.create();
         try {
             SystemNotification notification = systemNotificationService.findLastNotification();
-            if (notification==null){
+            if (notification == null) {
                 result.setSuccess(false);
                 result.setMessage("无系统公告");
-            }else {
+            } else {
                 result.setData(notification);
             }
-        }catch (Exception e){
+        } catch (Exception e) {
             result.setSuccess(false);
-            if (StringUtils.isNotEmpty(e.getMessage())){
+            if (StringUtils.isNotEmpty(e.getMessage())) {
                 result.setMessage(e.getMessage());
-            }else {
+            } else {
                 result.setMessage("未知错误");
             }
         }
         return result;
     }
 
-    @RequestMapping(method = RequestMethod.POST,value = "/search")
-    public String search(@Param("name") String name, Model model){
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public String search(@Param("name") String name, Model model) {
         MvcResult result = bookAnalysisService.searchByName(name);
-        if (!result.isSuccess()){
-            model.addAttribute("msg",result.getMessage());
+        if (!result.isSuccess()) {
+            model.addAttribute("msg", result.getMessage());
             return "public/error";
         }
-        model.addAttribute("list",result.getVal("list"));
-        model.addAttribute("name",name);
+        model.addAttribute("list", result.getVal("list"));
+        model.addAttribute("name", name);
         return "front/search/list";
     }
 
     @RequestMapping("/book/detail")
     public String detail(String url, Model model) {
         MvcResult result = bookAnalysisService.loadBookDetail(url);
-        if (!result.isSuccess()){
-            model.addAttribute("msg",result.getMessage());
+        if (!result.isSuccess()) {
+            model.addAttribute("msg", result.getMessage());
             return "public/error";
         }
         model.addAllAttributes(result.getValues());
@@ -99,12 +103,12 @@ public class IndexController {
 
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-        if (user!=null){
-            BookInfo bookInfo = bookInfoService.getBookInfoByBookUrlAndUser(url,user);
-            if (bookInfo!=null){
-                if (StringUtils.isNotBlank(bookInfo.getLastReadCatalogLink())){
-                    model.addAttribute("lastReadCatalogLink",bookInfo.getLastReadCatalogLink());
-                    model.addAttribute("lastReadCatalogName",bookInfo.getLastReadCatalogName());
+        if (user != null) {
+            BookInfo bookInfo = bookInfoService.getBookInfoByBookUrlAndUser(url, user);
+            if (bookInfo != null) {
+                if (StringUtils.isNotBlank(bookInfo.getLastReadCatalogLink())) {
+                    model.addAttribute("lastReadCatalogLink", bookInfo.getLastReadCatalogLink());
+                    model.addAttribute("lastReadCatalogName", bookInfo.getLastReadCatalogName());
                 }
             }
         }
@@ -112,24 +116,24 @@ public class IndexController {
     }
 
     @RequestMapping("/book/reader")
-    public String reader(String url,Model model){
+    public String reader(String url, Model model) {
         MvcResult result = bookAnalysisService.loadBookContent(url);
-        if (!result.isSuccess()){
-            model.addAttribute("msg",result.getMessage());
+        if (!result.isSuccess()) {
+            model.addAttribute("msg", result.getMessage());
             return "public/error";
         }
         model.addAllAttributes(result.getValues());
-        model.addAttribute("currentUrl",url);
+        model.addAttribute("currentUrl", url);
         Subject subject = SecurityUtils.getSubject();
         User user = (User) subject.getPrincipal();
-        if (user!=null){
-            BookInfo bookInfo = bookInfoService.getBookInfoByBookUrlAndUser(result.getVal("catalogs"),user);
-            if (bookInfo!=null){
+        if (user != null) {
+            BookInfo bookInfo = bookInfoService.getBookInfoByBookUrlAndUser(result.getVal("catalogs"), user);
+            if (bookInfo != null) {
                 bookInfo.setLastReadCatalogLink(url);
                 bookInfo.setLastReadCatalogName(result.getVal("catalogName"));
                 boolean isSuccess = bookInfoService.edit(bookInfo);
-                if (!isSuccess){
-                    logger.error("保存书籍阅读记录失败【"+ JSON.toJSONString(bookInfo) +"】");
+                if (!isSuccess) {
+                    logger.error("保存书籍阅读记录失败【" + JSON.toJSONString(bookInfo) + "】");
                 }
             }
         }
@@ -137,10 +141,10 @@ public class IndexController {
     }
 
     @RequestMapping("/donate/list")
-    public String donateList(Model model){
+    public String donateList(Model model) {
         List<Donate> list = donateService.getAll();
-        if (list!= null && list.size()>0){
-            model.addAttribute("list",list);
+        if (list != null && list.size() > 0) {
+            model.addAttribute("list", list);
         }
         return "front/donate/list";
     }
@@ -158,53 +162,57 @@ public class IndexController {
             response.setHeader("Content-type", "text/html;charset=gb2312");
             response.setCharacterEncoding("gb2312");
 
-            if (StringUtils.isBlank(url)){
+            if (StringUtils.isBlank(url)) {
                 response.getOutputStream().write("链接不能为空！！！".getBytes());
                 return;
             }
             User user = (User) SecurityUtils.getSubject().getPrincipal();
-            if (user == null){
+            if (user == null) {
                 response.getOutputStream().write("很抱歉，因服务器性能较弱，下载功能仅对注册用户开放！！！".getBytes());
                 return;
             }
             MvcResult result = bookAnalysisService.loadBookDetail(url);
             ServletOutputStream os = response.getOutputStream();
-            if (result.isSuccess()){
+            if (result.isSuccess()) {
                 BookInfo info = result.getVal("info");
 
-                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(info.getName()+".txt", "utf-8"));
+                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(info.getName() + ".txt", "utf-8"));
 
                 List<Col> catalogs = result.getVal("catalogs");
 
-                os.write(("书名："+info.getName()+"\n").getBytes());
-                os.write(("作者："+info.getAuthor()+"\n").getBytes());
-                os.write(("描述："+ Jsoup.parse(info.getNovelDes()).text()+"\n").getBytes());
+                os.write(("书名：" + info.getName() + "\n").getBytes());
+                os.write(("作者：" + info.getAuthor() + "\n").getBytes());
+                os.write(("描述：" + Jsoup.parse(info.getNovelDes()).text() + "\n").getBytes());
                 os.write(("更多小说请关注：http://novel.luckymorning.cn\n").getBytes());
 
                 int index = 10;
-                for (Col col:catalogs){
-                    if (!col.getName().startsWith("第")){
-                        os.write(("第"+index+"章.").getBytes());
+                for (Col col : catalogs) {
+                    long start = System.currentTimeMillis();
+                    if (!col.getName().startsWith("第")) {
+                        os.write(("第" + index + "章.").getBytes());
                     }
                     os.write(col.getName().getBytes());
                     os.write("\n".getBytes());
                     result = bookAnalysisService.loadBookContent(col.getValue().toString());
-                    if (result.isSuccess()){
+                    if (result.isSuccess()) {
                         String content = result.getVal("content");
-                        content = content.replaceAll("<br>","\n");
+                        content = content.replaceAll("<br>", "\n");
                         os.write(Jsoup.parse(content).text().getBytes());
-                    }else {
-                        os.write(("加载内容出错！"+result.getMessage()).getBytes());
+                    } else {
+                        os.write(("加载内容出错！" + result.getMessage()).getBytes());
                     }
                     os.write("\n".getBytes());
                     index++;
+                    logger.info("加载完毕《"+col.getName()+"》，耗时："+(System.currentTimeMillis()-start));
                 }
-            }else {
+            } else {
                 os.write(result.getMessage().getBytes());
             }
-        }catch (Exception e){
+        } catch (IOException e) {
+            logger.error("下载书籍（" + url + "）出错"+e.getMessage());
+        } catch (Exception e) {
 //            e.printStackTrace();
-            logger.error("下载书籍（"+url+"）出错",e);
+            logger.error("下载书籍（" + url + "）出错", e);
         }
     }
 }

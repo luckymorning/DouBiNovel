@@ -249,7 +249,7 @@ public class BookSourceAnalysis {
                         Element hrefElem = catalogItem.selectFirst(bookSource.getBookDetailCatalogItemLinkSelector());
                         if (hrefElem != null) {
                             href = hrefElem.attr("href");
-                            if (!href.startsWith("http://") || !href.startsWith("https://")) {
+                            if (!href.startsWith("//") && !href.startsWith("http://") && !href.startsWith("https://") && !href.contains(bookSource.getBaseUrl())) {
                                 href = bookSource.getBaseUrl() + href;
                             }
                         } else {
