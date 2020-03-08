@@ -27,6 +27,7 @@ import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.concurrent.Future;
 
 @Component
@@ -370,6 +371,14 @@ public class BookSourceAnalysis {
                         }
                         map.put("nextCatalog", nextCatalog);
                     }
+                }
+
+                if (Objects.equals(map.get("preCatalog"),map.get("catalogs"))){
+                    map.remove("preCatalog");
+                }
+
+                if (Objects.equals(map.get("nextCatalog"),map.get("catalogs"))){
+                    map.remove("nextCatalog");
                 }
                 cacheService.set(url, map, Const.cache.BOOK_CATALOG_CONTENT_TTL);
             }
