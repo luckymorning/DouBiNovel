@@ -26,12 +26,13 @@ import java.util.concurrent.Future;
 public class MailServiceImpl implements MailService {
     private final static Logger logger = Logs.get();
 
-    private final static int ERROR_COUNT = 3;//容错次数
+    //容错次数
+    private final static int ERROR_COUNT = 3;
 
     @Resource
     private JavaMailSender mailSender;
 
-    @Value("${mail.fromMail.addr}")
+    @Value("${spring.mail.username}")
     private String from;
 
     @Override

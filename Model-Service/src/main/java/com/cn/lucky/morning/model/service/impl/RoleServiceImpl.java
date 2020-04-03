@@ -2,7 +2,6 @@ package com.cn.lucky.morning.model.service.impl;
 
 import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
-import com.cn.lucky.morning.model.common.cache.CacheService;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.tool.DateTool;
 import com.cn.lucky.morning.model.dao.RoleMapper;
@@ -22,9 +21,6 @@ public class RoleServiceImpl implements RoleService {
 
     @Resource
     private RoleMapper roleMapper;
-
-    @Resource
-    private CacheService cacheService;
 
     @Override
     public PageTemplate<Role> getByQuery(BaseQuery query) {
@@ -60,21 +56,12 @@ public class RoleServiceImpl implements RoleService {
 
     @Override
     public Role getById(Long id) {
-        Role role = (Role) cacheService.get(Const.cache.ROLE_ID + id);
-        if (role != null) {
-            return role;
-        }
-        role = roleMapper.selectByPrimaryKey(id);
-        if (role == null) {
-            return null;
-        }
-        cacheService.set(Const.cache.ROLE_ID + id, role, Const.cache.ROLE_ID_TTL);
+        Role role = role = roleMapper.selectByPrimaryKey(id);
         return role;
     }
 
     @Override
     public boolean edit(Role role) {
-        cacheService.del(Const.cache.ROLE_ID + role.getId());
         return roleMapper.updateByPrimaryKeySelective(role) > 0;
     }
 
@@ -91,7 +78,6 @@ public class RoleServiceImpl implements RoleService {
             return false;
         }
 
-        cacheService.del(Const.cache.ROLE_ID + id);
         return roleMapper.deleteByPrimaryKey(id) > 0;
     }
 
@@ -120,7 +106,6 @@ public class RoleServiceImpl implements RoleService {
         }
 
         for (Long id : ids) {
-            cacheService.del(Const.cache.ROLE_ID + id);
             if (roleMapper.deleteByPrimaryKey(id) == 0) {
                 return false;
             }

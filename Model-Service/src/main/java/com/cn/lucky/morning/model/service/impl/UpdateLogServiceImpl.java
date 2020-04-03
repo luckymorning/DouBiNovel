@@ -2,8 +2,6 @@ package com.cn.lucky.morning.model.service.impl;
 
 import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
-import com.cn.lucky.morning.model.common.cache.CacheService;
-import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.dao.UpdateLogMapper;
 import com.cn.lucky.morning.model.domain.UpdateLog;
 import com.cn.lucky.morning.model.domain.UpdateLogExample;
@@ -17,8 +15,6 @@ import java.util.List;
 public class UpdateLogServiceImpl implements UpdateLogService {
     @Resource
     private UpdateLogMapper mapper;
-    @Resource
-    private CacheService cacheService;
 
     @Override
     public PageTemplate<UpdateLog> getByQuery(BaseQuery query) {
@@ -40,7 +36,6 @@ public class UpdateLogServiceImpl implements UpdateLogService {
 
     @Override
     public boolean add(UpdateLog updateLog) {
-        cacheService.del(Const.cache.UPDATE_LOG_ID+"list");
         return mapper.insertSelective(updateLog) > 0;
     }
 
@@ -50,25 +45,16 @@ public class UpdateLogServiceImpl implements UpdateLogService {
         if (log == null) {
             return true;
         }
-        cacheService.del(Const.cache.UPDATE_LOG_ID+"list");
-        cacheService.del(Const.cache.UPDATE_LOG_ID + id);
         return mapper.deleteByPrimaryKey(id) > 0;
     }
 
     @Override
     public UpdateLog getById(Long id) {
-        UpdateLog log = (UpdateLog) cacheService.get(Const.cache.UPDATE_LOG_ID + id);
-        if (log == null) {
-            log = mapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.UPDATE_LOG_ID + id, log, Const.cache.UPDATE_LOG_ID_TTL);
-        }
-        return log;
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public boolean edit(UpdateLog updateLog) {
-        cacheService.del(Const.cache.UPDATE_LOG_ID+"list");
-        cacheService.del(Const.cache.UPDATE_LOG_ID + updateLog.getId());
         return mapper.updateByPrimaryKeySelective(updateLog) > 0;
     }
 
@@ -87,13 +73,9 @@ public class UpdateLogServiceImpl implements UpdateLogService {
 
     @Override
     public List<UpdateLog> findListLog() {
-        List<UpdateLog> list = (List<UpdateLog>) cacheService.get(Const.cache.UPDATE_LOG_ID+"list");
-        if (list == null){
-            UpdateLogExample example = new UpdateLogExample();
-            example.setOrderByClause("id desc");
-            list = mapper.selectByExample(example);
-            cacheService.set(Const.cache.UPDATE_LOG_ID+"list",list,Const.cache.UPDATE_LOG_ID_TTL);
-        }
+        UpdateLogExample example = new UpdateLogExample();
+        example.setOrderByClause("id desc");
+        List<UpdateLog> list = mapper.selectByExample(example);
         return list;
     }
 

@@ -1,0 +1,40 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: local
+  application:
+    name: DouBiNovel
+  mail:
+    host: smtp.qq.com
+    username: XXXXXX@qq.com
+    password: XXXXXX
+    default-encoding: utf-8
+    properties:
+      mail:
+        smtp:
+          socketFactory:
+            port: 465
+            class: javax.net.ssl.SSLSocketFactory
+  datasource:
+    url: jdbc:mysql://127.0.0.1:3306/novel?characterEncoding=utf8&useUnicode=true&useSSL=false&serverTimezone=GMT%2B8&allowPublicKeyRetrieval=true
+    username: root
+    password: root
+    driver-class-name: com.mysql.jdbc.Driver
+  thymeleaf:
+    prefix: classpath:/web/
+    suffix: .html
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: false
+    mode: HTML
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: false
+          paths: /*

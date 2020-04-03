@@ -2,8 +2,6 @@ package com.cn.lucky.morning.model.service.impl;
 
 import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
-import com.cn.lucky.morning.model.common.cache.CacheService;
-import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.dao.BookInfoMapper;
 import com.cn.lucky.morning.model.domain.BookInfo;
 import com.cn.lucky.morning.model.domain.BookInfoExample;
@@ -17,8 +15,6 @@ import java.util.Objects;
 
 @Service
 public class BookInfoServiceImpl implements BookInfoService {
-    @Resource
-    private CacheService cacheService;
     @Resource
     private BookInfoMapper mapper;
 
@@ -48,7 +44,6 @@ public class BookInfoServiceImpl implements BookInfoService {
 
     @Override
     public boolean add(BookInfo bookInfo) {
-        cacheService.del(Const.cache.BOOK_INFO_ID+"creatorId."+bookInfo.getCreatorId());
         return mapper.insertSelective(bookInfo) > 0;
     }
 
@@ -58,26 +53,16 @@ public class BookInfoServiceImpl implements BookInfoService {
         if (bookInfo == null){
             return true;
         }
-
-        cacheService.del(Const.cache.BOOK_INFO_ID+"creatorId."+bookInfo.getCreatorId());
-        cacheService.del(Const.cache.BOOK_INFO_ID+bookInfo.getId());
         return mapper.deleteByPrimaryKey(id) > 0;
     }
 
     @Override
     public BookInfo getById(Long id) {
-        BookInfo bookInfo = (BookInfo) cacheService.get(Const.cache.BOOK_INFO_ID+id);
-        if (bookInfo == null){
-            bookInfo = mapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.BOOK_INFO_ID+id,bookInfo,Const.cache.BOOK_INFO_ID_TTL);
-        }
-        return bookInfo;
+        return mapper.selectByPrimaryKey(id);
     }
 
     @Override
     public boolean edit(BookInfo bookInfo) {
-        cacheService.del(Const.cache.BOOK_INFO_ID+"creatorId."+bookInfo.getCreatorId());
-        cacheService.del(Const.cache.BOOK_INFO_ID+bookInfo.getId());
         return mapper.updateByPrimaryKeySelective(bookInfo) > 0;
     }
 
@@ -96,13 +81,9 @@ public class BookInfoServiceImpl implements BookInfoService {
 
     @Override
     public List<BookInfo> getBookInfoByUser(User user) {
-        List<BookInfo> list = (List<BookInfo>) cacheService.get(Const.cache.BOOK_INFO_ID+"creatorId."+user.getId());
-        if (list == null){
-            BookInfoExample example = new BookInfoExample();
-            example.createCriteria().andCreatorIdEqualTo(user.getId());
-            list = mapper.selectByExample(example);
-            cacheService.set(Const.cache.BOOK_INFO_ID+"creatorId."+user.getId(),list,Const.cache.BOOK_INFO_ID_TTL);
-        }
+        BookInfoExample example = new BookInfoExample();
+        example.createCriteria().andCreatorIdEqualTo(user.getId());
+        List<BookInfo> list = mapper.selectByExample(example);
         return list;
     }
 

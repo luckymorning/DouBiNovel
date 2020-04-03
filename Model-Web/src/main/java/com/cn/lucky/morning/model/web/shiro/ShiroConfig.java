@@ -53,18 +53,13 @@ public class ShiroConfig {
         return shiroFilterFactoryBean;
     }
 
-    @Resource
-    private RedisCacheManager redisCacheManager;
-
     @Bean
     public SecurityManager securityManager() {
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         myShiroRealm.setCredentialsMatcher(hashedCredentialsMatcher());
         myShiroRealm.setCachingEnabled(true);
-        myShiroRealm.setCacheManager(redisCacheManager);
         securityManager.setRealm(myShiroRealm);
         securityManager.setRememberMeManager(rememberMeManager());
-        securityManager.setCacheManager(redisCacheManager);
         return securityManager;
     }
 

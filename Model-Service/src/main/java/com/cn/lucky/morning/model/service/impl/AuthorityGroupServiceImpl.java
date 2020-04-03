@@ -2,10 +2,7 @@ package com.cn.lucky.morning.model.service.impl;
 
 import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
-import com.cn.lucky.morning.model.common.cache.CacheService;
-import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.dao.AuthorityGroupMapper;
-import com.cn.lucky.morning.model.domain.Authority;
 import com.cn.lucky.morning.model.domain.AuthorityGroup;
 import com.cn.lucky.morning.model.domain.AuthorityGroupExample;
 import com.cn.lucky.morning.model.service.AuthorityGroupService;
@@ -20,8 +17,6 @@ import java.util.List;
 public class AuthorityGroupServiceImpl implements AuthorityGroupService {
     @Resource
     private AuthorityGroupMapper authorityGroupMapper;
-    @Autowired
-    private CacheService cacheService;
     @Autowired
     private AuthorityService authorityService;
 
@@ -41,7 +36,6 @@ public class AuthorityGroupServiceImpl implements AuthorityGroupService {
 
     @Override
     public boolean add(AuthorityGroup authorityGroup) {
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + "all");
         return authorityGroupMapper.insertSelective(authorityGroup) > 0;
     }
 
@@ -52,25 +46,16 @@ public class AuthorityGroupServiceImpl implements AuthorityGroupService {
             return true;
         }
         authorityService.deleteByAuthorityGroupId(id);
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + id);
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + "all");
         return authorityGroupMapper.deleteByPrimaryKey(id) > 0;
     }
 
     @Override
     public AuthorityGroup getById(Long id) {
-        AuthorityGroup authorityGroup = (AuthorityGroup) cacheService.get(Const.cache.AUTHORITY_GROUP_ID + id);
-        if (authorityGroup == null) {
-            authorityGroup = authorityGroupMapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.AUTHORITY_GROUP_ID + id, authorityGroup, Const.cache.AUTHORITY_GROUP_ID_TTL);
-        }
-        return authorityGroup;
+        return authorityGroupMapper.selectByPrimaryKey(id);
     }
 
     @Override
     public boolean edit(AuthorityGroup authorityGroup) {
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + "all");
-        cacheService.del(Const.cache.AUTHORITY_GROUP_ID + authorityGroup.getId());
         return authorityGroupMapper.updateByPrimaryKeySelective(authorityGroup) > 0;
     }
 
@@ -91,12 +76,6 @@ public class AuthorityGroupServiceImpl implements AuthorityGroupService {
 
     @Override
     public List<AuthorityGroup> getAll() {
-        List<AuthorityGroup> list = (List<AuthorityGroup>) cacheService.get(Const.cache.AUTHORITY_GROUP_ID + "all");
-        if (list == null) {
-            AuthorityGroupExample example = new AuthorityGroupExample();
-            list = authorityGroupMapper.selectByExample(example);
-            cacheService.set(Const.cache.AUTHORITY_GROUP_ID + "all", list, Const.cache.AUTHORITY_GROUP_ID_TTL);
-        }
-        return list;
+        return authorityGroupMapper.selectByExample(new AuthorityGroupExample());
     }
 }

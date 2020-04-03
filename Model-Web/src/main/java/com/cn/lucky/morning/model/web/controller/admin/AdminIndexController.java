@@ -1,7 +1,6 @@
 package com.cn.lucky.morning.model.web.controller.admin;
 
 import com.cn.lucky.morning.model.common.base.BaseQuery;
-import com.cn.lucky.morning.model.common.cache.CacheService;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.common.tool.IpUtil;
@@ -36,8 +35,6 @@ import java.util.Objects;
 @RequestMapping("/admin")
 public class AdminIndexController {
     @Resource
-    private CacheService cacheService;
-    @Resource
     private LoginLogService loginLogService;
     @Resource
     private UserService userService;
@@ -49,6 +46,8 @@ public class AdminIndexController {
     private UpdateLogService updateLogService;
     @Resource
     private SystemNotificationService systemNotificationService;
+    @Resource
+    private RedisService redisService;
 
     @RequestMapping(value = {"", "/", "/index"})
     @RequiresPermissions(value = {"ADMIN_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
@@ -183,14 +182,9 @@ public class AdminIndexController {
     public Map<String, Object> clearCache() {
         Map<String, Object> map = Maps.newHashMap();
         try {
-            boolean isSuccess = cacheService.flushAll();
-            if (isSuccess) {
-                map.put("code", 1);
-                map.put("msg", "清除成功");
-            } else {
-                map.put("code", 2);
-                map.put("msg", "清除失败,redis清空失败");
-            }
+            redisService.removePattern("*");
+            map.put("code", 1);
+            map.put("msg", "清除成功");
         } catch (Exception e) {
             map.put("code", 2);
             if (StringUtils.isEmpty(e.getMessage())) {

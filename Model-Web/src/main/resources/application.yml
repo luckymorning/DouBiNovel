@@ -1,9 +1,46 @@
+server:
+  port: 8080
+  servlet:
+    context-path: /
+spring:
+  # 环境 dev|test|prod
+  profiles:
+    active: local
+  application:
+    name: DouBiNovel
+  servlet:
+    multipart:
+      max-file-size: 100MB
+      max-request-size: 100MB
+      enabled: true   #这里设置enable,其配置文件默认会被读取到MultipartConfigElement中
+      file-size-threshold: 400MB
+  http:
+    encoding:
+      charset: UTF-8
+      enabled: true
+      force: true
+  thymeleaf:
+    prefix: classpath:/web/
+    suffix: .html
+    encoding: UTF-8
+    servlet:
+      content-type: text/html
+    cache: true
+    mode: HTML
+  resources:
+    chain:
+      strategy:
+        content:
+          enabled: true
+          paths: /*
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
+
+mybatis:
+  mapper-locations: classpath:mybatis/*.xml
+  type-aliases-package: com.cn.lucky.morning.model.domain
+
 #配置日志
 logging:
-  #配置日志文件路径
-  level:
-    xatu.zsl: debug #不同目录下的日志可配置不同级别
-    org.springfromework.web: info
-    org.hibernate: error
-  #采用相对路径方式将日志文件输出到文件Logs/Web/log
-  file: ./Logs/novel/log.log
+  config: classpath:logback-spring.xml

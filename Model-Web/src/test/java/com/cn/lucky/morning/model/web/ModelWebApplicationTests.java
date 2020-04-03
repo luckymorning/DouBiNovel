@@ -1,46 +1,11 @@
 package com.cn.lucky.morning.model.web;
 
-import com.alibaba.fastjson.JSON;
-import com.cn.lucky.morning.model.analysis.BookSourceAnalysis;
-import com.cn.lucky.morning.model.common.cache.CacheService;
-import com.cn.lucky.morning.model.common.mvc.MvcResult;
-import com.cn.lucky.morning.model.common.network.Col;
-import com.cn.lucky.morning.model.common.network.NetWorkUtil;
-import com.cn.lucky.morning.model.common.tool.ByteUtils;
-import com.cn.lucky.morning.model.domain.BookInfo;
-import com.cn.lucky.morning.model.domain.BookSource;
 import com.cn.lucky.morning.model.service.BookAnalysisService;
 import com.cn.lucky.morning.model.service.BookSourceService;
 import com.cn.lucky.morning.model.service.MailService;
-import com.cn.lucky.morning.model.web.tools.CodeUtils;
-import com.google.common.collect.Maps;
-import okhttp3.Cache;
-import okhttp3.Headers;
-import okhttp3.Response;
-import org.apache.commons.lang.CharSet;
-import org.apache.commons.lang.CharSetUtils;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.thymeleaf.TemplateEngine;
-import org.thymeleaf.context.Context;
-
-import javax.annotation.Resource;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.nio.charset.Charset;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Random;
-import java.util.concurrent.ExecutionException;
-import java.util.concurrent.Future;
 
 @SpringBootTest
 class ModelWebApplicationTests {
@@ -51,11 +16,6 @@ class ModelWebApplicationTests {
 
     @Autowired
     private BookSourceService bookSourceService;
-
-    @Autowired
-    private BookSourceAnalysis bookSourceAnalysis;
-    @Autowired
-    private CacheService cacheService;
 
     @Autowired
     private MailService mailService;

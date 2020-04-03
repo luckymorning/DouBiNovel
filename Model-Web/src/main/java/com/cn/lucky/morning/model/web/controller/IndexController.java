@@ -7,6 +7,7 @@ import com.cn.lucky.morning.model.common.network.Col;
 import com.cn.lucky.morning.model.common.tool.ByteUtils;
 import com.cn.lucky.morning.model.domain.*;
 import com.cn.lucky.morning.model.service.*;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.lang.StringUtils;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.subject.Subject;
@@ -24,6 +25,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.net.URLEncoder;
 import java.util.List;
 import java.util.concurrent.LinkedBlockingDeque;
@@ -158,61 +160,68 @@ public class IndexController {
 
     @RequestMapping("/book/download")
     public void download(String url, HttpServletResponse response) {
+        OutputStream os = null;
         try {
             response.setHeader("Content-type", "text/html;charset=gb2312");
             response.setCharacterEncoding("gb2312");
+            os = response.getOutputStream();
 
-            if (StringUtils.isBlank(url)) {
-                response.getOutputStream().write("链接不能为空！！！".getBytes());
-                return;
-            }
-            User user = (User) SecurityUtils.getSubject().getPrincipal();
-            if (user == null) {
-                response.getOutputStream().write("很抱歉，因服务器性能较弱，下载功能仅对注册用户开放！！！".getBytes());
-                return;
-            }
-            MvcResult result = bookAnalysisService.loadBookDetail(url);
-            ServletOutputStream os = response.getOutputStream();
-            if (result.isSuccess()) {
-                BookInfo info = result.getVal("info");
+            os.write("很抱歉，因服务器性能较弱，暂时关闭下载功能！！！".getBytes());
 
-                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(info.getName() + ".txt", "utf-8"));
-
-                List<Col> catalogs = result.getVal("catalogs");
-
-                os.write(("书名：" + info.getName() + "\n").getBytes());
-                os.write(("作者：" + info.getAuthor() + "\n").getBytes());
-                os.write(("描述：" + Jsoup.parse(info.getNovelDes()).text() + "\n").getBytes());
-                os.write(("更多小说请关注：http://novel.luckymorning.cn\n").getBytes());
-
-                int index = 10;
-                for (Col col : catalogs) {
-                    long start = System.currentTimeMillis();
-                    if (!col.getName().startsWith("第")) {
-                        os.write(("第" + index + "章.").getBytes());
-                    }
-                    os.write(col.getName().getBytes());
-                    os.write("\n".getBytes());
-                    result = bookAnalysisService.loadBookContent(col.getValue().toString());
-                    if (result.isSuccess()) {
-                        String content = result.getVal("content");
-                        content = content.replaceAll("<br>", "\n");
-                        os.write(Jsoup.parse(content).text().getBytes());
-                    } else {
-                        os.write(("加载内容出错！" + result.getMessage()).getBytes());
-                    }
-                    os.write("\n".getBytes());
-                    index++;
-                    logger.info("加载完毕《"+col.getName()+"》，耗时："+(System.currentTimeMillis()-start));
-                }
-            } else {
-                os.write(result.getMessage().getBytes());
-            }
+//            if (StringUtils.isBlank(url)) {
+//                response.getOutputStream().write("链接不能为空！！！".getBytes());
+//                return;
+//            }
+//            User user = (User) SecurityUtils.getSubject().getPrincipal();
+//            if (user == null) {
+//                response.getOutputStream().write("很抱歉，因服务器性能较弱，下载功能仅对注册用户开放！！！".getBytes());
+//                return;
+//            }
+//            MvcResult result = bookAnalysisService.loadBookDetail(url);
+//            ServletOutputStream os = response.getOutputStream();
+//            if (result.isSuccess()) {
+//                BookInfo info = result.getVal("info");
+//
+//                response.setHeader("content-disposition", "attachment;filename=" + URLEncoder.encode(info.getName() + ".txt", "utf-8"));
+//
+//                List<Col> catalogs = result.getVal("catalogs");
+//
+//                os.write(("书名：" + info.getName() + "\n").getBytes());
+//                os.write(("作者：" + info.getAuthor() + "\n").getBytes());
+//                os.write(("描述：" + Jsoup.parse(info.getNovelDes()).text() + "\n").getBytes());
+//                os.write(("更多小说请关注：http://novel.luckymorning.cn\n").getBytes());
+//
+//                int index = 10;
+//                for (Col col : catalogs) {
+//                    long start = System.currentTimeMillis();
+//                    if (!col.getName().startsWith("第")) {
+//                        os.write(("第" + index + "章.").getBytes());
+//                    }
+//                    os.write(col.getName().getBytes());
+//                    os.write("\n".getBytes());
+//                    result = bookAnalysisService.loadBookContent(col.getValue().toString());
+//                    if (result.isSuccess()) {
+//                        String content = result.getVal("content");
+//                        content = content.replaceAll("<br>", "\n");
+//                        os.write(Jsoup.parse(content).text().getBytes());
+//                    } else {
+//                        os.write(("加载内容出错！" + result.getMessage()).getBytes());
+//                    }
+//                    os.write("\n".getBytes());
+//                    index++;
+//                    logger.info("加载完毕《"+col.getName()+"》，耗时："+(System.currentTimeMillis()-start));
+//                }
+//            } else {
+//                os.write(result.getMessage().getBytes());
+//            }
         } catch (IOException e) {
             logger.error("下载书籍（" + url + "）出错"+e.getMessage());
         } catch (Exception e) {
-//            e.printStackTrace();
             logger.error("下载书籍（" + url + "）出错", e);
+        }finally {
+            if (os!=null){
+                IOUtils.closeQuietly(os);
+            }
         }
     }
 }

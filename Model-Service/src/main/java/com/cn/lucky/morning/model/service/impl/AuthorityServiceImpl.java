@@ -2,8 +2,6 @@ package com.cn.lucky.morning.model.service.impl;
 
 import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
-import com.cn.lucky.morning.model.common.cache.CacheService;
-import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.dao.AuthorityGroupMapper;
 import com.cn.lucky.morning.model.dao.AuthorityMapper;
 import com.cn.lucky.morning.model.domain.Authority;
@@ -31,9 +29,6 @@ public class AuthorityServiceImpl implements AuthorityService {
     @Resource
     private AuthorityMapper authorityMapper;
 
-    @Resource
-    private CacheService cacheService;
-
     @Override
     public Map<AuthorityGroup, List<Authority>> getAuthority() {
         // TODO 加入缓存
@@ -55,8 +50,9 @@ public class AuthorityServiceImpl implements AuthorityService {
         for (AuthorityGroup ag : aglist) {
             List<Authority> author = Lists.newArrayList();
             for (Authority a : alist) {
-                if (Objects.equal(a.getGroupId(), ag.getId()))
+                if (Objects.equal(a.getGroupId(), ag.getId())) {
                     author.add(a);
+                }
             }
             rst.put(ag, author);
         }
@@ -97,13 +93,11 @@ public class AuthorityServiceImpl implements AuthorityService {
         if (authority == null) {
             return true;
         }
-        cacheService.del(Const.cache.AUTHORITY_ID + id);
         return authorityMapper.deleteByPrimaryKey(id) > 0;
     }
 
     @Override
     public boolean edit(Authority authority) {
-        cacheService.del(Const.cache.AUTHORITY_ID + authority.getId());
         return authorityMapper.updateByPrimaryKeySelective(authority) > 0;
     }
 
@@ -131,11 +125,6 @@ public class AuthorityServiceImpl implements AuthorityService {
 
     @Override
     public Authority getById(Long id) {
-        Authority authority = (Authority) cacheService.get(Const.cache.AUTHORITY_ID + id);
-        if (authority == null) {
-            authority = authorityMapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.AUTHORITY_ID + id, authority, Const.cache.AUTHORITY_ID_TTL);
-        }
         return authorityMapper.selectByPrimaryKey(id);
     }
 
@@ -146,7 +135,9 @@ public class AuthorityServiceImpl implements AuthorityService {
         List<Authority> authorities = authorityMapper.selectByExample(example);
         if (authorities.size() != 0) {
             return true;
-        } else return false;
+        } else {
+            return false;
+        }
     }
 
     @Override

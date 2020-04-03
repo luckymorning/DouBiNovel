@@ -1,11 +1,11 @@
 package com.cn.lucky.morning.model.web.controller.admin;
 
-import com.cn.lucky.morning.model.analysis.BookSourceAnalysis;
 import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
 import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.domain.BookSource;
+import com.cn.lucky.morning.model.service.BookSourceAnalysisService;
 import com.cn.lucky.morning.model.service.BookSourceService;
 import org.apache.commons.lang.StringUtils;
 import org.apache.ibatis.annotations.Param;
@@ -26,7 +26,7 @@ public class BookSourceController {
     @Resource
     private BookSourceService bookSourceService;
     @Resource
-    private BookSourceAnalysis bookSourceAnalysis;
+    private BookSourceAnalysisService bookSourceAnalysisService;
 
     @RequestMapping("/list")
     @RequiresPermissions(value = {"BOOK_SOURCE_VIEW", Const.role.ROLE_SUPER}, logical = Logical.OR)
@@ -201,13 +201,13 @@ public class BookSourceController {
         try {
             switch (type) {
                 case 0:
-                    result = bookSourceAnalysis.searchByName(key, bookSource).get();
+                    result = bookSourceAnalysisService.searchByName(key, bookSource).get();
                     break;
                 case 1:
-                    result = bookSourceAnalysis.loadBookInfo(key, bookSource).get();
+                    result = bookSourceAnalysisService.loadBookInfo(key, bookSource).get();
                     break;
                 case 2:
-                    result = bookSourceAnalysis.loadContent(key, bookSource).get();
+                    result = bookSourceAnalysisService.loadContent(key, bookSource).get();
                     break;
                 default:
                     result = MvcResult.createFail("未知测试类型");

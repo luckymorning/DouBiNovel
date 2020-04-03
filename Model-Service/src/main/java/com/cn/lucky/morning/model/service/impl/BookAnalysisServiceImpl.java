@@ -1,11 +1,11 @@
 package com.cn.lucky.morning.model.service.impl;
 
-import com.cn.lucky.morning.model.analysis.BookSourceAnalysis;
 import com.cn.lucky.morning.model.common.log.Logs;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.domain.BookInfo;
 import com.cn.lucky.morning.model.domain.BookSource;
 import com.cn.lucky.morning.model.service.BookAnalysisService;
+import com.cn.lucky.morning.model.service.BookSourceAnalysisService;
 import com.cn.lucky.morning.model.service.BookSourceService;
 import org.apache.commons.lang.StringUtils;
 import org.slf4j.Logger;
@@ -16,11 +16,15 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.Future;
 
+/**
+ * 聚合搜索服务
+ * @author lucky_morning
+ */
 @Service
 public class BookAnalysisServiceImpl implements BookAnalysisService {
     private static final Logger logger = Logs.get();
     @Resource
-    private BookSourceAnalysis bookSourceAnalysis;
+    private BookSourceAnalysisService bookSourceAnalysisService;
     @Resource
     private BookSourceService bookSourceService;
 
@@ -39,7 +43,7 @@ public class BookAnalysisServiceImpl implements BookAnalysisService {
             }else {
                 List<Future<MvcResult>> futureList = new ArrayList<>(bookSources.size());
                 for (BookSource bookSource : bookSources){
-                    futureList.add(bookSourceAnalysis.searchByName(name,bookSource));
+                    futureList.add(bookSourceAnalysisService.searchByName(name,bookSource));
                 }
 
                 boolean isAllError = true;
@@ -102,7 +106,7 @@ public class BookAnalysisServiceImpl implements BookAnalysisService {
                     for (BookSource bookSource : bookSources){
                         if (url.contains(bookSource.getBaseUrl())){
                             isNotFound = false;
-                            future = bookSourceAnalysis.loadBookInfo(url,bookSource);
+                            future = bookSourceAnalysisService.loadBookInfo(url,bookSource);
                             result = future.get();
                             break;
                         }
@@ -140,7 +144,7 @@ public class BookAnalysisServiceImpl implements BookAnalysisService {
                         for (BookSource bookSource : bookSources){
                             if (url.contains(bookSource.getBaseUrl())){
                                 isNotFound = false;
-                                future = bookSourceAnalysis.loadContent(url,bookSource);
+                                future = bookSourceAnalysisService.loadContent(url,bookSource);
                                 result = future.get();
                                 break;
                             }
@@ -156,31 +160,7 @@ public class BookAnalysisServiceImpl implements BookAnalysisService {
                     logger.error("解析章节内容【" + url + "】出错", e);
                 }
             }
-            if (result.isSuccess()) {
-                loadNextCatalogContent(result.getVal("nextCatalog"));
-            }
             return result;
         }
     }
-
-    @Override
-    public void loadNextCatalogContent(String url) {
-        if (!StringUtils.isEmpty(url)) {
-            try {
-                List<BookSource> bookSources = bookSourceService.getAll();
-                if (bookSources!=null && bookSources.size() >0){
-                    for (BookSource bookSource : bookSources){
-                        if (url.contains(bookSource.getBaseUrl())){
-                            bookSourceAnalysis.loadNextContent(url,bookSource);
-                            break;
-                        }
-                    }
-                }
-            } catch (Exception e) {
-                logger.error("解析预览章节内容【" + url + "】出错", e);
-            }
-        }
-    }
-
-
 }

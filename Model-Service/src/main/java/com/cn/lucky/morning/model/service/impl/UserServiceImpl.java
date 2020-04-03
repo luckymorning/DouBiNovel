@@ -2,8 +2,6 @@ package com.cn.lucky.morning.model.service.impl;
 
 import com.cn.lucky.morning.model.common.base.BaseQuery;
 import com.cn.lucky.morning.model.common.base.PageTemplate;
-import com.cn.lucky.morning.model.common.cache.CacheService;
-import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.tool.Datas;
 import com.cn.lucky.morning.model.common.tool.DateTool;
 import com.cn.lucky.morning.model.dao.UserMapper;
@@ -23,8 +21,6 @@ import java.util.List;
 public class UserServiceImpl implements UserService {
     @Resource
     private UserMapper userMapper;
-    @Resource
-    private CacheService cacheService;
 
     @Override
     public PageTemplate<User> getByQuery(BaseQuery query) {
@@ -68,17 +64,12 @@ public class UserServiceImpl implements UserService {
         if (StringUtils.isEmpty(user.getToken())){
             user.setToken(Datas.getUUID());
         }
-        cacheService.del(Const.cache.USER_ID + "all");
         return userMapper.insertSelective(user) > 0;
     }
 
     @Override
     public User getById(Long id) {
-        User user = (User) cacheService.get(Const.cache.USER_ID + id);
-        if (user == null) {
-            user = userMapper.selectByPrimaryKey(id);
-            cacheService.set(Const.cache.USER_ID + id, user, Const.cache.USER_ID_TTL);
-        }
+        User user = userMapper.selectByPrimaryKey(id);
         return user;
     }
 
@@ -95,7 +86,6 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean edit(User user) {
-        cacheService.del(Const.cache.USER_ID + user.getId());
         return userMapper.updateByPrimaryKeySelective(user) > 0;
     }
 
@@ -105,7 +95,6 @@ public class UserServiceImpl implements UserService {
         if (db == null) {
             return true;
         }
-        cacheService.del(Const.cache.USER_ID + id);
         return userMapper.deleteByPrimaryKey(id) > 0;
     }
 

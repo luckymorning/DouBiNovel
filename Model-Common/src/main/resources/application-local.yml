@@ -1,0 +1,34 @@
+spring:
+  redis:
+    database: 0
+    password:
+    host: 127.0.0.1
+    port: 6379
+    lettuce:
+      pool:
+        max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+        max-idle: 100 # 连接池中的最大空闲连接
+        min-idle: 50 # 连接池中的最小空闲连接
+        max-wait: 6000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+    timeout: 1000
+#集群
+#spring:
+#  redis:
+#    database: 1
+#    password: guest
+#    cluster:
+#      max-redirects: 3
+#      nodes:
+#      - 192.168.131.139:6379
+#      - 192.168.131.140:6379
+#      - 192.168.131.141:6379
+#      - 192.168.131.142:6379
+#      - 192.168.131.143:6379
+#      - 192.168.131.144:6379
+#    lettuce:
+#      pool:
+#        max-active:  100 # 连接池最大连接数（使用负值表示没有限制）
+#        max-idle: 100 # 连接池中的最大空闲连接
+#        min-idle: 50 # 连接池中的最小空闲连接
+#        max-wait: 6000 # 连接池最大阻塞等待时间（使用负值表示没有限制）
+#    timeout: 1000

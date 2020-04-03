@@ -1,68 +1,52 @@
-package com.cn.lucky.morning.model.analysis;
+package com.cn.lucky.morning.model.service.impl;
 
-import com.cn.lucky.morning.model.common.cache.CacheService;
-import com.cn.lucky.morning.model.common.constant.Const;
 import com.cn.lucky.morning.model.common.log.Logs;
 import com.cn.lucky.morning.model.common.mvc.MvcResult;
 import com.cn.lucky.morning.model.common.network.Col;
-import com.cn.lucky.morning.model.common.network.NetWorkUtil;
-import com.cn.lucky.morning.model.common.tool.ByteUtils;
 import com.cn.lucky.morning.model.domain.BookInfo;
 import com.cn.lucky.morning.model.domain.BookSource;
+import com.cn.lucky.morning.model.service.BookSourceAnalysisService;
+import com.cn.lucky.morning.model.service.NetWorkService;
 import com.google.common.collect.Maps;
 import okhttp3.Headers;
-import okhttp3.Response;
 import org.apache.commons.lang.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
-import org.springframework.scheduling.annotation.Async;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.AsyncResult;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
-import javax.annotation.Resource;
-import java.net.SocketTimeoutException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.Future;
 
-@Component
-public class BookSourceAnalysis {
+/**
+ * 通过书源网络获取书籍
+ *
+ * @author lucky_morning
+ */
+@Service
+public class BookSourceAnalysisServiceImpl implements BookSourceAnalysisService {
     private static final Logger logger = Logs.get();
-    private Headers headers;
+    @Autowired
+    private NetWorkService netWorkService;
+    private static final Headers headers = new Headers.Builder()
+            .add("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36")
+            .build();
 
-    @Resource
-    private CacheService cacheService;
-
-    public BookSourceAnalysis() {
-        headers = new Headers.Builder()
-                .add("User-Agent", "Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.97 Safari/537.36")
-                .build();
-    }
-
-    /**
-     * 通过名称查找书籍
-     *
-     * @param name       书籍名称
-     * @param bookSource 书源信息
-     * @return 查询结果
-     */
-    @Async
+    @Override
     public Future<MvcResult> searchByName(String name, BookSource bookSource) {
         String url = String.format(bookSource.getBaseUrl() + bookSource.getSearchUrl(), name);
         MvcResult result = MvcResult.create();
         try {
-            List<BookInfo> list = (List<BookInfo>) cacheService.get(url);
-            if (list == null) {
-                list = new ArrayList<>();
-                Response response = NetWorkUtil.get(url, headers, true);
-                byte[] bytes = response.body().bytes();
-                String charset = ByteUtils.getEncoding(bytes);
-                String responseStr = new String(bytes, charset);
+            String responseStr = netWorkService.get(url, headers);
+            if (StringUtils.isNotEmpty(responseStr)){
+                List<BookInfo> list = new ArrayList<>();
                 Document html = Jsoup.parse(responseStr);
                 Elements resultListElements = html.select(bookSource.getSearchResultSelector());
                 for (Element resultItem : resultListElements) {
@@ -140,13 +124,12 @@ public class BookSourceAnalysis {
 
                     list.add(info);
                 }
-                cacheService.set(url, list, Const.cache.BOOK_SEARCH_RESULT_TTL);
+
+                result.addVal("list", list);
+            }else {
+                result.setSuccess(false);
+                result.setMessage("查询结果为空");
             }
-            result.addVal("list", list);
-        } catch (SocketTimeoutException e) {
-            logger.error("查找书籍出错", e);
-            result.setSuccess(false);
-            result.setMessage("《" + bookSource.getName() + "》网络连接超时");
         } catch (Exception e) {
             logger.error("查找书籍出错", e);
             result.setSuccess(false);
@@ -155,24 +138,14 @@ public class BookSourceAnalysis {
         return new AsyncResult<MvcResult>(result);
     }
 
-    /**
-     * 获取书籍详细信息页
-     *
-     * @param url        详情链接
-     * @param bookSource 书源信息
-     * @return 详情结果
-     */
-    @Async
+    @Override
     public Future<MvcResult> loadBookInfo(String url, BookSource bookSource) {
         MvcResult result = MvcResult.create();
         try {
-            Map<String, Object> map = (Map<String, Object>) cacheService.get(url);
-            if (map == null) {
-                map = Maps.newHashMap();
-                Response response = NetWorkUtil.get(url, headers, true);
-                byte[] bytes = response.body().bytes();
-                String charset = ByteUtils.getEncoding(bytes);
-                String responseStr = new String(bytes, charset);
+            String responseStr = netWorkService.get(url,headers);
+            if (StringUtils.isNotEmpty(responseStr)){
+                Map<String, Object> map = Maps.newHashMap();
+
                 Document html = Jsoup.parse(responseStr);
 
                 //加载书籍详情
@@ -259,20 +232,14 @@ public class BookSourceAnalysis {
                         catalogs.add(new Col(catalogName, href));
                     }
                 }
-
                 map.put("catalogs", catalogs);
-
-                cacheService.set(url, map, Const.cache.BOOK_DETAIL_TTL);
+                result.setSuccess(true);
+                result.addAllVal(map);
+            }else {
+                result.setSuccess(false);
+                result.setMessage("查询内容为空");
             }
-            result.setSuccess(true);
-            result.addAllVal(map);
-
-
-        } catch (SocketTimeoutException e) {
-            logger.error("获取书籍详情出错", e);
-            result.setSuccess(false);
-            result.setMessage("《" + bookSource.getName() + "》网络连接超时");
-        } catch (Exception e) {
+        }  catch (Exception e) {
             logger.error("获取书籍详情出错", e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
@@ -280,25 +247,14 @@ public class BookSourceAnalysis {
         return new AsyncResult<MvcResult>(result);
     }
 
-    /**
-     * 获取章节内容
-     *
-     * @param url        章节内容链接
-     * @param bookSource 书源信息
-     * @return 获取章节内容
-     */
-    @Async
+    @Override
     public Future<MvcResult> loadContent(String url, BookSource bookSource) {
         MvcResult result = MvcResult.create();
         try {
+            String responseStr = netWorkService.get(url,headers);
+            if (StringUtils.isNotEmpty(responseStr)){
 
-            Map<String, Object> map = (Map<String, Object>) cacheService.get(url);
-            if (map == null) {
-                map = Maps.newHashMap();
-                Response response = NetWorkUtil.get(url, headers, true);
-                byte[] bytes = response.body().bytes();
-                String charset = ByteUtils.getEncoding(bytes);
-                String responseStr = new String(bytes, charset);
+                Map<String, Object> map = Maps.newHashMap();
                 Document html = Jsoup.parse(responseStr);
 
                 if (StringUtils.isNotBlank(bookSource.getBookContentNameSelector())) {
@@ -380,36 +336,18 @@ public class BookSourceAnalysis {
                 if (Objects.equals(map.get("nextCatalog"),map.get("catalogs"))){
                     map.remove("nextCatalog");
                 }
-                cacheService.set(url, map, Const.cache.BOOK_CATALOG_CONTENT_TTL);
+                result.setSuccess(true);
+                result.addAllVal(map);
+            }else {
+                result.setSuccess(false);
+                result.setMessage("查询结果为空");
             }
-            result.setSuccess(true);
-            result.addAllVal(map);
 
-        } catch (SocketTimeoutException e) {
-            logger.error("获取书籍章节内容出错", e);
-            result.setSuccess(false);
-            result.setMessage("《" + bookSource.getName() + "》网络连接超时，");
         } catch (Exception e) {
             logger.error("获取书籍章节内容出错", e);
             result.setSuccess(false);
             result.setMessage(e.getMessage());
         }
         return new AsyncResult<MvcResult>(result);
-    }
-
-    /**
-     * 预加载章节内容
-     *
-     * @param url        章节内容链接
-     * @param bookSource 书源信息
-     */
-    @Async
-    public void loadNextContent(String url, BookSource bookSource) {
-        try {
-            Future<MvcResult> future = loadContent(url, bookSource);
-            MvcResult result = future.get();
-        } catch (Exception e) {
-            logger.error("获取书籍章节内容出错", e);
-        }
     }
 }
